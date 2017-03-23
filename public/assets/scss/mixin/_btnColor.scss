@@ -1,0 +1,10 @@
+@mixin btnColor($color, $light)
+{
+    background: #{$color};
+    color: $white;
+    border: 1px solid #{$light};
+    &:hover{
+        transition: 0.4s;
+        background: #{$light};
+    }
+}

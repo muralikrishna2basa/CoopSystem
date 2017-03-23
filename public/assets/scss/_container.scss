@@ -1,0 +1,19 @@
+.container{
+    padding: 10px;
+}
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    @for $i from 1 through 12
+    {
+        .col-#{$i}{
+            flex: 1 1 auto;
+            box-sizing: border-box;
+//            border: 1px solid #000;
+            width: #{7.333% * $i};
+            min-width: 100px;
+        }
+    }
+}

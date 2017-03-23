@@ -1,0 +1,84 @@
+html, body{
+//    font-family: "Rounded Mplus 1c";
+    font-family: "Noto Sans Japanese";
+    background: $bg-base-color;
+    font-size: 16px;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+    padding: 5px;
+    &:hover{
+        transition: 0.4s;
+//        background: darken($bg-base-color, 5%);
+    }
+}
+
+p{
+    margin: 5px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{
+//    font-family: "Noto Sans Japanese";
+    font-family: "Rounded Mplus 1c";
+    margin: 10px 0;
+}
+
+ul,
+ol
+{
+    margin: 10px 0;
+}
+
+table{
+    width: 100%;
+    border: 1px solid $line-color;
+    border-collapse: collapse;
+    th{
+        border: 1px solid $line-color;
+        text-align: left;
+    }
+    td{
+        border: 1px solid $line-color;
+    }
+}
+
+input,
+select,
+textarea
+{
+    padding: 10px 5px;
+    @include setPrefix(border-radius, 3px);
+    border: 1px solid $line-color;
+//    font-family: "Rounded Mplus 1c";
+    font-family: "Noto Sans Japanese";
+    &:hover{
+        transition: 0.6s;
+        @include setPrefix(box-shadow, 2px 2px 4px rgba($shadow-color, 0.2));
+    }
+}
+
+input[type="radio"],
+input[type="checkbox"]
+{
+    width: 15px;
+    height: 15px;
+    padding: 0;
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"],
+button,
+a
+{
+    cursor: pointer;
+}

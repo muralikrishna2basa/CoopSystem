@@ -1,0 +1,23 @@
+$bg-base-color: #f5f5f5;
+$header-bg-color: #444;
+$line-color: #ccc;
+
+$white: #fff;
+
+$blue:   #2d579a;
+$red:    #b32034;
+$yellow: #f2bc09;
+$green:  #93b11d;
+$purple: #693a8a;
+
+$text-blue: darken($blue, 10%);
+$text-red: darken($red, 10%);
+$text-green: darken($green, 10%);
+$text-yellow: darken($yellow, 10%);
+$text-purple: darken($purple, 10%);
+
+$shadow-color: #666;
+a:link    { color: #3261ab; }
+a:visited { color: #aaa; }
+a:hover   { color: #bf1e56; }
+a:active  { color: #bf1e56; }

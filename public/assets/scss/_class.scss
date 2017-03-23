@@ -1,0 +1,94 @@
+.text-right{
+    text-align: right;
+}
+.text-left{
+    text-align: left;
+}
+.text-center{
+    text-align: center;
+}
+
+.border-bottom{
+    border: none;
+    th, td{
+        border: none;
+        border-bottom: 1px solid $line-color;
+    }
+}
+.border-none{
+    border: none;
+    th, td{
+        border: none;
+    }
+}
+
+.table-hover{
+    tbody tr:hover{
+        th,td{
+            background: darken($bg-base-color, 15%);
+            transition: 0.4s;
+        }
+    }
+}
+
+.table-stripe{
+    tbody tr:nth-child(odd){
+        background: darken($bg-base-color, 5%);
+    }
+}
+
+.btn{
+    padding: 10px 20px;
+}
+.block{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+.inline{
+    display: inline-block;
+}
+
+.btn-blue{
+    @include btnColor($blue, lighten($blue, 15%));
+}
+.btn-red{
+    @include btnColor($red, lighten($red, 15%));
+}
+.btn-yellow{
+    @include btnColor($yellow, lighten($yellow, 15%));
+}
+.btn-green{
+    @include btnColor($green, lighten($green, 15%));
+}
+.btn-purple{
+    @include btnColor($purple, lighten($purple, 15%));
+}
+
+.form-group{
+    label, .msg{
+        display: block;
+        font-size: 0.8em;
+    }
+    input, select, textarea
+    {
+        width: 100%;
+    }
+}
+
+.form-inline{
+    input, select, textarea
+    {
+        width: auto;
+    }
+}
+
+.warning{
+    @include formColor($yellow, $text-yellow);
+}
+.success{
+    @include formColor($green, $text-green);
+}
+.danger{
+    @include formColor($red, $text-red);
+}

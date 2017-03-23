@@ -1,0 +1,16 @@
+@mixin formColor($border-color, $text-color)
+{
+    label{
+        color: $text-color;
+    }
+    input,
+    select,
+    textarea
+    {
+        border: 1px solid $border-color;
+        color: $text-color;
+    }
+    .msg{
+        color: $text-color;
+    }
+}

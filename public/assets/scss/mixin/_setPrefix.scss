@@ -1,0 +1,8 @@
+$set-prefix: '', -webkit-, -moz-, -ms-, -o-;
+@mixin setPrefix($name, $value)
+{
+    @each $prefix in $set-prefix
+    {
+        #{$prefix}#{$name}: $value;
+    }
+}

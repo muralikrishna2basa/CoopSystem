@@ -1,0 +1,13 @@
+header{
+    background: $header-bg-color;
+    color: $white;
+    padding: 10px 0;
+    h1{
+        margin: 0;
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 5px 30px 5px 10px;
+        border-bottom: 2px solid $green;
+        color: $green;
+    }
+}

@@ -26,7 +26,7 @@
     tbody tr:hover{
         th,td{
             background: darken($bg-base-color, 15%);
-            transition: 0.4s;
+            transition: $timer;
         }
     }
 }
@@ -37,13 +37,25 @@
     }
 }
 
-.btn{
+.btn, button{
     padding: 10px 20px;
+    border: 1px solid $line-color;
+    color: $white;
+    @include setPrefix(border-radius, 5px);
+    background: darken($bg-base-color, 30%);
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 5px 2px;
+    &:hover{
+        transition: $timer;
+        background: darken($bg-base-color, 20%);
+    }
 }
 .block{
     display: block;
     width: 100%;
     box-sizing: border-box;
+    text-align: center;
 }
 .inline{
     display: inline-block;
@@ -76,7 +88,28 @@
     }
 }
 
-.form-inline{
+.radio,
+.checkbox
+{
+    label{
+        display: block;
+        cursor: pointer;
+        vertical-align: middle;
+        input[type="checkbox"],
+        input[type="radio"]
+        {
+            vertical-align: middle;
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+    }
+}
+
+.form-group-inline{
+    label{
+        display: inline-block;
+    }
     input, select, textarea
     {
         width: auto;

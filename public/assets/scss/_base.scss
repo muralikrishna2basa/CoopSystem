@@ -10,7 +10,7 @@ a{
     text-decoration: none;
     padding: 5px;
     &:hover{
-        transition: 0.4s;
+        transition: $timer;
 //        background: darken($bg-base-color, 5%);
     }
 }
@@ -41,6 +41,7 @@ table{
     width: 100%;
     border: 1px solid $line-color;
     border-collapse: collapse;
+    margin: 10px 0;
     th{
         border: 1px solid $line-color;
         text-align: left;
@@ -57,10 +58,11 @@ textarea
     padding: 10px 5px;
     @include setPrefix(border-radius, 3px);
     border: 1px solid $line-color;
+    box-sizing: border-box;
 //    font-family: "Rounded Mplus 1c";
     font-family: "Noto Sans Japanese";
     &:hover{
-        transition: 0.6s;
+        transition: $timer;
         @include setPrefix(box-shadow, 2px 2px 4px rgba($shadow-color, 0.2));
     }
 }
@@ -68,9 +70,13 @@ textarea
 input[type="radio"],
 input[type="checkbox"]
 {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     padding: 0;
+    &:hover{
+        transition: 0;
+        @include setPrefix(box-shadow, none);
+    }
 }
 
 input[type="button"],
@@ -81,4 +87,29 @@ button,
 a
 {
     cursor: pointer;
+}
+
+pre, code{
+    font-family: "Source Code Pro", sans-serif;
+    font-size: 0.85em;
+}
+pre{
+    border: 1px solid $line-color;
+    background: darken($bg-base-color, 3%);
+    @include setPrefix(border-radius, 5px);
+    margin: 0;
+}
+code{
+    position: relative;
+    &:before{
+        content: "code";
+//        border: 1px solid darken($line-color, 10%);
+        border: 1px solid $line-color;
+        position: absolute;
+        margin: 0;
+        padding: 2px 5px;
+        left: 10px;
+        top: -3px;
+        background: darken($bg-base-color, 10%);
+    }
 }

@@ -21,3 +21,8 @@ a:link    { color: #3261ab; }
 a:visited { color: #aaa; }
 a:hover   { color: #bf1e56; }
 a:active  { color: #bf1e56; }
+
+.btn:link    { color: $white; }
+.btn:visited { color: darken($white, 10%); }
+.btn:hover   { color: darken($white, 5%); }
+.btn:active  { color: darken($white, 10%); }

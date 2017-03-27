@@ -1,0 +1,30 @@
+$icon-size: 20px;
+
+.toggle-menu{
+    dt{
+        position: relative;
+        padding-left: $icon-size;
+        cursor: pointer;
+        &:hover{
+            background-color: darken($bg-base-color, 10%);
+        }
+    }
+    .toggle-icon{
+        position: absolute;
+        content: "";
+        display: inline-block;
+        width: $icon-size;
+        height: $icon-size;
+        margin: auto;
+        bottom: 0;
+        top: 0;
+        background-image: url('../imgs/toggle.png');
+        background-repeat: no-repeat;
+        background-position: center center;
+        left: 0;
+        transition: $timer;
+    }
+    .toggle-open{
+        transform: rotateZ(90deg);
+    }
+}

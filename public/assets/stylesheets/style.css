@@ -1,46 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
 @import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 @import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
-/* line 20, ../scss/_colors.scss */
-a:link {
-  color: #3261ab;
-}
-
-/* line 21, ../scss/_colors.scss */
-a:visited {
-  color: #aaa;
-}
-
-/* line 22, ../scss/_colors.scss */
-a:hover {
-  color: #bf1e56;
-}
-
-/* line 23, ../scss/_colors.scss */
-a:active {
-  color: #bf1e56;
-}
-
-/* line 25, ../scss/_colors.scss */
-.btn:link {
-  color: #fff;
-}
-
-/* line 26, ../scss/_colors.scss */
-.btn:visited {
-  color: #e6e6e6;
-}
-
-/* line 27, ../scss/_colors.scss */
-.btn:hover {
-  color: #f2f2f2;
-}
-
-/* line 28, ../scss/_colors.scss */
-.btn:active {
-  color: #e6e6e6;
-}
-
 /* line 1, ../scss/_base.scss */
 html, body {
   font-family: "Noto Sans Japanese";
@@ -60,11 +20,51 @@ a:hover {
 }
 
 /* line 18, ../scss/_base.scss */
+a:link {
+  color: #3261ab;
+}
+
+/* line 19, ../scss/_base.scss */
+a:visited {
+  color: #aaa;
+}
+
+/* line 20, ../scss/_base.scss */
+a:hover {
+  color: #bf1e56;
+}
+
+/* line 21, ../scss/_base.scss */
+a:active {
+  color: #bf1e56;
+}
+
+/* line 23, ../scss/_base.scss */
+.btn:link {
+  color: #fff;
+}
+
+/* line 24, ../scss/_base.scss */
+.btn:visited {
+  color: #e6e6e6;
+}
+
+/* line 25, ../scss/_base.scss */
+.btn:hover {
+  color: #f2f2f2;
+}
+
+/* line 26, ../scss/_base.scss */
+.btn:active {
+  color: #e6e6e6;
+}
+
+/* line 28, ../scss/_base.scss */
 p {
   margin: 5px 0;
 }
 
-/* line 22, ../scss/_base.scss */
+/* line 32, ../scss/_base.scss */
 h1,
 h2,
 h3,
@@ -75,30 +75,30 @@ h6 {
   margin: 10px 0;
 }
 
-/* line 34, ../scss/_base.scss */
+/* line 44, ../scss/_base.scss */
 ul,
 ol {
   margin: 10px 0;
 }
 
-/* line 40, ../scss/_base.scss */
+/* line 50, ../scss/_base.scss */
 table {
   width: 100%;
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin: 10px 0;
 }
-/* line 45, ../scss/_base.scss */
+/* line 55, ../scss/_base.scss */
 table th {
   border: 1px solid #ccc;
   text-align: left;
 }
-/* line 49, ../scss/_base.scss */
+/* line 59, ../scss/_base.scss */
 table td {
   border: 1px solid #ccc;
 }
 
-/* line 54, ../scss/_base.scss */
+/* line 64, ../scss/_base.scss */
 input,
 select,
 textarea {
@@ -112,7 +112,7 @@ textarea {
   box-sizing: border-box;
   font-family: "Noto Sans Japanese";
 }
-/* line 64, ../scss/_base.scss */
+/* line 74, ../scss/_base.scss */
 input:hover,
 select:hover,
 textarea:hover {
@@ -124,14 +124,14 @@ textarea:hover {
   -o-box-shadow: 2px 2px 4px rgba(102, 102, 102, 0.2);
 }
 
-/* line 70, ../scss/_base.scss */
+/* line 80, ../scss/_base.scss */
 input[type="radio"],
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
   padding: 0;
 }
-/* line 76, ../scss/_base.scss */
+/* line 86, ../scss/_base.scss */
 input[type="radio"]:hover,
 input[type="checkbox"]:hover {
   transition: 0;
@@ -142,7 +142,7 @@ input[type="checkbox"]:hover {
   -o-box-shadow: none;
 }
 
-/* line 82, ../scss/_base.scss */
+/* line 92, ../scss/_base.scss */
 input[type="button"],
 input[type="submit"],
 input[type="radio"],
@@ -152,13 +152,13 @@ a {
   cursor: pointer;
 }
 
-/* line 92, ../scss/_base.scss */
+/* line 102, ../scss/_base.scss */
 pre, code {
   font-family: "Source Code Pro", sans-serif;
   font-size: 0.85em;
 }
 
-/* line 96, ../scss/_base.scss */
+/* line 106, ../scss/_base.scss */
 pre {
   border: 1px solid #ccc;
   background: #ededed;
@@ -170,11 +170,11 @@ pre {
   margin: 0;
 }
 
-/* line 102, ../scss/_base.scss */
+/* line 112, ../scss/_base.scss */
 code {
   position: relative;
 }
-/* line 104, ../scss/_base.scss */
+/* line 114, ../scss/_base.scss */
 code:before {
   content: "code";
   border: 1px solid #ccc;

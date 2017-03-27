@@ -1,15 +1,8 @@
-<?php
-function code($string)
-{
-    return htmlspecialchars($string);
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>CoopSystem</title>
-    <?php include("../public/assets/php/partial/head.php"); ?>
+    <?php include("../../public/assets/php/partial/head.php"); ?>
     <style type="text/css">
         h2.sample{
             border-top: 3px solid #999;
@@ -20,7 +13,7 @@ function code($string)
 </head>
 <body>
 
-    <?php include("../public/assets/php/partial/header.php"); ?>
+    <?php include("../../public/assets/php/partial/header.php"); ?>
 
 <div class="container">
     <h2 class="sample">Head</h2>
@@ -38,7 +31,7 @@ function code($string)
 <div class="container">
 
     <div class="container">
-        <div class="flex">
+        <div class="flex" style="margin-bottom: 20px">
             <div class="col-2" style="background: #2d579a; color: #fff;">
                 <!-- contents -->
                 <p>Article.</p>
@@ -164,6 +157,63 @@ function code($string)
 
 </code></pre>
 
+<h3>Class:border-none</h3>
+<table class="border-none">
+    <thead>
+        <tr>
+            <th>Head1</th>
+            <th>Head2</th>
+            <th>Head3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row-1 Col-1</td>
+            <td>Row-1 Col-2</td>
+            <td>Row-1 Col-3</td>
+        </tr>
+        <tr>
+            <td>Row-2 Col-1</td>
+            <td>Row-2 Col-2</td>
+            <td>Row-2 Col-3</td>
+        </tr>
+        <tr>
+            <td>Row-3 Col-1</td>
+            <td>Row-3 Col-2</td>
+            <td>Row-3 Col-3</td>
+        </tr>
+    </tbody>
+</table>
+
+<pre><code>
+    &lt;table class="border-none"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Head1&lt;/th&gt;
+                &lt;th&gt;Head2&lt;/th&gt;
+                &lt;th&gt;Head3&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Row-1 Col-1&lt;/td&gt;
+                &lt;td&gt;Row-1 Col-2&lt;/td&gt;
+                &lt;td&gt;Row-1 Col-3&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Row-2 Col-1&lt;/td&gt;
+                &lt;td&gt;Row-2 Col-2&lt;/td&gt;
+                &lt;td&gt;Row-2 Col-3&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Row-3 Col-1&lt;/td&gt;
+                &lt;td&gt;Row-3 Col-2&lt;/td&gt;
+                &lt;td&gt;Row-3 Col-3&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+
+</code></pre>
 <h3>Class:border-bottom</h3>
 <table class="border-bottom">
     <thead>
@@ -357,7 +407,7 @@ function code($string)
     <a href="#" class="btn btn-green">Link</a>
     <a href="#" class="btn btn-yellow">Link</a>
     <a href="#" class="btn btn-purple">Link</a>
-    <a href="#" class="btn block">Link</a>
+    <a href="#" class="btn block btn-green">Link</a>
 <pre><code>
     &lt;a href="#"&gt;Link&lt;/a&gt;
     &lt;a href="#" class="btn"&gt;Link&lt;/a&gt;
@@ -579,8 +629,7 @@ function code($string)
     </div>
 </div>
 
-    <footer>
-        <h6 class="text-right"><small>Last Update:2017-03-24</small></h6>
-    </footer>
+<?php include("../../public/assets/php/partial/footer.php"); ?>
+
 </body>
 </html>

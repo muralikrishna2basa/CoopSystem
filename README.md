@@ -6,4 +6,4 @@
 
 ## Notice
 CSSはpublic->assets->stylesheets内を参照  
-レイアウトサンプルはsample->index.phpを参考のこと
+レイアウトサンプルはsample->css->index.phpを参考のこと

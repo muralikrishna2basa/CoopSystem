@@ -1,20 +1,5 @@
 <?php
-
-function connectMywebDb(){
-    $srv  = '192.1.10.136';
-    $db   = 'myweb10po';
-    $user = 'sa';
-    $pass = 'P@ssw0rd';
-    $dns  = "sqlsrv:server={$srv};database={$db}";
-    try{
-        $pdo = new PDO($dns, $user, $pass);
-        $e = 'データベース接続に成功しました。';
-    }catch(Exception $e){
-        $e->Getmessage();
-        exit();
-    }
-    return $pdo;
-}
+require_once('connectDb.php');
 
 /**
  * [getSingleUser]
@@ -26,7 +11,7 @@ function connectMywebDb(){
 function getSingleUser($userid, $loginid = null)
 {
     $array = [];
-    $pdo   = connectMywebDb();
+    $pdo   = connectDb('myweb');
     $mySQL = "SELECT * FROM dbo.T_PER_USER WHERE PER_id=?;";
     if(mb_strlen($loginid) > 0)
     {
@@ -61,7 +46,7 @@ function getAllUsers()
 {
     $array = [];
     $mySQL = "SELECT * FROM dbo.T_PER_USER;";
-    $pdo   = connectMywebDb();
+    $pdo   = connectDb('myweb');
     $stmt  = $pdo->prepare($mySQL);
     $res   = $stmt->execute(null);
     if($res === false) throw new Exception("データベース接続時にエラーが発生しました。");
@@ -93,7 +78,7 @@ function authentificateUser($loginid, $password)
     $user  = [];
     $msg   = ['loginid'=>'', 'password'=>''];
     $pass  = '';
-    $pdo   = connectMywebDb();
+    $pdo   = connectDb('myweb');
 
     if(mb_strlen($loginid) == 0)
     {

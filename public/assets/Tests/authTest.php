@@ -91,7 +91,7 @@ class testCalc extends PHPUnit_Framework_TestCase
             return;
         }
 //        var_dump($res);
-        $this->assertEquals('ログインIDが間違っているようです。', $res['loginid']);
+        $this->assertEquals('ユーザーが見つかりませんでした。', $res['loginid']);
         $this->assertEquals('', $res['password']);
     }
 

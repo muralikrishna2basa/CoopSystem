@@ -1,3 +1,9 @@
+<?php
+    require_once('../../public/assets/php/lib/user/userProcess.php');
+    require_once('../../public/assets/php/connectDb.php');
+    $lists = returnCurrentMonthProductList();
+    $i     = 0;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +14,10 @@
 <?php include("../../public/assets/php/partial/header.php"); ?>
 
 <div class="container flex">
-    <div class="col-2"></div>
+    <div class="col-2">
+        <h2>MENU</h2>
+    </div>
     <div class="col-10">
-        <pre><?php var_dump($_POST); ?></pre>
         <form method="post" action="">
         <table class="table-stripe border-bottom">
             <thead>
@@ -24,65 +31,46 @@
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($lists as $list){ ?>
                 <tr>
                     <td>
                         <p class="form-group">
                             <label>monthly_goods_id</label>
-                            <input type="text" id="monthly_goods_id_1" name="monthly_goods_id_1" value="1">
+                            <input type="text" id="monthly_goods_id_<?php echo $list['monthly_goods_id'] ?>" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id']; ?>">
                         </p>
                     </td>
                     <td>
-                        <p>素敵な鉛筆</p>
+                        <p><?php echo $list['goods_name'] ?></p>
                     </td>
                     <td>
-                        <p>12本入り</p>
+                        <p><?php echo $list['detail_amount_per_one'] ?></p>
                     </td>
                     <td>
-                        <p>24個</p>
+                        <p><?php echo $list['required_quantity'] ?>個</p>
                     </td>
                     <td>
-                        <p>200円</p>
+                        <p><?php echo number_format(intval($list['unit_price'])) ?>円</p>
                     </td>
                     <td>
                         <p class="form-group">
                             <label>ordering_quantity</label>
-                            <input type="text" id="ordering_quantity_1" name="ordering_quantity_1">
+                            <input type="text" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="ordering_quantity[]">
                         </p>
                     </td>
                 </tr>
-
-                <tr>
-                    <td>
-                        <p class="form-group">
-                            <label>monthly_goods_id</label>
-                            <input type="text" id="monthly_goods_id_2" name="monthly_goods_id_2" value="2">
-                        </p>
-                    </td>
-                    <td>
-                        <p>よく消える消しゴム</p>
-                    </td>
-                    <td>
-                        <p>1個</p>
-                    </td>
-                    <td>
-                        <p>12個</p>
-                    </td>
-                    <td>
-                        <p>150円</p>
-                    </td>
-                    <td>
-                        <p class="form-group">
-                            <label>ordering_quantity</label>
-                            <input type="text" id="ordering_quantity_2" name="ordering_quantity_2">
-                        </p>
-                    </td>
-                </tr>
+                <?php $i++; } ?>
             </tbody>
         </table>
         <p class="text-right form-group">
-            <button type="submit">送信する</button>
+            <button type="submit" class="btn btn-blue">送信する</button>
         </p>
         </form>
+
+        <!-- debug -->
+        <h2>returnCurrentMonthProductList</h2>
+        <pre><?php var_dump($lists) ?></pre>
+        <h2>POST</h2>
+        <pre><?php var_dump($_POST) ?></pre>
 
     </div>
 </div>

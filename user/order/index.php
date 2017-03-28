@@ -3,6 +3,10 @@
     require_once('../../public/assets/php/connectDb.php');
     $lists = returnCurrentMonthProductList();
     $i     = 0;
+    if(count($_POST)>0){
+            $error =doOrderStock(1,$_POST);
+        if($error!=null)echo $error;
+    }
 ?>
 <!DOCTYPE html>
 <html>

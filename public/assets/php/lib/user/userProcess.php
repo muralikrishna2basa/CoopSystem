@@ -82,7 +82,7 @@ function returnStockList($monthlyId){
             stock_quantity,category_name,color
             FROM stock_list
             INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
-            INNER JOIN category ON monthly_goods.category_id = category.category_id;";
+            INNER JOIN category ON monthly_goods.category_id = category.category_id WHERE stock_quantity>0;";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(null);
         }else{
@@ -90,7 +90,8 @@ function returnStockList($monthlyId){
             stock_quantity,category_name,color
             FROM stock_list
             INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
-            INNER JOIN category ON monthly_goods.category_id = category.category_id WHERE stock_list.monthly_id =?;";
+            INNER JOIN category ON monthly_goods.category_id = category.category_id 
+            WHERE stock_list.monthly_id =? AND stock_quantity>0;";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($monthlyId));
         }
@@ -115,36 +116,85 @@ function doOrder($userId,$orderGoodsList){
        while ($row = $stmt->fetch()) {
         $ren =$row[0];
     }
-    foreach ($orderGoodsList as $key1 => $value1) {
 
-        $pdo = connectDb('cooopshinren');
-        $sql ="INSERT INTO ordering_list VALUES (NULL,?,?,?);";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($key1,$ren,$value1));
-    }
-    return 5;
-}catch(Exception $e){
-    echo $e->getMessage;
-}
-
-}
-function fixedFlagChange($userId,$orderGoodsList){
-    try{
-       $pdo = connectDb('cooopshinren');
-       $sql="SELECT MAX(ordering_id) FROM ordering WHERE orderer = ?;";
-       $stmt=$pdo->prepare($sql);
-       $res= $stmt->execute(array($userId));
-       while ($row = $stmt->fetch()) {
-        $ren =$row[0];
-    }
     $pdo = connectDb('cooopshinren');
-    $sql = "UPDATE ordering SET fixed_flag = 0 WHERE ordering.orderer =?;";
+    $sql = "UPDATE ordering SET fixed_flag = 0 WHERE ordering.orderer = ?;";
     $stmt=$pdo->prepare($sql);
     $res= $stmt->execute(array($userId));
     $pdo = connectDb('cooopshinren');
     $sql = "UPDATE ordering SET fixed_flag = 1 WHERE ordering.ordering_id=?;";
     $stmt=$pdo->prepare($sql);
     $res= $stmt->execute(array($ren));
+    for($i = 0; $i < count($orderGoodsList['monthly_goods_id']); $i++){
+        // echo '<pre>';
+
+        // echo $orderGoodsList['monthly_goods_id'][$i];
+        // echo $orderGoodsList['ordering_quantity'][$i];
+        // echo '</pre>';
+        $quantaity = intval($orderGoodsList["ordering_quantity"][$i]);
+        if($quantaity>0){
+            $pdo = connectDb('cooopshinren');
+            $sql ="INSERT INTO ordering_list VALUES (NULL,?,?,?);";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(array($orderGoodsList['monthly_goods_id'][$i],$ren,$quantaity));
+        }
+    }
+}catch(Exception $e){
+    echo $e->getMessage;
+}
+
+}
+
+// 在庫から発注する関数
+// $orderStockGoodsListは（商品ＩＤ、発注数）
+function doOrderStock($userId,$orderGoodsList)
+{
+    $errorMessage = [];
+ try{
+   $pdo = connectDb('cooopshinren');
+   $sql="SELECT MAX(ordering_id) FROM ordering WHERE orderer = ?";
+   $stmt=$pdo->prepare($sql);
+   $res= $stmt->execute(array($userId));
+   while ($row = $stmt->fetch()) {
+    $ren =$row[0];
+}
+
+for($i = 0; $i < count($orderGoodsList['monthly_goods_id']); $i++){
+    echo $i;
+    echo count($orderGoodsList['monthly_goods_id']);
+    $goodsId = $orderGoodsList['monthly_goods_id'][$i];
+    $quantaity = intval($orderGoodsList["ordering_quantity"][$i]);
+    $pdo = connectDb('cooopshinren');
+    $sql ="SELECT stock_quantity FROM stock_list WHERE monthly_goods_id=?";
+    $stmt=$pdo->prepare($sql);
+    $res= $stmt->execute(array($goodsId));
+    while ($row = $stmt->fetch()) {
+        $stock =$row[0];
+    }
+    if($quantaity>0&&$stock-$quantaity>=0){
+        $pdo = connectDb('cooopshinren');
+        $sql ="INSERT INTO ordering_list VALUES (NULL,?,?,?);";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($goodsId,$ren,$quantaity));
+        $pdo = connectDb('cooopshinren');
+        $sql ="UPDATE stock_list SET stock_quantity = ? WHERE stock_list.monthly_goods_id= ?";
+        $stmt=$pdo->prepare($sql);
+        $difference=$stock-$quantaity;
+        $res= $stmt->execute(array($difference,$goodsId));
+    }
+    if($stock-$quantaity<0){
+        $pdo = connectDb('cooopshinren');
+        $sql="SELECT goods_name FROM `monthly_goods` WHERE monthly_goods_id = ?";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($goodsId));
+        while ($row = $stmt->fetch()) {
+            $str =$row[0]."は在庫以上の数を発注しようとしたためエラーが起きました";
+        }
+        $errorMessage[$str];
+    }
+
+}
+return $errorMessage;
 }catch(Exception $e){
     echo $e->getMessage;
 }

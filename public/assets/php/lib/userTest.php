@@ -52,7 +52,7 @@ function testDisplayHistory()
         3 =>300,
         4 =>400,
         );
-    $e=  fixedFlagChange(1,$arr)
+    $e=  fixedFlagChange(2,$arr);
     }
 }
 ?>

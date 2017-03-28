@@ -1,10 +1,127 @@
-/* line 1, ../scss/scripts/_modal.scss */
+/* line 4, ../scss/scripts/_modal.scss */
 .modal-bg {
   position: absolute;
   width: 100%;
-  height: 130%;
+  height: 100%;
+  min-height: 100vh;
   left: 0;
   top: 0;
+  background: rgba(34, 34, 34, 0.7);
+  z-index: 99;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+  -moz-perspective: 1000px;
+  -ms-perspective: 1000px;
+  -o-perspective: 1000px;
+}
+/* line 13, ../scss/scripts/_modal.scss */
+.modal-bg h1, .modal-bg h2, .modal-bg h3, .modal-bg h4, .modal-bg h5, .modal-bg h6 {
+  margin: 0;
+}
+/* line 18, ../scss/scripts/_modal.scss */
+.modal-bg .modal-close {
+  cursor: pointer;
+}
+/* line 21, ../scss/scripts/_modal.scss */
+.modal-bg .modal-content {
+  position: absolute;
+  width: 80%;
+  max-width: 800px;
+  left: 0;
+  right: 0;
+  top: 100px;
+  margin: auto;
+  box-shadow: 5px 5px 3px rgba(34, 34, 34, 0.4);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  transform-origin: 0px 0px;
+  -webkit-transform-origin: 0px 0px;
+  -moz-transform-origin: 0px 0px;
+  -ms-transform-origin: 0px 0px;
+  -o-transform-origin: 0px 0px;
+  animation: modal_open 0.6s forwards;
+}
+/* line 34, ../scss/scripts/_modal.scss */
+.modal-bg .modal-content .modal-close {
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background: #b32034;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+}
+/* line 47, ../scss/scripts/_modal.scss */
+.modal-bg .modal-content .modal-header, .modal-bg .modal-content .modal-body, .modal-bg .modal-content .modal-footer {
+  padding: 10px 15px;
+}
+/* line 50, ../scss/scripts/_modal.scss */
+.modal-bg .modal-content .modal-header {
+  border-bottom: 1px solid #b3b3b3;
+  background: gainsboro;
+  border-top-left-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-top-left-radius: 5px;
+  -ms-border-top-left-radius: 5px;
+  -o-border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-top-right-radius: 5px;
+  -ms-border-top-right-radius: 5px;
+  -o-border-top-right-radius: 5px;
+}
+/* line 56, ../scss/scripts/_modal.scss */
+.modal-bg .modal-content .modal-body {
+  border-bottom: 1px solid #b3b3b3;
+  background: #f5f5f5;
+}
+/* line 60, ../scss/scripts/_modal.scss */
+.modal-bg .modal-content .modal-footer {
+  background: gainsboro;
+  border-bottom-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-bottom-left-radius: 5px;
+  -ms-border-bottom-left-radius: 5px;
+  -o-border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+  -ms-border-bottom-right-radius: 5px;
+  -o-border-bottom-right-radius: 5px;
+}
+
+@keyframes modal_open {
+  0% {
+    transform: rotateX(-90deg);
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    -ms-transform: rotateX(-90deg);
+    -o-transform: rotateX(-90deg);
+    opacity: 0.2;
+  }
+  100% {
+    transform: rotateX(0deg);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    -ms-transform: rotateX(0deg);
+    -o-transform: rotateX(0deg);
+    opacity: 1.0;
+  }
+}
+/* line 72, ../scss/scripts/_modal.scss */
+.modal-hide {
+  display: none;
 }
 
 /* line 4, ../scss/scripts/_toggle.scss */
@@ -17,7 +134,11 @@
 .toggle-menu dt:hover {
   background-color: gainsboro;
 }
-/* line 12, ../scss/scripts/_toggle.scss */
+/* line 11, ../scss/scripts/_toggle.scss */
+.toggle-menu dt h1, .toggle-menu dt h2, .toggle-menu dt h3, .toggle-menu dt h4, .toggle-menu dt h5, .toggle-menu dt h6 {
+  margin: 0;
+}
+/* line 15, ../scss/scripts/_toggle.scss */
 .toggle-menu .toggle-icon {
   position: absolute;
   content: "";
@@ -33,12 +154,65 @@
   left: 0;
   transition: 0.6s;
 }
-/* line 27, ../scss/scripts/_toggle.scss */
+/* line 30, ../scss/scripts/_toggle.scss */
 .toggle-menu .toggle-open {
   transform: rotateZ(90deg);
 }
 
-/* line 9, ../scss/scripts.scss */
+/* line 1, ../scss/scripts/_tips.scss */
+.tips {
+  position: relative;
+  perspective: 1000px;
+  z-index: 1;
+}
+/* line 5, ../scss/scripts/_tips.scss */
+.tips .tips-trigger {
+  cursor: help;
+}
+/* line 8, ../scss/scripts/_tips.scss */
+.tips .tips-target {
+  display: none;
+}
+/* line 11, ../scss/scripts/_tips.scss */
+.tips .tips-content {
+  padding: 10px 20px;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  z-index: 2;
+  width: 400px;
+  min-height: 100px;
+  background: rgba(34, 34, 34, 0.7);
+  color: #fff;
+  border: 1px solid #4d4d4d;
+  font-size: 0.9em;
+  top: 20px;
+  animation: tips 0.6s forwards;
+}
+
+@keyframes tips {
+  0% {
+    transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+  }
+}
+/* line 10, ../scss/scripts.scss */
 .draggable {
   cursor: move;
+  position: relative;
+  z-index: 2;
 }

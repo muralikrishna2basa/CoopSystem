@@ -46,6 +46,8 @@
     box-sizing: border-box;
     display: inline-block;
     margin: 5px 2px;
+    outline: none;
+    font-weight: bold;
     &:hover{
         transition: $timer;
         background: darken($bg-base-color, 20%);
@@ -75,6 +77,34 @@
 }
 .btn-purple{
     @include btnColor($purple, lighten($purple, 15%));
+}
+
+.bg-blue,
+.bg-red,
+.bg-yellow,
+.bg-green,
+.bg-purple
+{
+    color: $white;
+}
+
+.bg-blue{
+    background: $blue !important;
+}
+.bg-red{
+    background: $red !important;
+}
+.bg-yellow{
+    background: $yellow !important;
+}
+.bg-green{
+    background: $green !important;
+}
+.bg-purple{
+    background: $purple !important;
+}
+.bg-glay{
+    background: darken($bg-base-color, 10%);
 }
 
 .form-group{
@@ -124,4 +154,24 @@
 }
 .danger{
     @include formColor($red, $text-red);
+}
+
+.border-left{
+    border-left: 1px solid $line-color;
+}
+
+.border-right{
+    border-right: 1px solid $line-color;
+}
+
+.label{
+    color: $white;
+    display: inline-block;
+    padding: 5px 10px;
+    @include setPrefix(border-radius, 5px);
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    min-width: 50px;
+
 }

@@ -5,7 +5,10 @@ $timer: 0.6s;
 
 @import "./scripts/_modal.scss";
 @import "./scripts/_toggle.scss";
+@import "./scripts/_tips.scss";
 
 .draggable{
     cursor: move;
+    position: relative;
+    z-index: 2;
 }

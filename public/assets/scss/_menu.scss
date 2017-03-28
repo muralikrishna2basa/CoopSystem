@@ -1,0 +1,38 @@
+.menu{
+    position: relative;
+    ul{
+        list-style: none;
+        padding: 0;
+        li{
+            border-bottom: 1px solid $line-color;
+//            @include setPrefix(border-radius, 5px);
+            text-align: center;
+//            margin: 5px 0;
+            vertical-align: middle;
+            a{
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 10px 0;
+                &:hover{
+                    background: lighten($blue, 50%);
+//                    color: $white;
+                    transition: $timer;
+                }
+            }
+        }
+    }
+}
+.menu-btn{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    bottom: 0;
+    right: -15px;
+    @include setPrefix(border-radius, 50%);
+    padding: 0;
+    margin: auto;
+    background: darken($bg-base-color, 50%);
+    border: 1px solid darken($line-color, 30%);
+}

@@ -1,17 +1,27 @@
+html{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+body{
+    padding: 50px 0;
+    height: 100%;
+}
 html, body{
-//    font-family: "Rounded Mplus 1c";
     font-family: "Noto Sans Japanese";
     background: $bg-base-color;
     font-size: 16px;
     margin: 0;
+    position: relative;
+    min-height: 100%;
 }
 
 a{
     text-decoration: none;
     padding: 5px;
+    outline: none;
     &:hover{
         transition: $timer;
-//        background: darken($bg-base-color, 5%);
     }
 }
 
@@ -36,7 +46,6 @@ h4,
 h5,
 h6
 {
-//    font-family: "Noto Sans Japanese";
     font-family: "Rounded Mplus 1c";
     margin: 10px 0;
 }
@@ -69,7 +78,6 @@ textarea
     @include setPrefix(border-radius, 3px);
     border: 1px solid $line-color;
     box-sizing: border-box;
-//    font-family: "Rounded Mplus 1c";
     font-family: "Noto Sans Japanese";
     &:hover{
         transition: $timer;
@@ -108,12 +116,17 @@ pre{
     background: darken($bg-base-color, 3%);
     @include setPrefix(border-radius, 5px);
     margin: 0;
+    z-index: 0;
 }
 code{
     position: relative;
+    white-space: pre-wrap;
+    word-break: break-all;
+    z-index: 0;
     &:before{
+        white-space: pre-wrap;
+        word-break: normal;
         content: "code";
-//        border: 1px solid darken($line-color, 10%);
         border: 1px solid $line-color;
         position: absolute;
         margin: 0;

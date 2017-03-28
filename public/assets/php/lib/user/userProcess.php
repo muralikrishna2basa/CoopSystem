@@ -1,5 +1,4 @@
 <?php
-require_once('../../php/connectDb.php');
 
     //ユーザーの履歴を返す関数
     // カテゴリ名（category_name）,色（color）,商品名（goods_name）,単価（unit_price,）
@@ -32,7 +31,7 @@ function displayHistory($userId,$monthlyId){
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($userId,$monthlyId));
         }
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+        while ($row = $stmt->fetch()) {
             $ren[] =$row;
         }
 
@@ -59,7 +58,7 @@ function returnCurrentMonthProductList(){
 //            var_dump($value);
 //        }
 
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+        while ($row = $stmt->fetch()) {
             $ren[] =$row;
 //                $ren.=array ($row[0],$row[1],$row[3],$row[4],$row[5],$row[7]);
         }
@@ -96,7 +95,7 @@ function returnStockList($monthlyId){
             $res= $stmt->execute(array($monthlyId));
         }
 
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+        while ($row = $stmt->fetch()) {
             $ren[] =$row;
         }
         return $ren;
@@ -113,7 +112,7 @@ function doOrder($userId,$orderGoodsList){
        $sql="SELECT MAX(ordering_id) FROM ordering WHERE orderer = ?";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($userId));
-       while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+       while ($row = $stmt->fetch()) {
         $ren =$row[0];
     }
     foreach ($orderGoodsList as $key1 => $value1) {
@@ -135,7 +134,7 @@ function fixedFlagChange($userId,$orderGoodsList){
        $sql="SELECT MAX(ordering_id) FROM ordering WHERE orderer = ?;";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($userId));
-       while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+       while ($row = $stmt->fetch()) {
         $ren =$row[0];
     }
     $pdo = connectDb('cooopshinren');

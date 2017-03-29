@@ -106,6 +106,9 @@ function returnCurrentMonthProductList($userId){
                 if($order[$i][0]==$currentMonthList[$j][0]){
                     $order[$i]['ordering_quantity']=$currentMonthList[$j][1];
                     $order[$i][7]=$currentMonthList[$j][1];
+                }else{
+                     $order[$i]['ordering_quantity']=0;
+                    $order[$i][7]=0;
                 }
             }
         }

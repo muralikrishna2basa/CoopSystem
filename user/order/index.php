@@ -5,7 +5,7 @@
     $lists = returnCurrentMonthProductList(12);
     $i     = 0;
     if(count($_POST)>0){
-            $error =doOrderStock(1,$_POST);
+            $error =doOrder(1,$_POST);
         if($error!=null)echo $error;
     }
 

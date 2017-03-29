@@ -1,5 +1,6 @@
 <?php 
 require_once ("user/userProcess.php");
+require_once('../connectDb.php');
 /**
 * 
 */
@@ -11,7 +12,7 @@ class userTest extends PHPUnit_Framework_TestCase
     function testReturnCurrentMonthProductList()
     {
 
-       $a = returnCurrentMonthProductList();
+       $a = returnCurrentMonthProductList(12);
     // var_dump($a);
 
    }
@@ -41,18 +42,8 @@ function testDoOrder()
 function testDisplayHistory()
 {
     $d =displayHistory(1,3);
-    var_dump($d);
+    //var_dump($d);
 }
-/**
-    * @test
-    */
-    function testFixedFlagChange()
-    { $arr = array(1 =>100,
-        2 =>200,
-        3 =>300,
-        4 =>400,
-        );
-    $e=  fixedFlagChange(2,$arr);
-    }
+
 }
 ?>

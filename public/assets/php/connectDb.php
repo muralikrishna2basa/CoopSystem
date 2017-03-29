@@ -26,7 +26,7 @@ function connectDb($dbName){
     try{
         $pdo = new PDO($dns, $user, $pass);
     }catch(Exception $e){
-        $e->Getmessage();
+        echo($e->Getmessage());
         return;
     }
 

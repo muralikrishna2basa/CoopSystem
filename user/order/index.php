@@ -2,7 +2,7 @@
     require_once('../../public/assets/php/lib/user/userProcess.php');
     require_once('../../public/assets/php/connectDb.php');
     require_once('../../public/assets/php/getFontColor.php');
-    $lists = returnCurrentMonthProductList();
+    $lists = returnCurrentMonthProductList(12);
     $i     = 0;
     if(count($_POST)>0){
             $error =doOrderStock(1,$_POST);

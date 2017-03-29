@@ -17,12 +17,12 @@
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-3 border-right min-height" id="col-menu">
+    <div class="col-2 border-right min-height" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_user.php"); ?>
     </div>
-    <div class="col-9 container">
-        <h1>商品注文履歴確認画面</h1>
-        <table class="table-stripe border-bottom">
+    <div class="col-10 container">
+        <h1>注文した履歴を確認する</h1>
+        <table class="table-hover border-bottom">
             <thead>
                 <tr>
                     <th class="text-center">カテゴリ</th>
@@ -57,7 +57,9 @@
                 </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="5" class="text-right"><?php echo number_format($total) ?>円</td>
+                    <td colspan="3"></td>
+                    <td class="text-center">合計</td>
+                    <td class="text-right"><?php echo number_format($total) ?>円</td>
                 </tr>
             </tbody>
         </table>

@@ -30,6 +30,7 @@ $btn-width: 30px;
     background-repeat: no-repeat;
     @include setPrefix(transform, rotateZ(180deg));
     transition: $timer;
+    opacity: 0.5;
     &:hover{
         background-image: url(../imgs/toggle.png);
         background-position: center center;

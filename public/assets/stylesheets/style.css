@@ -105,15 +105,25 @@ table {
 }
 /* line 64, ../scss/_base.scss */
 table th {
-  border: 1px solid #ccc;
   text-align: left;
 }
 /* line 68, ../scss/_base.scss */
 table td {
+  padding: 2px 5px;
+}
+/* line 70, ../scss/_base.scss */
+table td:first-child:before {
+  content: "";
+  display: block;
+  height: 35px;
+  float: left;
+}
+/* line 77, ../scss/_base.scss */
+table th, table td {
   border: 1px solid #ccc;
 }
 
-/* line 73, ../scss/_base.scss */
+/* line 82, ../scss/_base.scss */
 input,
 select,
 textarea {
@@ -127,7 +137,7 @@ textarea {
   box-sizing: border-box;
   font-family: "Noto Sans Japanese";
 }
-/* line 82, ../scss/_base.scss */
+/* line 91, ../scss/_base.scss */
 input:hover,
 select:hover,
 textarea:hover {
@@ -139,14 +149,14 @@ textarea:hover {
   -o-box-shadow: 2px 2px 4px rgba(102, 102, 102, 0.2);
 }
 
-/* line 88, ../scss/_base.scss */
+/* line 97, ../scss/_base.scss */
 input[type="radio"],
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
   padding: 0;
 }
-/* line 94, ../scss/_base.scss */
+/* line 103, ../scss/_base.scss */
 input[type="radio"]:hover,
 input[type="checkbox"]:hover {
   transition: 0;
@@ -157,7 +167,7 @@ input[type="checkbox"]:hover {
   -o-box-shadow: none;
 }
 
-/* line 100, ../scss/_base.scss */
+/* line 109, ../scss/_base.scss */
 input[type="button"],
 input[type="submit"],
 input[type="radio"],
@@ -167,13 +177,13 @@ a {
   cursor: pointer;
 }
 
-/* line 110, ../scss/_base.scss */
+/* line 119, ../scss/_base.scss */
 pre, code {
   font-family: "Source Code Pro", sans-serif;
   font-size: 0.85em;
 }
 
-/* line 114, ../scss/_base.scss */
+/* line 123, ../scss/_base.scss */
 pre {
   border: 1px solid #ccc;
   background: #ededed;
@@ -186,14 +196,14 @@ pre {
   z-index: 0;
 }
 
-/* line 121, ../scss/_base.scss */
+/* line 130, ../scss/_base.scss */
 code {
   position: relative;
   white-space: pre-wrap;
   word-break: break-all;
   z-index: 0;
 }
-/* line 126, ../scss/_base.scss */
+/* line 135, ../scss/_base.scss */
 code:before {
   white-space: pre-wrap;
   word-break: normal;
@@ -324,15 +334,16 @@ code:before {
   -ms-transform: rotateZ(180deg);
   -o-transform: rotateZ(180deg);
   transition: 0.6s;
+  opacity: 0.5;
 }
-/* line 33, ../scss/_container.scss */
+/* line 34, ../scss/_container.scss */
 .col-btn:hover {
   background-image: url(../imgs/toggle.png);
   background-position: center center;
   background-repeat: no-repeat;
 }
 
-/* line 39, ../scss/_container.scss */
+/* line 40, ../scss/_container.scss */
 .col-close {
   transform: rotateZ(0deg);
   -webkit-transform: rotateZ(0deg);
@@ -468,7 +479,7 @@ footer {
 
 /* line 27, ../scss/_class.scss */
 .table-hover tbody tr:hover th, .table-hover tbody tr:hover td {
-  background: #cfcfcf;
+  background: #e8e8e8;
   transition: 0.6s;
 }
 
@@ -622,14 +633,19 @@ footer {
   width: 100%;
 }
 
-/* line 124, ../scss/_class.scss */
+/* line 122, ../scss/_class.scss */
+.form-trans input, .form-trans select, .form-trans textarea {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* line 131, ../scss/_class.scss */
 .radio label,
 .checkbox label {
   display: block;
   cursor: pointer;
   vertical-align: middle;
 }
-/* line 128, ../scss/_class.scss */
+/* line 135, ../scss/_class.scss */
 .radio label input[type="checkbox"],
 .radio label input[type="radio"],
 .checkbox label input[type="checkbox"],
@@ -640,11 +656,11 @@ footer {
   margin: 0;
 }
 
-/* line 140, ../scss/_class.scss */
+/* line 147, ../scss/_class.scss */
 .form-group-inline label {
   display: inline-block;
 }
-/* line 143, ../scss/_class.scss */
+/* line 150, ../scss/_class.scss */
 .form-group-inline input, .form-group-inline select, .form-group-inline textarea {
   width: auto;
 }
@@ -697,17 +713,17 @@ footer {
   color: #881827;
 }
 
-/* line 159, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .border-left {
   border-left: 1px solid #ccc;
 }
 
-/* line 163, ../scss/_class.scss */
+/* line 170, ../scss/_class.scss */
 .border-right {
   border-right: 1px solid #ccc;
 }
 
-/* line 167, ../scss/_class.scss */
+/* line 174, ../scss/_class.scss */
 .label {
   color: #fff;
   display: inline-block;
@@ -721,4 +737,14 @@ footer {
   font-weight: bold;
   text-align: center;
   min-width: 50px;
+}
+
+/* line 186, ../scss/_class.scss */
+.border-radius {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }

@@ -1,9 +1,18 @@
-$(function(){
-    //header-footer
+function windowSizing()
+{
     var top = $("header").outerHeight();
     var btm = $("footer").outerHeight();
-//    console.log(top+' ; '+btm);
-    $("body").css({paddingTop: top+'px', paddingBottom: btm+'px'});
+    var win = $(window).height();
+    var siz = win - top - btm;
+//    console.log(win+' , '+top+' , '+btm+' , '+siz);
+    $("body").css({paddingTop: top+'px', paddingBottom: btm+'px', minHeight: siz+'px'});
+    $(".min-height").each(function(){ $(this).css({minHeight: siz+'px'}) });
+}
+
+$(function(){
+    //sizing
+    windowSizing();
+    $(window).resize(function(){ windowSizing() });
 
     //Draggable
     $(".draggable").draggable({ containment: $(this).attr("data-area") });
@@ -40,17 +49,13 @@ $(function(){
             var html = $(this).nextAll('.tips-target').html();
             $(this).parent().append('<div class="tips-content">'+html+'</div>');
             $(".tips-content").css({left: $(this).scrollLeft()+20+"px"}).hide().fadeIn();
-        }, function(){
-            $(".tips-content").fadeOut(100, function(){ $(this).remove() });
-        }
+        }, function(){ $(".tips-content").fadeOut(100, function(){ $(this).remove() }) }
     );
 
-    //col-btn
     var trg  = $(".col-btn").attr("col-target");
     var btm  = $(window).height();
     var side = $(trg).innerWidth();
-//    console.log(trg+btm+' ; '+side);
-    $(".col-btn").css({top: (btm-60)+"px", left: "0px"});
+    $(".col-btn").css({top: (btm-100)+"px", left: "0px"});
     $(".col-btn").click(function(){
         var trg = $(this).attr("col-target");
         if($(trg).is(":hidden")){

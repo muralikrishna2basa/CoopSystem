@@ -1,0 +1,16 @@
+.ordering-minus,
+.ordering-plus{
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0 5px;
+    vertical-align: middle;
+    background: lighten($blue, 20%);
+    border: none;
+    opacity: 0.7;
+    @include setPrefix(border-radius, 50%);
+    &:hover{
+        transition: $timer;
+        @include setPrefix(transform, scale(1.5));
+    }
+}

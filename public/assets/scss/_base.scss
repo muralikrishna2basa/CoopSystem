@@ -62,10 +62,19 @@ table{
     border-collapse: collapse;
     margin: 10px 0;
     th{
-        border: 1px solid $line-color;
         text-align: left;
     }
+    // 場合によっては削除
     td{
+        padding: 2px 5px;
+        &:first-child:before{
+            content: "";
+            display: block;
+            height: 35px;
+            float: left;
+        }
+    }
+    th,td{
         border: 1px solid $line-color;
     }
 }

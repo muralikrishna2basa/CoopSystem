@@ -1,6 +1,7 @@
 <?php
     require_once('../../public/assets/php/lib/user/userProcess.php');
     require_once('../../public/assets/php/connectDb.php');
+    require_once('../../public/assets/php/getFontColor.php');
     $lists = returnStockList(0);
     $i     = 0;
 ?>
@@ -9,6 +10,7 @@
 <head>
     <title>CoopSystem</title>
     <?php include("../../public/assets/php/partial/head.php"); ?>
+    <link rel="stylesheet" type="text/css" href="../../public/assets/stylesheets/users.css">
 </head>
 <body>
 <?php include("../../public/assets/php/partial/header.php"); ?>
@@ -16,52 +18,69 @@
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-3 border-right" id="col-menu">
+    <div class="col-2 border-right min-height" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_user.php"); ?>
     </div>
-    <div class="col-9 container">
+    <div class="col-10 container">
+        <h1>在庫から注文する</h1>
         <form method="post" action="">
         <table class="table-hover border-bottom">
             <thead>
                 <tr>
-                    <th class="text-center">商品ID/カテゴリ</th>
+                    <th class="text-center">カテゴリ</th>
                     <th>商品名</th>
-                    <th>内容量</th>
-                    <th>在庫数</th>
-                    <th>単価</th>
-                    <th>購入数</th>
-                    <th>合計金額</th>
+                    <th class="text-center">内容量</th>
+                    <th class="text-center">在庫数</th>
+                    <th class="text-center">単価</th>
+                    <th class="text-center">購入数</th>
+                    <th class="text-right">合計金額</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($lists as $list){ ?>
                 <tr>
                     <td class="text-center">
-                        <p class="form-group">
-                            <input type="hidden" id="monthly_goods_id_<?php echo $list['monthly_goods_id'] ?>" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id']; ?>">
-                        </p>
-                        <p class="label" style="background: <?php echo $list['color'] ?>"><?php echo $list['category_name']; ?></p>
+                        <p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>;"><?php echo $list['category_name']; ?></p>
+                        <input type="hidden" id="monthly_goods_id_<?php echo $list['monthly_goods_id'] ?>" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id']; ?>">
                     </td>
                     <td>
                         <p><?php echo $list['goods_name'] ?></p>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <p><?php echo $list['detail_amount_per_one'] ?></p>
                     </td>
-                    <td>
-                        <p><?php echo $list['stock_quantity'] ?>個</p>
-                    </td>
-                    <td>
-                        <p><?php echo number_format(intval($list['unit_price'])) ?>円</p>
-                    </td>
-                    <td>
-                        <p class="form-group">
-                            <label>ordering_quantity</label>
-                            <input type="text" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="ordering_quantity[]">
+                    <td class="text-center">
+                        <p>
+                            <span id="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"><?php echo $list['stock_quantity'] ?></span>
+                            <span>個</span>
                         </p>
                     </td>
-                    <td>
-                        <p></p>
+                    <td class="text-center">
+                        <p>
+                            <span id="unit_price_<?php echo $list['monthly_goods_id'] ?>"><?php echo number_format(intval($list['unit_price'])) ?></span>
+                            <span>円</span>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p
+                            data-price  ="unit_price_<?php echo $list['monthly_goods_id'] ?>"
+                            data-total  ="total_<?php echo $list['monthly_goods_id'] ?>"
+                            data-number ="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>"
+                            data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
+                            data-stock  ="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"
+                        >
+                            <button class="ordering-minus">&minus;</button>
+                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php  ?></span>
+                            <button class="ordering-plus">+</button>
+                        </p>
+                        <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="0">
+                        <input type="hidden" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="ordering_quantity[]" value="0">
+                    </td>
+                    <td class="text-right">
+                        <p>
+                            <span id="total_<?php echo $list['monthly_goods_id'] ?>"></span>
+                            <span>円</span>
+                        </p>
                     </td>
                 </tr>
                 <?php $i++; } ?>
@@ -71,16 +90,14 @@
             <button type="submit" class="btn btn-blue">送信する</button>
         </p>
         </form>
-
-        <!-- debug -->
-        <h2>returnStockList</h2>
-        <pre><?php var_dump($lists) ?></pre>
-        <h2>POST</h2>
         <pre><?php var_dump($_POST) ?></pre>
+        <div class="draggable border-radius col-3">
 
+            <p><span id="price_total">0</span>円</p>
+        </div>
     </div>
 </div>
-
+<script src="../../public/assets/js/users.js"></script>
 <?php include("../../public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

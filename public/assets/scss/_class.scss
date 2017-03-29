@@ -25,7 +25,7 @@
 .table-hover{
     tbody tr:hover{
         th,td{
-            background: darken($bg-base-color, 15%);
+            background: darken($bg-base-color, 5%);
             transition: $timer;
         }
     }
@@ -118,6 +118,13 @@
     }
 }
 
+.form-trans{
+    input, select, textarea
+    {
+        background: rgba($white, 0.2);
+    }
+}
+
 .radio,
 .checkbox
 {
@@ -174,4 +181,9 @@
     text-align: center;
     min-width: 50px;
 
+}
+
+.border-radius{
+    border: 1px solid $line-color;
+    @include setPrefix(border-radius, 5px);
 }

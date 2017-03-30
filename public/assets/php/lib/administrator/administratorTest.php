@@ -8,6 +8,13 @@ class administratorTest extends PHPUnit_Framework_TestCase{
     {
         monthSelectionAndOrderCreation(4);
     }
+ /**
+    * @test
+    */function testStockListCreation()
+ {
+    var_dump(stockListCreation(1));
+ }
+
 }
 
  ?>

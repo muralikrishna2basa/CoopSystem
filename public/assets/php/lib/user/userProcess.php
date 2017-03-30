@@ -143,7 +143,7 @@ function returnStockList($userId,$monthlyId){
             stock_quantity,category_name,color
             FROM stock_list
             INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
-            INNER JOIN category ON monthly_goods.category_id = category.category_id WHERE stock_quantity>0;";
+            INNER JOIN category ON monthly_goods.category_id = category.category_id;";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(null);
         }else{
@@ -152,7 +152,7 @@ function returnStockList($userId,$monthlyId){
             FROM stock_list
             INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
             INNER JOIN category ON monthly_goods.category_id = category.category_id 
-            WHERE stock_list.monthly_id =? AND stock_quantity>0;";
+            WHERE stock_list.monthly_id =?";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($monthlyId));
         }
@@ -362,7 +362,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
     $pdo = connectDb('cooopshinren');
     $sql ="SELECT stock_quantity FROM stock_list WHERE monthly_goods_id=?";
     $stmt=$pdo->prepare($sql);
-    $res= $stmt->execute(array($editOrderGoodsList['monthly_goods_id'][$i]));
+    $res= $stmt->execute(array($editOrderGoodsList['monthly_goods_id']));
     while ($row = $stmt->fetch()) {
         $stock =$row[0];
     }
@@ -385,7 +385,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
             $pdo = connectDb('cooopshinren');
             $sql ="UPDATE stock_list SET stock_quantity = ? WHERE stock_list.monthly_goods_id= ?";
             $stmt=$pdo->prepare($sql);
-            $res= $stmt->execute(array($stock,$goodsId));
+            $res= $stmt->execute(array($stock,$editOrderGoodsList['monthly_goods_id']));
         }catch(Exception $e){
             echo $e->getMessage;
         }
@@ -404,7 +404,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
                 $pdo = connectDb('cooopshinren');
                 $sql ="UPDATE stock_list SET stock_quantity = ? WHERE stock_list.monthly_goods_id= ?";
                 $stmt=$pdo->prepare($sql);
-                $res= $stmt->execute(array($stock,$goodsId));
+                $res= $stmt->execute(array($stock,$editOrderGoodsList['monthly_goods_id']));
             }catch(Exception $e){
                 echo $e->getMessage;
             }
@@ -414,7 +414,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
             $pdo = connectDb('cooopshinren');
             $sql="SELECT goods_name FROM `monthly_goods` WHERE monthly_goods_id = ?";
             $stmt=$pdo->prepare($sql);
-            $res= $stmt->execute(array($goodsId));
+            $res= $stmt->execute(array($editOrderGoodsList['monthly_goods_id']));
             while ($row = $stmt->fetch()) {
                 $str =$row[0]."は在庫以上の数を発注しようとしたためエラーが起きました";
             }
@@ -425,7 +425,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
         $pdo = connectDb('cooopshinren');
         $sql="SELECT goods_name FROM `monthly_goods` WHERE monthly_goods_id = ?";
         $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($goodsId));
+        $res= $stmt->execute(array($editOrderGoodsList['monthly_goods_id']));
         while ($row = $stmt->fetch()) {
             $str =$row[0]."は在庫以上の数を発注しようとしたためエラーが起きました";
         }

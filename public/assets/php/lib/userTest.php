@@ -21,8 +21,8 @@ class userTest extends PHPUnit_Framework_TestCase
     */
  function testReturnStockList()
  {
-    $b =returnStockList(2);
-   // var_dump($b);
+    $b =returnStockList(9,0);
+    var_dump($b);
 }
 /**
     * @test

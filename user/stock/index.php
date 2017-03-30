@@ -2,8 +2,12 @@
     require_once('../../public/assets/php/lib/user/userProcess.php');
     require_once('../../public/assets/php/connectDb.php');
     require_once('../../public/assets/php/getFontColor.php');
-    $lists = returnStockList(0);
+    $lists = returnStockList(9,0);
     $i     = 0;
+    if(count($_POST)>0){
+            $error =stockListFromOrderWhenNewlyDetermineWhether(9,$_POST);
+        if($error!=null)echo $error;
+    }
 ?>
 <!DOCTYPE html>
 <html>

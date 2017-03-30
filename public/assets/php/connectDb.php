@@ -16,9 +16,9 @@ function connectDb($dbName){
         $dns  = "sqlsrv:server={$srv};database={$db}";
     }
     else{
-        $srv  = 'localhost';
-        $db   = 'coopSystemDB';
-        $user = 'root';
+        $srv  = '192.1.10.221';
+        $db   = 'coopsystemdb';
+        $user = 'sqluser';
         $pass = 'mysql';
         $dns  = "mysql:dbname={$db};host={$srv};charset=utf8";
     }

@@ -8,6 +8,7 @@
             <li><a href="<?php echo $url ?>/user/history">在庫を編集する</a></li>
             <li><a href="<?php echo $url ?>/user/stock">現在のリストを編集する</a></li>
             <li><a href="<?php echo $url ?>/user/history">注文リストを修正する</a></li>
+            <li><a href="<?php echo $url ?>/admin/category">カテゴリを編集する</a></li>
             <li><a href="<?php echo $url ?>/public/assets/php/partial/logout.php">ログアウトする</a></li>
         </ul>
     </nav>

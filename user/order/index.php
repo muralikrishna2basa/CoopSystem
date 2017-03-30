@@ -73,11 +73,11 @@
                             data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
                         >
                             <button class="ordering-minus">&minus;</button>
-                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo $list['ordering_quantity'] ?></span>
+                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?></span>
                             <button class="ordering-plus">+</button>
                         </p>
                         <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo $list['ordering_quantity'] ?>">
-                        <input type="hidden" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="ordering_quantity[]" value="<?php echo $list['ordering_quantity'] ?>">
+                        <input type="hidden" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="ordering_quantity[]"         value="<?php echo $list['ordering_quantity'] ?>">
                     </td>
                     <td class="text-right">
                         <p>
@@ -94,6 +94,7 @@
             <button type="submit" class="btn btn-blue">注文する</button>
         </p>
         </form>
+
         <div class="draggable border-radius col-6 bg-white opacity-7">
             <table class="border-none">
                 <tr>
@@ -106,6 +107,7 @@
                 </tr>
             </table>
         </div>
+
     </div>
 </div>
 <script src="../../public/assets/js/users.js"></script>

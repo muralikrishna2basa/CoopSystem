@@ -2,8 +2,9 @@
     require_once('../../public/assets/php/lib/user/userProcess.php');
     require_once('../../public/assets/php/connectDb.php');
     require_once('../../public/assets/php/getFontColor.php');
-    $lists = returnStockList(9,0);
-    $i     = 0;
+    $lists      = returnStockList(9,0);
+    $i          = 0;
+    $priceTotal = 0;
     if(count($_POST)>0){
             $error =stockListFromOrderWhenNewlyDetermineWhether(9,$_POST);
         if($error!=null)echo $error;
@@ -20,7 +21,6 @@
 <?php include("../../public/assets/php/partial/header.php"); ?>
 
 <button class="col-btn" col-target="#col-menu"></button>
-
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_user.php"); ?>
@@ -74,30 +74,42 @@
                             data-stock  ="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"
                         >
                             <button class="ordering-minus">&minus;</button>
-                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php  ?></span>
+                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?></span>
                             <button class="ordering-plus">+</button>
                         </p>
-                        <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="0">
-                        <input type="hidden" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="ordering_quantity[]" value="0">
+                        <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo intval($list['ordering_quantity']) ?>">
+                        <input type="hidden" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="ordering_quantity[]"         value="<?php echo intval($list['ordering_quantity']) ?>">
                     </td>
                     <td class="text-right">
                         <p>
-                            <span id="total_<?php echo $list['monthly_goods_id'] ?>"></span>
+                            <?php $total = intval($list['ordering_quantity']) * intval($list['unit_price']) ?>
+                            <span id="total_<?php echo $list['monthly_goods_id'] ?>"><?php echo number_format($total) ?></span>
                             <span>円</span>
                         </p>
                     </td>
                 </tr>
-                <?php $i++; } ?>
+                <?php $priceTotal += $total; $i++; } ?>
             </tbody>
         </table>
         <p class="text-right form-group">
             <button type="submit" class="btn btn-blue">送信する</button>
         </p>
         </form>
-        <pre><?php var_dump($_POST) ?></pre>
-        <div class="draggable border-radius col-3">
 
-            <p><span id="price_total">0</span>円</p>
+        <div class="flex">
+            <div class="col-6"></div>
+            <div class="draggable border-radius col-6 bg-white opacity-7">
+                <table class="border-none">
+                    <tr>
+                        <td class="text-center">
+                            <p>購入金額</p>
+                        </td>
+                        <td>
+                            <p><span id="price_total"><?php echo number_format($priceTotal) ?></span>円</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>

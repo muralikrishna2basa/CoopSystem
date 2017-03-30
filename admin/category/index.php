@@ -57,15 +57,17 @@ if(count($_POST) > 0 && isset($_POST['insert']))
             <table class="border-bottom table-hover">
                 <thead>
                     <tr>
-                        <th width="60%" class="text-center">カテゴリ名</th>
-                        <th width="15%" class="text-center">色</th>
-                        <th width="20%" class="text-center">サンプル</th>
-                        <th width="5%" class="text-center">削除</th>
+                        <th width="15%" class="text-center">ID</th>
+                        <th width="45%" class="text-center">カテゴリ名</th>
+                        <th width="10%" class="text-center">色</th>
+                        <th width="15%" class="text-center">サンプル</th>
+                        <th width="15%" class="text-center">削除</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($categories as $category){ ?>
                     <tr>
+                        <td class="text-center"><p><?php echo $category['category_id'] ?></p></td>
                         <td>
                             <p class="form-group form-trans">
                                 <input type="hidden" name="category_id[]" value="<?php echo $category['category_id'] ?>">
@@ -82,15 +84,17 @@ if(count($_POST) > 0 && isset($_POST['insert']))
                         </td>
                         <td class="text-center">
                             <p class="form-group">
-                                <input type="hidden"   name="delete_<?php echo $category['category_id'] ?>" value="off">
-                                <input type="checkbox" name="delete_<?php echo $category['category_id'] ?>">
+                                <input type="hidden"   id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>" value="off">
+                                <input type="checkbox" id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>">
                             </p>
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
-            <p class="text-right"><button type="submit" name="update" class="btn btn-blue">送信</button></p>
+            <p class="text-right">
+                <button type="submit" name="update" class="btn btn-blue">更新する</button>
+            </p>
         </form>
     </div>
 </div>

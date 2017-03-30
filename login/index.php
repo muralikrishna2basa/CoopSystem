@@ -6,19 +6,25 @@
 
     if(isset($_POST) && count($_POST) > 0){
         if($_POST['loginid'] === 'coop' && $_POST['password'] === 'coop')
+        {
             // 認証成功 管理者ページへ遷移
             echo 'success:goto admin';
-            try {
-                $msg = authentificateUser($_POST['loginid'], $_POST['password']);
-            } catch (Exception $e) {
-                echo $e->Getmessage();
-                exit();
-            }
+            $_SESSION['USERID']    = -1;
+            $_SESSION['USER_NAME'] = 'システム管理者';
+            header('location: ../admin/month');
+            exit();
+        }
+        try {
+            $msg = authentificateUser($_POST['loginid'], $_POST['password']);
+        } catch (Exception $e) {
+            echo $e->Getmessage();
+            exit();
+        }
 
         if($msg === true)
         {
             // 認証成功 非管理者ページへ遷移
-            echo "success:goto users";
+//            echo "success:goto users";
             try {
                 $user = getSingleUser(0, $_POST['loginid']);
             } catch (Exception $e) {
@@ -28,10 +34,11 @@
 
             $_SESSION['USERID']    = intval($user['userid']);
             $_SESSION['USER_NAME'] = $user['userName'];
-//            var_dump($_SESSION);
+            var_dump($_SESSION);
+            header('location: ../user/order');
         }else{
             // 認証失敗 バリデーション実行
-            echo 'failed';
+//            echo 'failed';
         }
     }
 //    var_dump($msg);

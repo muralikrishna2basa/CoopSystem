@@ -36,7 +36,7 @@ if(count($_POST) > 0)
 
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
-        <h2 class="text-center">** admin menu **</h2>
+        <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container">
         <pre><?php var_dump($_POST) ?></pre>

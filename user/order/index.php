@@ -1,4 +1,5 @@
 ﻿<?php
+    session_start();
     require_once('../../public/assets/php/lib/user/userProcess.php');
     require_once('../../public/assets/php/connectDb.php');
     require_once('../../public/assets/php/getFontColor.php');

@@ -7,7 +7,13 @@
     $priceTotal = 0;
     if(count($_POST)>0){
             $error =currentMonthListFromOrderWhenNewlyDetermineWhether(9,$_POST);
-        if($error!=null)echo $error;
+        if($error!=null)
+        {
+            echo $error;
+        }
+        else{
+            header('location: ./index.php');
+        }
     }
 
 ?>

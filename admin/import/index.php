@@ -22,11 +22,11 @@ try
         }
         // CSVファイルを配列に変換
         $csv = convertCsvFileToArray('../../public/assets/files/upload.csv');
-        // TODO: ファイル内容のチェック teshima->kawanishi 2017/03/30
+        // ファイル内容のチェック
         $errorMessage=csvFileCheck($csvArray);
-        // TODO: 結果をDBに格納 teshima->kawanishi 2017/03/30
+        // 結果をDBに格納
         if($errorMessage==null){
-            productListCreation($csvArray,2)
+            productListCreation($csvArray,2);
         }
         // アップロードしたファイルを削除
         if(file_exists($filePath)) unlink($filePath);

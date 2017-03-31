@@ -7,21 +7,26 @@ function monthSelectionAndOrderCreation($monthlyId)
        $sql ="SELECT COUNT(*) FROM ordering WHERE monthly_id =?";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($monthlyId));
-       while ($row = $stmt->fetch())
-       {
-        $ren =$row[0];
-    }
+       $ren = $stmt->fetchColumn();
+       var_dump($ren);
+
+//       var_dump($stmt->fetchColumn());
+//       var_dump($stmt->fetch());
+//       while ($row = $stmt->fetch())
+//       {
+//        $ren =$row[0];
+//    }
 }catch(Exception $e){
     echo $e->getMessage;
 }
 
-
-if($ren==0){
+if(intval($ren)!==0){
     try{
         $pdo = connectDb('cooopshinren');
         $sql = "UPDATE monthly SET public_flag = 0";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(null);
+
         $pdo = connectDb('cooopshinren');
         $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
         $stmt=$pdo->prepare($sql);

@@ -148,7 +148,7 @@ function csvFileCheck($csvArray){
 //商品リストを作成する関数
 function productListCreation($csvArray,$monthlyId){
 
-    for($i=1;$i<count($csvArray)){
+    for($i=1;$i<count($csvArray);$i++){
         try{
             $pdo = connectDb('cooopshinren');
             $sql="INSERT INTO  coopsystemdb.monthly_goods (

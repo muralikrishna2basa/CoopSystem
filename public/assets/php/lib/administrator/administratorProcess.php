@@ -225,5 +225,5 @@ function orderListEdit()
     # code...
 }
 //月別ＩＤを作成する関数
-function 
+//function 
 ?>

@@ -38,7 +38,7 @@ function displayHistory($userId,$monthlyId){
         return $ren;
 
     }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
 }
 //今月のリストを返す関数
@@ -162,7 +162,7 @@ function returnStockList($userId,$monthlyId){
         }
 
     }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
     if($ren!=3){
         for ($i=0; $i <count($stockList) ; $i++) { 
@@ -240,7 +240,7 @@ function doOrder($userId,$orderGoodsList){
         }
     }
 }catch(Exception $e){
-    echo $e->getMessage;
+    echo $e->getMessage();
 }
 
 }
@@ -293,7 +293,7 @@ function doOrderStock($userId,$newOrderGoodsList){
     }
     return $errorMessage;
 }catch(Exception $e){
-    echo $e->getMessage;
+    echo $e->getMessage();
 }
 
 }
@@ -309,7 +309,7 @@ function currentMonthListFromPlacedEdit($userId,$editOrderGoodsList){
         $ren =$row[0];
     }
 }catch(Exception $e){
-    echo $e->getMessage;
+    echo $e->getMessage();
 }
 for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
     if($editOrderGoodsList["ordering_quantity"]==0){
@@ -318,7 +318,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($editOrderGoodsList['monthly_goods_id'],$ren));
     }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
 
 }else{
@@ -328,7 +328,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($editOrderGoodsList['ordering_quantity'],$editOrderGoodsList['monthly_goods_id'],$ren));
     }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
 
 }
@@ -352,7 +352,7 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
 }
 catch(Exception $e)
 {
-    echo $e->getMessage;
+    echo $e->getMessage();
 }
 for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
     $pdo = connectDb('cooopshinren');
@@ -365,7 +365,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
     try{
 
     } catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     } 
     if($editOrderGoodsList["ordering_quantity"]==0) {
         try{ 
@@ -374,7 +374,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($editOrderGoodsList['monthly_goods_id'],$ren));
         }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
         $stock=$stock+$editOrderGoodsList['initial_ordering_quantity'][$i];
         try{ 
@@ -383,7 +383,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($stock,$editOrderGoodsList['monthly_goods_id']));
         }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
     }else {
         try {
@@ -392,7 +392,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($editOrderGoodsList['ordering_quantity'][$i],$editOrderGoodsList['monthly_goods_id'][$i],$ren));
         }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
         $stock=$stock+$editOrderGoodsList['initial_ordering_quantity'][$i]-$editOrderGoodsList['ordering_quantity'][$i];
         if($stock>=0){
@@ -402,7 +402,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
                 $stmt=$pdo->prepare($sql);
                 $res= $stmt->execute(array($stock,$editOrderGoodsList['monthly_goods_id']));
             }catch(Exception $e){
-                echo $e->getMessage;
+                echo $e->getMessage();
             }
         }
         else {
@@ -416,7 +416,7 @@ for($i = 0; $i < count($editOrderGoodsList['monthly_goods_id']); $i++){
             }
             $errorMessage[$str];
         }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
         $pdo = connectDb('cooopshinren');
         $sql="SELECT goods_name FROM `monthly_goods` WHERE monthly_goods_id = ?";

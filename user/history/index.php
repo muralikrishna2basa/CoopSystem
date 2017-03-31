@@ -1,8 +1,8 @@
 <?php
-    session_start();
+include     ('../../public/assets/php/partial/require_common.php');
+include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
+
     require_once('../../public/assets/php/lib/user/userProcess.php');
-    require_once('../../public/assets/php/connectDb.php');
-    require_once('../../public/assets/php/getFontColor.php');
     $lists = displayHistory(1, 1);
     $total = 0;
 ?>

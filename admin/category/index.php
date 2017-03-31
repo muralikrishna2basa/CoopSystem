@@ -1,7 +1,8 @@
 <?php
-require_once('../../public/assets/php/connectDb.php');
+include     ('../../public/assets/php/partial/require_common.php');
+include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
+
 require_once('../../public/assets/php/lib/administrator/category.php');
-require_once('../../public/assets/php/getFontColor.php');
 $categories = [];
 try{
     $pdo  = connectDb('coop');

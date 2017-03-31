@@ -75,7 +75,7 @@ function stockListRegistration($monthlyId,$stockList)
 
     for($i=0;$i<count($stockList['monthly_goods_id']);$i++){
         $quantaity = intval($stockList['stock_quantity'][$i]);
-        if($quantaity!=0){
+        if($quantaity!=0){ // != -> !==
             try{
                $pdo = connectDb('cooopshinren');
                $sql="INSERT INTO stock_list VALUES (NULL, '?', '?', '?');";
@@ -93,7 +93,7 @@ function stockListRegistration($monthlyId,$stockList)
 function stockListEdit($stockList){
   for($i=0;$i<count($stockList['monthly_goods_id']);$i++){
     $quantaity = intval($stockList['stock_quantity'][$i]);
-    if($quantaity!=0){
+    if($quantaity!=0){ // != -> !==
         try{
            $pdo = connectDb('cooopshinren');
            $sql="UPDATE stock_list SET stock_quantit` = ? WHERE monthly_goods_id = ?";
@@ -124,7 +124,7 @@ function csvFileCheck($csvArray){
         $errorflag=0;
            $number=$i-1;
            $str = $number."番目の商品の";
-        if(count($csvArray[$i])==5){
+        if(count($csvArray[$i])==5){ // == -> ===
            
            if($csvArray[$i][0]==null){
             $errorflag=1;
@@ -250,7 +250,7 @@ function monthlyIdGeneration($date){
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($date));
         $monthlyId = $stmt->fetchColumn();
-        if($monthlyId==false){
+        if($monthlyId==false){ // == -> ===
             $sql="INSERT INTO monthly VALUES (NULL,?,0,0)";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($date));

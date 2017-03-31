@@ -1,12 +1,16 @@
 <?php
-require_once('../../public/assets/php/connectDb.php');
+include     ('../../public/assets/php/partial/require_common.php');
+include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
+
 require_once('../../public/assets/php/convertCsvFileToArray.php');
 require_once("../../public/assets/php/lib/administrator/administratorProcess.php");
 
 $extension    = 'nofiles';
+$displayMonth = '月を選択する';
+$monthlyId    = '';
 $csv          = [];
 $errorMessage = [];
-$rows = [];
+$rows         = [];
 for($i = -3; $i < 3; $i++)
 {
     $date = date('Y-m-01');
@@ -16,52 +20,57 @@ for($i = -3; $i < 3; $i++)
     $rows[] = $dateSerial;
 }
 
-try {
-    if(count($_POST) > 0 && isset($_POST['month']))
-    {
-        // TODO: monthlyにデータを作成する teshima -> kawanishi 2017/03/31
-        // TODO: 生成したデータから月別IDを取得する teshima 2017/03/31
+if(count($_POST) > 0 && isset($_POST['month']))
+{
+    try {
+        // monthlyにデータを作成して、月別IDを取得する
+        $monthlyId    = monthlyIdGeneration($_POST['month']);
+        $displayMonth = date('Y年n月が選択されています', strtotime($_POST['month']));
+    } catch (Exception $e) {
+        $errorMessage[] = $e->getMessage();
+        exit();
     }
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit();
 }
 
-try
+if(isset($_POST['monthlyId'])) $monthlyId = intval($_POST['monthlyId']);
+
+// ファイルがセットされたかの判定
+if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
 {
-    // ファイルがセットされたかの判定
-    if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
+    try
     {
         // ファイル拡張子がCSVであるか判定
         $extension = mb_substr($_FILES['csv']['name'], -3);
-        if(strtolower($extension) === 'csv')
+        if(strtolower($extension) !== 'csv')
         {
-            // tmpファイルを正式にアップロード
-            $filePath = '../../public/assets/files/upload.csv';
-            move_uploaded_file($_FILES['csv']['tmp_name'], $filePath);
-            chmod($filePath, 0644);
-            // CSVファイルを配列に変換
-            $csvArray = convertCsvFileToArray('../../public/assets/files/upload.csv');
-            // ファイル内容のチェック
-            $errorMessage=csvFileCheck($csvArray);
-            // 結果をDBに格納
-            if($errorMessage==null){
-                productListCreation($csvArray,2);
-            }
-            // アップロードしたファイルを削除
-            if(file_exists($filePath)) unlink($filePath);
-            // ページ遷移
-            header('../productlist/index.php?id=');
-        }
-        else{
             echo '<script type="text/javascript">alert("CSV形式以外のファイルがアップロードされたようです。");</script>';
-            header('./index.php');
+            throw new Exception("ファイル形式が誤っています。");
         }
+        // 月別IDがPOSTにされているか判定
+        if(!isset($_POST['monthlyId'])) throw new Exception("月が選択されていないようです。");
+
+        // tmpファイルを正式にアップロード
+        $filePath = '../../public/assets/files/upload.csv';
+        move_uploaded_file($_FILES['csv']['tmp_name'], $filePath);
+        chmod($filePath, 0644);
+        // CSVファイルを配列に変換
+        $csvArray = convertCsvFileToArray('../../public/assets/files/upload.csv');
+        // ファイル内容のチェック
+        $errorMessage=csvFileCheck($csvArray);
+        // 結果をDBに格納
+        if($errorMessage==null){
+            productListCreation($csvArray, $_POST['monthlyId']);
+        }
+        // アップロードしたファイルを削除
+        if(file_exists($filePath)) unlink($filePath);
+        // ページ遷移
+        header('location: ../productlist/index.php?id='.$monthlyId);
+    }catch (Exception $e)
+    {
+        $errorMessage[] = $e->getMessage();
     }
-}catch (Exception $e)
-{
-    echo 'エラー：'.$e->getMessage();
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,35 +89,27 @@ try
         <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container">
-
+        <h2>生協商品リストを取り込む</h2>
         <form method="post">
             <select name="month">
                 <?php foreach ($rows as $val){ ?>
-                <option value="<?php echo date('Ymd', $val); ?>" <?php if(date('Ym') === date('Ym', $val)) echo 'selected' ?>><?php echo date('Y年n月分', $val) ?></option>
+                <option value="<?php echo date('Ymd', $val); ?>"
+                 <?php if(date('Ym') === date('Ym', $val)) echo 'selected' ?>>
+                 <?php echo date('Y年n月分', $val) ?></option>
                 <?php } ?>
             </select>
-            <button type="submit" name='submit_month'>月を選択する</button>
+            <button type="submit" name='submit_month' class="btn btn-green"><?php echo $displayMonth ?></button>
         </form>
 
         <?php if(isset($_POST['submit_month'])){ ?>
         <form method="post" action="" enctype="multipart/form-data">
-            <input type="file" name="csv" id="csv">
-            <input type="text" name="month" value="<?php echo $_POST['month'] // TODO: 月別IDをセットする teshima 2017/03/31 ?>">
-            <button type="submit"
-             name="submit_csv"
-             class="btn btn-blue"
-             onclick="return checkFile();"
-             >send</button>
+            <input type="file"    name="csv" id="csv">
+            <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
+            <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
         </form>
         <?php } ?>
 
-        <?php if(count($errorMessage) > 0){ ?>
-        <div>
-            <?php foreach ($errorMessage as $msg) { ?>
-            <p><?php echo $msg; ?></p>
-            <?php } ?>
-        </div>
-        <?php } ?>
+        <?php errorMessages($errorMessage) ?>
     </div>
 </div>
 <script type="text/javascript">

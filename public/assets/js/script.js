@@ -4,9 +4,17 @@ function windowSizing()
     var btm = $("footer").outerHeight();
     var win = $(window).height();
     var siz = win - top - btm;
+
 //    console.log(win+' , '+top+' , '+btm+' , '+siz);
     $("body").css({paddingTop: top+'px', paddingBottom: btm+'px', minHeight: siz+'px'});
     $(".min-height").each(function(){ $(this).css({minHeight: siz+'px'}) });
+
+    var trg  = $(".col-btn").attr("col-target");
+    var btm  = $(window).height();
+    var side = $(trg).innerWidth();
+//    console.log(side);
+    $(".col-btn").css({top: (btm-100)+"px", left: (side-40)+"px"});
+
 }
 
 $(function(){
@@ -15,7 +23,7 @@ $(function(){
     $(window).resize(function(){ windowSizing() });
 
     //Draggable
-    $(".draggable").draggable({ containment: $(this).attr("data-area") });
+    $(".draggable").draggable({ containment: 'body' });
 
     //Toggle
     $(".toggle-menu dt").each(function(){
@@ -52,18 +60,16 @@ $(function(){
         }, function(){ $(".tips-content").fadeOut(100, function(){ $(this).remove() }) }
     );
 
-    var trg  = $(".col-btn").attr("col-target");
-    var btm  = $(window).height();
-    var side = $(trg).innerWidth();
-    $(".col-btn").css({top: (btm-100)+"px", left: "0px"});
+    //col-btn
     $(".col-btn").click(function(){
         var trg = $(this).attr("col-target");
         if($(trg).is(":hidden")){
             $(trg).fadeIn();
-            $(this).removeClass('col-close');
+            var side = $(trg).innerWidth();
+            $(this).removeClass('col-close').css({left: (side-40)+'px'});
         }else{
             $(trg).fadeOut();
-            $(this).addClass('col-close');
+            $(this).addClass('col-close').css({left: '5px'});
         }
     });
 })

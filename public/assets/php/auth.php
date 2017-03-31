@@ -1,5 +1,5 @@
 <?php
-require_once('connectDb.php');
+//require_once('connectDb.php');
 
 /**
  * [getSingleUser]

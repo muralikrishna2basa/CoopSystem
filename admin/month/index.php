@@ -1,6 +1,7 @@
 <?php
-session_start();
-require_once('../../public/assets/php/connectDb.php');
+include     ('../../public/assets/php/partial/require_common.php');
+include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
+
 require_once('../../public/assets/php/lib/administrator/administratorProcess.php');
 require_once('../../public/assets/php/auth.php');
 
@@ -43,7 +44,7 @@ if(count($_POST) > 0 && isset($_POST['btn']) && $_POST['btn'] === 'publish')
 <?php include("../../public/assets/php/partial/header.php"); ?>
 
 <button class="col-btn" col-target="#col-menu"></button>
-<pre><?php var_dump($rows) ?></pre>
+
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_admin.php"); ?>

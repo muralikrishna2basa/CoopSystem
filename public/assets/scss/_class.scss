@@ -195,3 +195,9 @@
     border: 1px solid $line-color;
     @include setPrefix(border-radius, 5px);
 }
+
+.has-error{
+    border: 1px solid lighten($red, 10%);
+    @include setPrefix(border-radius, 5px);
+    background: lighten($red, 40%);
+}

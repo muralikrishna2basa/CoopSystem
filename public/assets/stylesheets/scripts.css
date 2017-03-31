@@ -132,13 +132,13 @@
 }
 /* line 8, ../scss/scripts/_toggle.scss */
 .toggle-menu dt:hover {
-  background-color: gainsboro;
+  color: #555555;
 }
-/* line 11, ../scss/scripts/_toggle.scss */
+/* line 12, ../scss/scripts/_toggle.scss */
 .toggle-menu dt h1, .toggle-menu dt h2, .toggle-menu dt h3, .toggle-menu dt h4, .toggle-menu dt h5, .toggle-menu dt h6 {
   margin: 0;
 }
-/* line 15, ../scss/scripts/_toggle.scss */
+/* line 16, ../scss/scripts/_toggle.scss */
 .toggle-menu .toggle-icon {
   position: absolute;
   content: "";
@@ -154,7 +154,7 @@
   left: 0;
   transition: 0.6s;
 }
-/* line 30, ../scss/scripts/_toggle.scss */
+/* line 31, ../scss/scripts/_toggle.scss */
 .toggle-menu .toggle-open {
   transform: rotateZ(90deg);
 }

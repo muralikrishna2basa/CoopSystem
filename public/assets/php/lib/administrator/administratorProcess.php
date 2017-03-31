@@ -13,39 +13,42 @@ function monthSelectionAndOrderCreation($monthlyId)
 //       {
 //        $ren =$row[0];
 //    }
-    }catch(Exception $e){
+   }
+   catch(Exception $e){
+    echo $e->getMessage();
+}
+if(intval($ren)!==0){
+    try{
+        $pdo = connectDb('cooopshinren');
+        $sql = "UPDATE monthly SET public_flag = 0";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(null);
+
+        $pdo = connectDb('cooopshinren');
+        $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($monthlyId));
+
+    }
+    catch(Exception $e){
         echo $e->getMessage();
     }
-    if(intval($ren)!==0){
-        try{
-            $pdo = connectDb('cooopshinren');
-            $sql = "UPDATE monthly SET public_flag = 0";
-            $stmt=$pdo->prepare($sql);
-            $res= $stmt->execute(null);
-
-            $pdo = connectDb('cooopshinren');
-            $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
-            $stmt=$pdo->prepare($sql);
-            $res= $stmt->execute(array($monthlyId));
-
-        }catch(Exception $e){
-            echo $e->getMessage();
-        }
-    }
-    else{
-        try{
-            $allUser = getAllUsers();
-            $j=count($allUser);
-            for($i=0;$i<$j;$i++){
-               $pdo = connectDb('cooopshinren');
-               $sql="INSERT INTO ordering VALUES (NULL, ?, ?, 0)";
-               $stmt=$pdo->prepare($sql);
-               $res= $stmt->execute(array($allUser[$i]["userid"],$monthlyId));
-           }
-       }catch(Exception $e){
-            echo $e->getMessage();
-        }
-    }
+}
+else{
+    try{
+        $allUser = getAllUsers();
+        $j=count($allUser);
+        for($i=0;$i<$j;$i++){
+           $pdo = connectDb('cooopshinren');
+           $sql="INSERT INTO ordering VALUES (NULL, ?, ?, 0)";
+           $stmt=$pdo->prepare($sql);
+           $res= $stmt->execute(array($allUser[$i]["userid"],$monthlyId));
+       }
+   }
+   catch(Exception $e){
+    echo $e->getMessage();
+}
+}
 }
 //在庫リストを仮作成する関数
 //
@@ -59,7 +62,8 @@ function stockListTemporaryCreating(){
             $ren[] =$row;
         }
         return $ren;
-    }catch(Exception $e){
+    }
+    catch(Exception $e){
         echo $e->getMessage();
     }
 }
@@ -77,7 +81,8 @@ function stockListRegistration($monthlyId,$stockList)
                $sql="INSERT INTO stock_list VALUES (NULL, '?', '?', '?');";
                $stmt=$pdo->prepare($sql);
                $res= $stmt->execute(array($stockList['monthly_goods_id'][$i],$monthlyId,intval($stockList['stock_quantity'][$i])));
-           }catch(Exception $e){
+           }
+           catch(Exception $e){
             echo $e->getMessage();
         }
     }
@@ -94,16 +99,19 @@ function stockListEdit($stockList){
            $sql="UPDATE stock_list SET stock_quantit` = ? WHERE monthly_goods_id = ?";
            $stmt=$pdo->prepare($sql);
            $res= $stmt->execute(array(intval($stockList['stock_quantity'][$i])),$stockList['monthly_goods_id'][$i]);
-       }catch(Exception $e){
+       }
+       catch(Exception $e){
         echo $e->getMessage();
     }
-}else{
+}
+else{
    try{
        $pdo = connectDb('cooopshinren');
        $sql="INSERT INTO stock_list VALUES (NULL, '?', '?', '?');";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($stockList['monthly_goods_id'][$i],$monthlyId,intval($stockList['stock_quantity'][$i])));
-   }catch(Exception $e){
+   }
+   catch(Exception $e){
     echo $e->getMessage();
 }
 }
@@ -114,9 +122,11 @@ function csvFileCheck($csvArray){
     $errorMessage=[];
     for($i=1;$i<count($csvArray);$i++){
         $errorflag=0;
-        $number=$i-1;
-        $str = $number."番目の商品の";
-        if($csvArray[$i][0]==null){
+           $number=$i-1;
+           $str = $number."番目の商品の";
+        if(count($csvArray[$i])==5){
+           
+           if($csvArray[$i][0]==null){
             $errorflag=1;
             $str=$str."商品名が空白です,";
         }
@@ -141,17 +151,22 @@ function csvFileCheck($csvArray){
             $errorMessage[$str];
 
         } 
+    }else{
+        $str=$str."情報が不足しています";
+
     }
-    return $errorMessage;
+
+}
+return $errorMessage;
 }
 
 
 //商品リストを作成する関数
 function productListCreation($csvArray,$monthlyId){
-
+    $pdo = connectDb('cooopshinren');
     for($i=1;$i<count($csvArray);$i++){
         try{
-            $pdo = connectDb('cooopshinren');
+
             $sql="INSERT INTO  coopsystemdb.monthly_goods (
             monthly_goods_id,
             goods_name,
@@ -169,7 +184,8 @@ function productListCreation($csvArray,$monthlyId){
                 $csvArray[$i][3],
                 $monthlyId,
                 $csvArray[$i][4],));
-        }catch(Exception $e){
+        }
+        catch(Exception $e){
             echo $e->getMessage();
         }
     }
@@ -185,7 +201,8 @@ function productListDisplay($monthlyId){
             $order[] =$row;
         }
         return $order;
-    }catch(Exception $e)
+    }
+    catch(Exception $e)
     {
       echo $e->getMessage();
   }
@@ -194,8 +211,8 @@ function productListDisplay($monthlyId){
 //商品リストを編集する関数
  //productListは　商品ＩＤ、商品名、単価、内容量、必要量、カテゴリＩＤの配列　
 function productListEdit($productList){
-   $pdo = connectDb('cooopshinren');
-   for($i=0;$i<count($productList['monthly_goods_id']);$i++){
+ $pdo = connectDb('cooopshinren');
+ for($i=0;$i<count($productList['monthly_goods_id']);$i++){
     try{
         $sql="UPDATE monthly_goods SET monthly_goods_id=?,
         goods_name=?,
@@ -226,5 +243,23 @@ function orderListEdit()
     # code...
 }
 //月別ＩＤを作成する関数
-//function 
+function monthlyIdGeneration($date){
+    $pdo = connectDb('cooopshinren');
+    try{
+        $sql="SELECT monthly_id FROM monthly WHERE date =?";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($date));
+        $monthlyId = $stmt->fetchColumn();
+        if($monthlyId==false){
+            $sql="INSERT INTO monthly VALUES (NULL,?,0,0)";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(array($date));
+            $monthlyId=monthlyIdGeneration($date);
+        }
+        return $monthlyId;
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
 ?>

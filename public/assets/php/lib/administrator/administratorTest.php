@@ -8,15 +8,21 @@ class administratorTest extends PHPUnit_Framework_TestCase{
     * @test
     */public function testMonthSelectionAndOrderCreation()
     {
-        monthSelectionAndOrderCreation(4);
+       // monthSelectionAndOrderCreation(4);
     }
  /**
     * @test
     */function testStockListTemporaryCreating()
  {
-    var_dump(stockListTemporaryCreating());
+    //var_dump(stockListTemporaryCreating());
  }
-
+ /**
+    * @test
+    */function tesMonthlyIdGeneration()
+ {
+    $date=20170920;
+    echo monthlyIdGeneration($date);
+ }
 }
 
  ?>

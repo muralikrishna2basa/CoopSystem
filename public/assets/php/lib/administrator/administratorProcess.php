@@ -6,50 +6,46 @@ function monthSelectionAndOrderCreation($monthlyId)
        $pdo = connectDb('cooopshinren');
        $sql ="SELECT COUNT(*) FROM ordering WHERE monthly_id =?";
        $stmt=$pdo->prepare($sql);
-       $res= $stmt->execute(array($monthlyId));
+       $res = $stmt->execute(array($monthlyId));
        $ren = $stmt->fetchColumn();
-       var_dump($ren);
-
-//       var_dump($stmt->fetchColumn());
-//       var_dump($stmt->fetch());
-//       while ($row = $stmt->fetch())
+//       var_dump($ren);
+//       while ($row = $stmt->fetch()[0])
 //       {
 //        $ren =$row[0];
 //    }
-}catch(Exception $e){
-    echo $e->getMessage;
-}
-
-if(intval($ren)!==0){
-    try{
-        $pdo = connectDb('cooopshinren');
-        $sql = "UPDATE monthly SET public_flag = 0";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(null);
-
-        $pdo = connectDb('cooopshinren');
-        $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($monthlyId));
-
     }catch(Exception $e){
         echo $e->getMessage;
     }
-    try{
+    if(intval($ren)!==0){
+        try{
+            $pdo = connectDb('cooopshinren');
+            $sql = "UPDATE monthly SET public_flag = 0";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(null);
 
-        $allUser = getAllUsers();
-        $j=count($allUser);
-        for($i=0;$i<$j;$i++){
-           $pdo = connectDb('cooopshinren');
-           $sql="INSERT INTO ordering VALUES (NULL, ?, ?, 0)";
-           $stmt=$pdo->prepare($sql);
-           $res= $stmt->execute(array($allUser[$i]["userid"],$monthlyId));
-       }
-   }catch(Exception $e){
-    echo $e->getMessage;
+            $pdo = connectDb('cooopshinren');
+            $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(array($monthlyId));
 
-}
-}
+        }catch(Exception $e){
+            echo $e->getMessage;
+        }
+    }
+    else{
+        try{
+            $allUser = getAllUsers();
+            $j=count($allUser);
+            for($i=0;$i<$j;$i++){
+               $pdo = connectDb('cooopshinren');
+               $sql="INSERT INTO ordering VALUES (NULL, ?, ?, 0)";
+               $stmt=$pdo->prepare($sql);
+               $res= $stmt->execute(array($allUser[$i]["userid"],$monthlyId));
+           }
+       }catch(Exception $e){
+            echo $e->getMessage;
+        }
+    }
 }
 //在庫リストを仮作成する関数
 //

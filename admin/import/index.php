@@ -3,9 +3,9 @@ require_once('../../public/assets/php/connectDb.php');
 require_once('../../public/assets/php/convertCsvFileToArray.php');
 require_once("../../public/assets/php/lib/administrator/administratorProcess.php");
 
-$extension = 'nofiles';
-$csv       = [];
-
+$extension    = 'nofiles';
+$csv          = [];
+$errorMessage = [];
 $rows = [];
 for($i = -3; $i < 3; $i++)
 {
@@ -51,7 +51,7 @@ try
             // アップロードしたファイルを削除
             if(file_exists($filePath)) unlink($filePath);
             // ページ遷移
-            header('../productlist/index.php');
+            header('../productlist/index.php?id=');
         }
         else{
             echo '<script type="text/javascript">alert("CSV形式以外のファイルがアップロードされたようです。");</script>';
@@ -89,7 +89,6 @@ try
             </select>
             <button type="submit" name='submit_month'>月を選択する</button>
         </form>
-        <pre><?php var_dump($csv) ?></pre>
 
         <?php if(isset($_POST['submit_month'])){ ?>
         <form method="post" action="" enctype="multipart/form-data">
@@ -101,6 +100,14 @@ try
              onclick="return checkFile();"
              >send</button>
         </form>
+        <?php } ?>
+
+        <?php if(count($errorMessage) > 0){ ?>
+        <div>
+            <?php foreach ($errorMessage as $msg) { ?>
+            <p><?php echo $msg; ?></p>
+            <?php } ?>
+        </div>
         <?php } ?>
     </div>
 </div>

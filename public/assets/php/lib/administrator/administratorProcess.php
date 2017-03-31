@@ -111,7 +111,7 @@ function stockListEdit($stockList){
 //受け取ったCSVファイルが正しいかどうかチェックする関数
 function csvFileCheck($csvArray){
     $errorMessage=[];
-    for($i=1;$i<count($csvArray);i++){
+    for($i=1;$i<count($csvArray);$i++){
         $errorflag=0;
         $number=$i-1;
         $str = $number."番目の商品の";

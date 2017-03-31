@@ -1,6 +1,8 @@
 <?php 
 require_once ("administratorProcess.php");
-
+require_once('../../auth.php');
+require_once('../../connectDb.php');
+require_once('../../convertCsvFileToArray.php')
 class administratorTest extends PHPUnit_Framework_TestCase{
      /**
     * @test

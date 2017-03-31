@@ -41,7 +41,7 @@ a:link {
 
 /* line 29, ../scss/_base.scss */
 a:visited {
-  color: #aaa;
+  color: #2c5697;
 }
 
 /* line 30, ../scss/_base.scss */
@@ -123,7 +123,12 @@ table th, table td {
   border: 1px solid #ccc;
 }
 
-/* line 82, ../scss/_base.scss */
+/* line 81, ../scss/_base.scss */
+form {
+  margin: 0;
+}
+
+/* line 84, ../scss/_base.scss */
 input,
 select,
 textarea {
@@ -136,8 +141,9 @@ textarea {
   border: 1px solid #ccc;
   box-sizing: border-box;
   font-family: "Noto Sans Japanese";
+  outline: none;
 }
-/* line 91, ../scss/_base.scss */
+/* line 94, ../scss/_base.scss */
 input:hover,
 select:hover,
 textarea:hover {
@@ -149,14 +155,14 @@ textarea:hover {
   -o-box-shadow: 2px 2px 4px rgba(102, 102, 102, 0.2);
 }
 
-/* line 97, ../scss/_base.scss */
+/* line 100, ../scss/_base.scss */
 input[type="radio"],
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
   padding: 0;
 }
-/* line 103, ../scss/_base.scss */
+/* line 106, ../scss/_base.scss */
 input[type="radio"]:hover,
 input[type="checkbox"]:hover {
   transition: 0;
@@ -167,23 +173,31 @@ input[type="checkbox"]:hover {
   -o-box-shadow: none;
 }
 
-/* line 109, ../scss/_base.scss */
+/* line 112, ../scss/_base.scss */
 input[type="button"],
 input[type="submit"],
 input[type="radio"],
 input[type="checkbox"],
+input[type="color"],
 button,
 a {
   cursor: pointer;
 }
 
-/* line 119, ../scss/_base.scss */
+/* line 122, ../scss/_base.scss */
+input[type="color"] {
+  padding: 0;
+  height: 30px;
+  width: 60px;
+}
+
+/* line 127, ../scss/_base.scss */
 pre, code {
   font-family: "Source Code Pro", sans-serif;
   font-size: 0.85em;
 }
 
-/* line 123, ../scss/_base.scss */
+/* line 131, ../scss/_base.scss */
 pre {
   border: 1px solid #ccc;
   background: #ededed;
@@ -196,14 +210,14 @@ pre {
   z-index: 0;
 }
 
-/* line 130, ../scss/_base.scss */
+/* line 138, ../scss/_base.scss */
 code {
   position: relative;
   white-space: pre-wrap;
   word-break: break-all;
   z-index: 0;
 }
-/* line 135, ../scss/_base.scss */
+/* line 143, ../scss/_base.scss */
 code:before {
   white-space: pre-wrap;
   word-break: normal;
@@ -363,14 +377,6 @@ header {
   z-index: 99;
 }
 /* line 9, ../scss/_header.scss */
-header h1 {
-  margin: 0;
-  display: inline-block;
-  box-sizing: border-box;
-  border-bottom: 2px solid #93b11d;
-  color: #93b11d;
-}
-/* line 17, ../scss/_header.scss */
 header .logo {
   display: inline-block;
   width: 170px;
@@ -379,10 +385,30 @@ header .logo {
   background-repeat: no-repeat;
   background-position: center center;
 }
-/* line 24, ../scss/_header.scss */
+/* line 16, ../scss/_header.scss */
 header .logo:hover {
   transition: 0.6s;
   background-image: url(../imgs/logo_2_hover.png);
+}
+/* line 22, ../scss/_header.scss */
+header .user-name {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  text-align: center;
+}
+/* line 27, ../scss/_header.scss */
+header .user-name .honorific {
+  font-size: 0.8em;
+}
+/* line 32, ../scss/_header.scss */
+header .logout {
+  position: absolute;
+  right: 5px;
+  top: 45px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 20px;
 }
 
 /* line 1, ../scss/_menu.scss */
@@ -623,29 +649,79 @@ footer {
   background: gainsboro;
 }
 
-/* line 111, ../scss/_class.scss */
+/* line 109, ../scss/_class.scss */
+.bg-white {
+  background: #fff;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-1 {
+  opacity: 0.1;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-2 {
+  opacity: 0.2;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-3 {
+  opacity: 0.3;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-4 {
+  opacity: 0.4;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-5 {
+  opacity: 0.5;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-6 {
+  opacity: 0.6;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-7 {
+  opacity: 0.7;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-8 {
+  opacity: 0.8;
+}
+
+/* line 115, ../scss/_class.scss */
+.opacity-9 {
+  opacity: 0.9;
+}
+
+/* line 119, ../scss/_class.scss */
 .form-group label, .form-group .msg {
   display: block;
   font-size: 0.8em;
 }
-/* line 115, ../scss/_class.scss */
+/* line 123, ../scss/_class.scss */
 .form-group input, .form-group select, .form-group textarea {
   width: 100%;
 }
 
-/* line 122, ../scss/_class.scss */
+/* line 130, ../scss/_class.scss */
 .form-trans input, .form-trans select, .form-trans textarea {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* line 131, ../scss/_class.scss */
+/* line 139, ../scss/_class.scss */
 .radio label,
 .checkbox label {
   display: block;
   cursor: pointer;
   vertical-align: middle;
 }
-/* line 135, ../scss/_class.scss */
+/* line 143, ../scss/_class.scss */
 .radio label input[type="checkbox"],
 .radio label input[type="radio"],
 .checkbox label input[type="checkbox"],
@@ -656,11 +732,11 @@ footer {
   margin: 0;
 }
 
-/* line 147, ../scss/_class.scss */
+/* line 155, ../scss/_class.scss */
 .form-group-inline label {
   display: inline-block;
 }
-/* line 150, ../scss/_class.scss */
+/* line 158, ../scss/_class.scss */
 .form-group-inline input, .form-group-inline select, .form-group-inline textarea {
   width: auto;
 }
@@ -713,17 +789,17 @@ footer {
   color: #881827;
 }
 
-/* line 166, ../scss/_class.scss */
+/* line 174, ../scss/_class.scss */
 .border-left {
   border-left: 1px solid #ccc;
 }
 
-/* line 170, ../scss/_class.scss */
+/* line 178, ../scss/_class.scss */
 .border-right {
   border-right: 1px solid #ccc;
 }
 
-/* line 174, ../scss/_class.scss */
+/* line 182, ../scss/_class.scss */
 .label {
   color: #fff;
   display: inline-block;
@@ -739,7 +815,7 @@ footer {
   min-width: 50px;
 }
 
-/* line 186, ../scss/_class.scss */
+/* line 194, ../scss/_class.scss */
 .border-radius {
   border: 1px solid #ccc;
   border-radius: 5px;

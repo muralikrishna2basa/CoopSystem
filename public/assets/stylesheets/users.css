@@ -6,7 +6,7 @@
   padding: 0;
   margin: 0 5px;
   vertical-align: middle;
-  background: #5d89d0;
+  background: #b5b5b5;
   border: none;
   opacity: 0.7;
   border-radius: 50%;
@@ -24,4 +24,14 @@
   -moz-transform: scale(1.5);
   -ms-transform: scale(1.5);
   -o-transform: scale(1.5);
+}
+
+/* line 18, ../scss/scripts/_users.scss */
+.ordering-plus:hover {
+  background: #a5c721;
+}
+
+/* line 21, ../scss/scripts/_users.scss */
+.ordering-minus:hover {
+  background: #c9243a;
 }

@@ -6,14 +6,6 @@ header{
     width: 100%;
     top: 0;
     z-index: 99;
-    h1{
-        margin: 0;
-        display: inline-block;
-        box-sizing: border-box;
-//        padding: 5px 30px 5px 10px;
-        border-bottom: 2px solid $green;
-        color: $green;
-    }
     .logo{
         display: inline-block;
         width: 170px;
@@ -26,5 +18,23 @@ header{
             background-image: url(../imgs/logo_2_hover.png);
 
         }
+    }
+    .user-name{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        text-align: center;
+        .honorific{
+            font-size: 0.8em;
+        }
+    }
+
+    .logout{
+        position: absolute;
+        right: 5px;
+        top: 45px;
+        background: $white;
+        border: 1px solid $line-color;
+        padding: 5px 20px;
     }
 }

@@ -26,7 +26,7 @@ a{
 }
 
 a:link    { color: #3261ab; }
-a:visited { color: #aaa; }
+a:visited { color: darken(#3261ab, 5%); }
 a:hover   { color: #bf1e56; }
 a:active  { color: #bf1e56; }
 
@@ -78,7 +78,9 @@ table{
         border: 1px solid $line-color;
     }
 }
-
+form{
+    margin: 0;
+}
 input,
 select,
 textarea
@@ -88,6 +90,7 @@ textarea
     border: 1px solid $line-color;
     box-sizing: border-box;
     font-family: "Noto Sans Japanese";
+    outline: none;
     &:hover{
         transition: $timer;
         @include setPrefix(box-shadow, 2px 2px 4px rgba($shadow-color, 0.2));
@@ -110,12 +113,17 @@ input[type="button"],
 input[type="submit"],
 input[type="radio"],
 input[type="checkbox"],
+input[type="color"],
 button,
 a
 {
     cursor: pointer;
 }
-
+input[type="color"]{
+    padding: 0;
+    height: 30px;
+    width: 60px;
+}
 pre, code{
     font-family: "Source Code Pro", sans-serif;
     font-size: 0.85em;

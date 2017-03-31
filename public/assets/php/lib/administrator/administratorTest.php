@@ -14,7 +14,7 @@ class administratorTest extends PHPUnit_Framework_TestCase{
     * @test
     */function testStockListTemporaryCreating()
  {
-    var_dump(stockListTemporaryCreating(7));
+    var_dump(stockListTemporaryCreating());
  }
 
 }

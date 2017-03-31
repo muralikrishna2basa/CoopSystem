@@ -14,7 +14,7 @@ function monthSelectionAndOrderCreation($monthlyId)
 //        $ren =$row[0];
 //    }
     }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
     if(intval($ren)!==0){
         try{
@@ -29,7 +29,7 @@ function monthSelectionAndOrderCreation($monthlyId)
             $res= $stmt->execute(array($monthlyId));
 
         }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
     }
     else{
@@ -43,24 +43,24 @@ function monthSelectionAndOrderCreation($monthlyId)
                $res= $stmt->execute(array($allUser[$i]["userid"],$monthlyId));
            }
        }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
     }
 }
 //在庫リストを仮作成する関数
 //
-function stockListTemporaryCreating($monthlyId){
+function stockListTemporaryCreating(){
     try{
         $pdo = connectDb('cooopshinren');
         $sql="SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1)";
         $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($monthlyId));
+        $res= $stmt->execute(array());
         while ($row = $stmt->fetch()) {
             $ren[] =$row;
         }
         return $ren;
     }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
 }
 
@@ -78,7 +78,7 @@ function stockListRegistration($monthlyId,$stockList)
                $stmt=$pdo->prepare($sql);
                $res= $stmt->execute(array($stockList['monthly_goods_id'][$i],$monthlyId,intval($stockList['stock_quantity'][$i])));
            }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
     }
 }
@@ -95,7 +95,7 @@ function stockListEdit($stockList){
            $stmt=$pdo->prepare($sql);
            $res= $stmt->execute(array(intval($stockList['stock_quantity'][$i])),$stockList['monthly_goods_id'][$i]);
        }catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
 }else{
    try{
@@ -104,7 +104,7 @@ function stockListEdit($stockList){
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($stockList['monthly_goods_id'][$i],$monthlyId,intval($stockList['stock_quantity'][$i])));
    }catch(Exception $e){
-    echo $e->getMessage;
+    echo $e->getMessage();
 }
 }
 }
@@ -170,7 +170,7 @@ function productListCreation($csvArray,$monthlyId){
                 $monthlyId,
                 $csvArray[$i][4],));
         }catch(Exception $e){
-            echo $e->getMessage;
+            echo $e->getMessage();
         }
     }
 }
@@ -216,7 +216,7 @@ function productListEdit($productList){
             $productList['monthly_goods_id'][$i]));
     }
     catch(Exception $e){
-        echo $e->getMessage;
+        echo $e->getMessage();
     }
 }
 }

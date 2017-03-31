@@ -50,7 +50,7 @@ function returnCurrentMonthProductList($userId){
     $ren = [];
     try{
         $pdo = connectDb('cooopshinren');
-        $sql = "SELECT fixed_flag FROM ordering WHERE orderer= ?";
+        $sql = "SELECT order_flag FROM ordering WHERE orderer= ?";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($userId));
         while ($row = $stmt->fetch()) {
@@ -63,7 +63,7 @@ function returnCurrentMonthProductList($userId){
     try{
         $pdo = connectDb('cooopshinren');
         $sql="SELECT monthly_goods_id,goods_name,unit_price,detail_amount_per_one, required_quantity,category_name,color
-        FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category WHERE public_flag=0;";
+        FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category WHERE public_flag=1;";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(null);
 
@@ -74,7 +74,7 @@ function returnCurrentMonthProductList($userId){
     }catch(Exception $e){
         echo $e->getMessage();
     }
-    if($ren==0){
+    if($ren!=3){
         for ($i=0; $i <count($order) ; $i++) { 
             $order[$i]['ordering_quantity']=0;
             $order[$i][7]=0;
@@ -91,7 +91,7 @@ function returnCurrentMonthProductList($userId){
         INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
         INNER JOIN category ON monthly_goods.category_id = category.category_id
         INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-        WHERE ordering.orderer = ? AND monthly.public_flag=0";
+        WHERE ordering.orderer = ? AND monthly.public_flag=1";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($userId));
 
@@ -127,7 +127,7 @@ function returnStockList($userId,$monthlyId){
     $ren = [];
     try{
         $pdo = connectDb('cooopshinren');
-        $sql = "SELECT fixed_flag FROM ordering WHERE orderer= ?";
+        $sql = "SELECT order_flag FROM ordering WHERE orderer= ?";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($userId));
         while ($row = $stmt->fetch()) {
@@ -164,7 +164,7 @@ function returnStockList($userId,$monthlyId){
     }catch(Exception $e){
         echo $e->getMessage;
     }
-    if($ren==0){
+    if($ren!=3){
         for ($i=0; $i <count($stockList) ; $i++) { 
             $stockList[$i]['ordering_quantity']=0;
             $stockList[$i][7]=0;
@@ -181,7 +181,7 @@ function returnStockList($userId,$monthlyId){
         INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
         INNER JOIN category ON monthly_goods.category_id = category.category_id
         INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-        WHERE ordering.orderer = ? AND monthly.public_flag=0";
+        WHERE ordering.orderer = ? AND monthly.public_flag=1";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($userId));
 
@@ -214,7 +214,7 @@ function returnStockList($userId,$monthlyId){
 function doOrder($userId,$orderGoodsList){
     try{
        $pdo = connectDb('cooopshinren');
-       $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 0 AND orderer =?";
+       $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($userId));
        while ($row = $stmt->fetch()) {
@@ -222,11 +222,7 @@ function doOrder($userId,$orderGoodsList){
     }
 
     $pdo = connectDb('cooopshinren');
-    $sql = "UPDATE ordering SET fixed_flag = 0 WHERE ordering.orderer = ?;";
-    $stmt=$pdo->prepare($sql);
-    $res= $stmt->execute(array($userId));
-    $pdo = connectDb('cooopshinren');
-    $sql = "UPDATE ordering SET fixed_flag = 1 WHERE ordering.ordering_id=?;";
+    $sql = "UPDATE ordering SET order_flag = 3 WHERE ordering.ordering_id=?;";
     $stmt=$pdo->prepare($sql);
     $res= $stmt->execute(array($ren));
     for($i = 0; $i < count($orderGoodsList['monthly_goods_id']); $i++){
@@ -255,7 +251,7 @@ function doOrderStock($userId,$newOrderGoodsList){
     $errorMessage = array();
     try{
        $pdo = connectDb('cooopshinren');
-       $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 0 AND orderer =?";
+       $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($userId));
        while ($row = $stmt->fetch()){
@@ -306,7 +302,7 @@ function doOrderStock($userId,$newOrderGoodsList){
 function currentMonthListFromPlacedEdit($userId,$editOrderGoodsList){
     try{
      $pdo = connectDb('cooopshinren');
-     $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 0 AND orderer =?";
+     $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?";
      $stmt=$pdo->prepare($sql);
      $res= $stmt->execute(array($userId));
      while ($row = $stmt->fetch()){
@@ -346,7 +342,7 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
     $errorMessage = array();
     try{
      $pdo = connectDb('cooopshinren');
-     $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 0 AND orderer =?";
+     $sql="SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?";
      $stmt=$pdo->prepare($sql);
      $res= $stmt->execute(array($userId));
      while ($row = $stmt->fetch()) 

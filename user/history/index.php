@@ -26,11 +26,11 @@
         <table class="table-hover border-bottom">
             <thead>
                 <tr>
-                    <th class="text-center">カテゴリ</th>
-                    <th class="text-left">商品名</th>
-                    <th class="text-center">単価</th>
-                    <th class="text-center">購入数</th>
-                    <th class="text-right">合計金額</th>
+                    <th width="15%" class="text-center">カテゴリ</th>
+                    <th width="30%" class="text-left">商品名</th>
+                    <th width="20%" class="text-center">単価</th>
+                    <th width="20%" class="text-center">購入数</th>
+                    <th width="15%" class="text-right">合計金額</th>
                 </tr>
             </thead>
             <tbody>

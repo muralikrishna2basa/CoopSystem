@@ -196,7 +196,7 @@ function productListEdit($productList){
    $pdo = connectDb('cooopshinren');
    for($i=0;$i<count($productList['monthly_goods_id']);$i++){
     try{
-        $sql"UPDATE monthly_goods SET monthly_goods_id=?,
+        $sql="UPDATE monthly_goods SET monthly_goods_id=?,
         goods_name=?,
         unit_price=?,
         detail_amount_per_one=?,

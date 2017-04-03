@@ -192,11 +192,12 @@ function productListCreation($csvArray,$monthlyId){
 }
 //商品リストを表示する関数
 function productListDisplay($monthlyId){
+    $order = array();
     try{
         $pdo = connectDb('cooopshinren');
         $sql="SELECT * FROM monthly_goods WHERE monthly_id = ?";
         $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute($monthlyId);
+        $res= $stmt->execute(array($monthlyId));
         while ($row = $stmt->fetch()) {
             $order[] =$row;
         }
@@ -237,10 +238,59 @@ function productListEdit($productList){
     }
 }
 }
+//発注リストを表示する関数
+function orderListDisplay($monthlyId){
+    $pdo = connectDb('cooopshinren');
+    try{
+         $sql = "SELECT category_name,color,goods_name,unit_price,
+            ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id
+            FROM  ordering_list
+            INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+            INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+            INNER JOIN category ON monthly_goods.category_id = category.category_id
+            INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
+            WHERE ordering.monthly_id = ?;";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(array($monthlyId));
+            while ($row = $stmt->fetch()) {
+            $ren[] =$row;
+        }
+
+        return $ren;
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
+
 //発注リストを編集する関数
-function orderListEdit()
-{
-    # code...
+function orderListEdit($orderList){
+    for($i=0;$i<count($orderList['order_list_id']);$i++){
+    try{
+        $sql="UPDATE ordering_list SET monthly_goods_id=?,
+        goods_name=?,
+        unit_price=?,
+        detail_amount_per_one=?,
+        required_quantity=?,
+        monthly_id=?,
+        category_id=?
+        WHERE monthly_goods_id=?";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($orderList['monthly_goods_id'][$i],
+            $orderList['goods_name'][$i],
+            $orderList['unit_price'][$i],
+            $orderList['detail_amount_per_one'][$i],
+            $orderList['required_quantity'][$i],
+            $orderList['monthly_id'][$i],
+            $orderList['category_id'][$i],
+            $orderList['monthly_goods_id'][$i]));
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
 //月別ＩＤを作成する関数
 function monthlyIdGeneration($date){

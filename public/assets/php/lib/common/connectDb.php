@@ -15,6 +15,13 @@ function connectDb($dbName){
         $pass = 'P@ssw0rd';
         $dns  = "sqlsrv:server={$srv};database={$db}";
     }
+    elseif($dbName === 'test'){
+        $srv  = '192.1.10.221';
+        $db   = 'test_coopsystemdb';
+        $user = 'sqluser';
+        $pass = 'mysql';
+        $dns  = "mysql:dbname={$db};host={$srv};charset=utf8";
+    }
     else{
         $srv  = '192.1.10.221';
         $db   = 'coopsystemdb';

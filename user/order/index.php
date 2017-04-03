@@ -2,21 +2,44 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-    require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
-    $lists      = returnCurrentMonthProductList(9);
-    $i          = 0;
-    $priceTotal = 0;
-    if(count($_POST)>0){
-            if($_POST['order'] == 1) $error =currentMonthListFromOrderWhenNewlyDetermineWhether(9,$_POST);
-            if($_POST['order'] == 0) echo 'update'; // TODO: update status
-        if($error!=null)
-        {
-            echo $error;
-        }
-        else{
-            header('location: ./index.php');
-        }
-    }
+require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
+$res        = returnCurrentMonthProductList($_SESSION['USERID']);
+$errors     = [];
+$lists      = [];
+$i          = 0;
+$priceTotal = 0;
+$errors     = [];
+$pdo        = connectDb('coop');
+
+if(!$res['result']){
+    $errors = $res['return'];
+}else{
+    $lists  = $res['return'];
+}
+
+try {
+    $sql = "SELECT order_flag FROM ordering
+    WHERE monthly_id=(SELECT monthly_id FROM monthly WHERE public_flag=1 LIMIT 1)
+    AND orderer=?;";
+    $stmt = $pdo->prepare($sql);
+    $res  = $stmt->execute([$_SESSION['USERID']]);
+    if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
+
+
+if(count($_POST) > 0){
+    if($_POST['order'] == 1) $errors = currentMonthListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
+    if($_POST['order'] == 0) echo 'update'; // TODO: update status
+//    if($error!=null)
+//    {
+//        echo $error;
+//    }
+//    else{
+    var_dump($errors);
+    if(count($errors) === 0) header('location: ./index.php');
+}
 
 ?>
 <!DOCTYPE html>
@@ -100,22 +123,28 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
         </table>
         <p class="text-right form-group">
             <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
-            <button type="submit" name="order" value="0" class="btn btn-blue">いいえ、今月は注文しません</button>
+            <button type="submit" name="order" value="0" class="btn btn-red">いいえ、今月は注文しません</button>
         </p>
         </form>
 
-        <div class="draggable border-radius col-6 bg-white opacity-7">
-            <table class="border-none">
-                <tr>
-                    <td class="text-center">
-                        <p>購入金額</p>
-                    </td>
-                    <td>
-                        <p><span id="price_total"><?php echo number_format($priceTotal) ?></span>円</p>
-                    </td>
-                </tr>
-            </table>
+        <div class="flex">
+            <div class="col-6"></div>
+            <div class="draggable border-radius col-6 bg-white opacity-7">
+                <table class="border-none">
+                    <tr>
+                        <td class="text-center">
+                            <p>購入金額</p>
+                        </td>
+                        <td>
+                            <p><span id="price_total"><?php echo number_format($priceTotal) ?></span>円</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
+
+        <?php errorMessages($errors) ?>
 
     </div>
 </div>

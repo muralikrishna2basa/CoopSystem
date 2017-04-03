@@ -1,4 +1,4 @@
-<?php 
+<?php
 //公開年月選択と全ユーザーの発注を作成する関数
 function monthSelectionAndOrderCreation($monthlyId)
 {
@@ -13,43 +13,42 @@ function monthSelectionAndOrderCreation($monthlyId)
 //       {
 //        $ren =$row[0];
 //    }
-   }
-   catch(Exception $e){
-    echo $e->getMessage();
-}
-if(intval($ren)!==0){
-    try{
-        $pdo = connectDb('cooopshinren');
-        $sql = "UPDATE monthly SET public_flag = 0";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(null);
-
-        $pdo = connectDb('cooopshinren');
-        $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($monthlyId));
-
     }
     catch(Exception $e){
         echo $e->getMessage();
     }
-}
-else{
-    try{
-        $allUser = getAllUsers();
-        $j=count($allUser);
-        for($i=0;$i<$j;$i++){
-           $pdo = connectDb('cooopshinren');
-           $sql="INSERT INTO ordering VALUES (NULL, ?, ?, 0)";
-           $stmt=$pdo->prepare($sql);
-           $param=array($allUser[$i]["userid"],$monthlyId);
-           $res= $stmt->execute($param);
+    if(intval($ren)!==0){
+        try{
+            $pdo = connectDb('cooopshinren');
+            $sql = "UPDATE monthly SET public_flag = 0";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(null);
+
+            $pdo = connectDb('cooopshinren');
+            $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
+            $stmt=$pdo->prepare($sql);
+            $res= $stmt->execute(array($monthlyId));
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+        }
+    }
+    else{
+        try{
+            $allUser = getAllUsers();
+            $j=count($allUser);
+            for($i=0;$i<$j;$i++){
+               $pdo = connectDb('cooopshinren');
+               $sql="INSERT INTO ordering VALUES (NULL, ?, ?, 0)";
+               $stmt=$pdo->prepare($sql);
+               $param=array($allUser[$i]["userid"],$monthlyId);
+               $res= $stmt->execute($param);
+           }
        }
-   }
-   catch(Exception $e){
-    echo $e->getMessage();
-}
-}
+        catch(Exception $e){
+            echo $e->getMessage();
+        }
+    }
 }
 //在庫リストを仮作成する関数
 //
@@ -74,79 +73,69 @@ function stockListTemporaryCreating(){
 //stockListは商品ＩＤと個数の配列
 function stockListRegistration($monthlyId,$stockList)
 {
-
-    
         $quantaity = intval($stockList['stock_quantity']);
         if($quantaity!=0){ // != -> !==
             try{
-               $pdo = connectDb('cooopshinren');
-               $sql="INSERT INTO stock_list VALUES (NULL, '?', '?', '?');";
-               $stmt=$pdo->prepare($sql);
-               $param=array($stockList['monthly_goods_id'],$monthlyId,intval($stockList['stock_quantity']));
-               $res= $stmt->execute($param);
-           }
-           catch(Exception $e){
-            echo $e->getMessage();
+                $pdo = connectDb('cooopshinren');
+                $sql="INSERT INTO stock_list VALUES (NULL, '?', '?', '?');";
+                $stmt=$pdo->prepare($sql);
+                $param=array($stockList['monthly_goods_id'],$monthlyId,intval($stockList['stock_quantity']));
+                $res= $stmt->execute($param);
+            }
+            catch(Exception $e){
+                echo $e->getMessage();
         }
     }
-
 }
 //在庫リストを編集する関数
 //stockListは商品ＩＤと個数の配列
 function stockListEdit($stockList){
-        try{
-           $pdo = connectDb('cooopshinren');
-           $sql="UPDATE stock_list SET stock_quantit = ? WHERE monthly_goods_id = ?";
-           $stmt=$pdo->prepare($sql);
-           $res= $stmt->execute(array(intval($stockList['stock_quantity'])),$stockList['monthly_goods_id']);
-       }
-       catch(Exception $e){
+    try{
+        $pdo = connectDb('cooopshinren');
+        $sql = "UPDATE stock_list SET stock_quantit = ? WHERE monthly_goods_id = ?";
+        $stmt= $pdo->prepare($sql);
+        $res = $stmt->execute(array(intval($stockList['stock_quantity'])),$stockList['monthly_goods_id']);
+    }
+    catch(Exception $e){
         echo $e->getMessage();
     }
-
-
 }
 //受け取ったCSVファイルが正しいかどうかチェックする関数
 function csvFileCheck($csvArray){
     $errorMessage=[];
     for($i=1;$i<count($csvArray);$i++){
         $errorflag=0;
-           $number=$i-1;
-           $str = $number."番目の商品の";
+        $number=$i-1;
+        $str = $number."番目の商品の";
         if(count($csvArray[$i])===5){ // == -> ===
-           
-           if(mb_strlen($csvArray[$i][0])===0){
-            $errorflag=1;
-            $str=$str."商品名が空白です,";
+            if(mb_strlen($csvArray[$i][0])===0){
+                $errorflag=1;
+                $str=$str."商品名が空白です,";
+            }
+            if(mb_strlen($csvArray[$i][1])===0){
+                $errorflag=1;
+                $str=$str."内容量が空白です,";
+            }
+            if(preg_match("[^0-9]",$csvArray[$i][2])==1){
+                $errorflag=1;
+                $str=$str."必要数は数字しか使えません,";
+            }
+            if(preg_match("[^0-9]",$csvArray[$i][3])==1){
+                $errorflag=1;
+                $str=$str."単価は数字しか使えません,";
+            }
+            if(preg_match("[^0-9]",$csvArray[$i][4])==1){
+                $errorflag=1;
+                $str=$str."カテゴリは数字しか使えません,";
+            }
+            if($errorflag==1){
+                $errorMessage[$str];
+            }
+        }else{
+            $str=$str."情報が不足しています";
         }
-        if(mb_strlen($csvArray[$i][1])===0){
-            $errorflag=1;
-            $str=$str."内容量が空白です,";
-        }
-        if(preg_match("[^0-9]",$csvArray[$i][2])==1){
-            $errorflag=1;
-            $str=$str."必要数は数字しか使えません,";
-        }
-
-        if(preg_match("[^0-9]",$csvArray[$i][3])==1){
-            $errorflag=1;
-            $str=$str."単価は数字しか使えません,";
-        }
-        if(preg_match("[^0-9]",$csvArray[$i][4])==1){
-            $errorflag=1;
-            $str=$str."カテゴリは数字しか使えません,";
-        }
-        if($errorflag==1){
-            $errorMessage[$str];
-
-        } 
-    }else{
-        $str=$str."情報が不足しています";
-
     }
-
-}
-return $errorMessage;
+    return $errorMessage;
 }
 
 
@@ -155,7 +144,6 @@ function productListCreation($csvArray,$monthlyId){
     $pdo = connectDb('cooopshinren');
     for($i=1;$i<count($csvArray);$i++){
         try{
-
             $sql="INSERT INTO  coopsystemdb.monthly_goods
             VALUES (NULL,?,?,?,?,?,?);";
             $param = [
@@ -192,57 +180,56 @@ function productListDisplay($monthlyId){
     }
     catch(Exception $e)
     {
-      echo $e->getMessage();
+        echo $e->getMessage();
   }
 }
 
 //商品リストを編集する関数
  //productListは　商品ＩＤ、商品名、単価、内容量、必要量、カテゴリＩＤの配列　
 function productListEdit($productList){
- $pdo = connectDb('cooopshinren');
- for($i=0;$i<count($productList['monthly_goods_id']);$i++){
-    try{
-        $sql="UPDATE monthly_goods SET 
-        goods_name=?,
-        unit_price=?,
-        detail_amount_per_one=?,
-        required_quantity=?,
-        category_id=?
-        WHERE monthly_goods_id=?";
-        $stmt=$pdo->prepare($sql);
-        $param=[
-            $productList['goods_name'][$i],
-            $productList['unit_price'][$i],
-            $productList['detail_amount_per_one'][$i],
-            $productList['required_quantity'][$i],
-            $productList['category_id'][$i],
-            $productList['monthly_goods_id'][$i]];
-        $res= $stmt->execute($param);
-   } 
-    catch(Exception $e){
-        echo $e->getMessage();
+    $pdo = connectDb('cooopshinren');
+    for($i=0;$i<count($productList['monthly_goods_id']);$i++){
+        try{
+            $sql="UPDATE monthly_goods SET
+            goods_name=?,
+            unit_price=?,
+            detail_amount_per_one=?,
+            required_quantity=?,
+            category_id=?
+            WHERE monthly_goods_id=?";
+            $stmt=$pdo->prepare($sql);
+            $param=[
+                $productList['goods_name'][$i],
+                $productList['unit_price'][$i],
+                $productList['detail_amount_per_one'][$i],
+                $productList['required_quantity'][$i],
+                $productList['category_id'][$i],
+                $productList['monthly_goods_id'][$i]];
+            $res= $stmt->execute($param);
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+        }
     }
 }
-}
 //発注リストを表示する関数
-function orderListDisplay($monthlyId){
+function orderListDisplay($monthlyId = 0){
     $ren = [];
     $pdo = connectDb('cooopshinren');
     try{
-         $sql = "SELECT category_name,color,goods_name,unit_price,
-            ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id
-            FROM  ordering_list
-            INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
-            INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
-            INNER JOIN category ON monthly_goods.category_id = category.category_id
-            INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-            WHERE ordering.monthly_id = (SELECT MIN(monthly_id) FROM monthly WHERE fixed_flag =0);";
-            $stmt=$pdo->prepare($sql);
-            $res= $stmt->execute(array($monthlyId));
-            while ($row = $stmt->fetch()) {
+        $sql = "SELECT category_name,color,goods_name,unit_price,
+        ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id
+        FROM  ordering_list
+        INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+        INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+        INNER JOIN category ON monthly_goods.category_id = category.category_id
+        INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
+        WHERE ordering.monthly_id = (SELECT MIN(monthly_id) FROM monthly WHERE fixed_flag =0);";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($monthlyId));
+        while ($row = $stmt->fetch()) {
             $ren[] =$row;
         }
-
         return $ren;
     }catch(Exception $e){
         echo $e->getMessage();
@@ -251,29 +238,29 @@ function orderListDisplay($monthlyId){
 
 //発注リストを編集する関数
 function orderListEdit($orderList){
-    for($i=0;$i<count($orderList['order_list_id']);$i++){
-    try{
-        $sql="UPDATE ordering_list SET ordering_quantity=?
-        WHERE order_list_id=?";
-        $stmt=$pdo->prepare($sql);
-        $param=[
-        $orderList['ordering_quantity'][$i],
-        $orderList['order_list_id'][$i]
-        ];
-        $res= $stmt->execute();
+    for($i = 0; $i < count($orderList['order_list_id']); $i++){
+        try{
+            $sql="UPDATE ordering_list SET ordering_quantity=?
+            WHERE order_list_id=?";
+            $stmt=$pdo->prepare($sql);
+            $param = [
+                $orderList['ordering_quantity'][$i],
+                $orderList['order_list_id'][$i]
+            ];
+            $res= $stmt->execute();
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+        }
     }
-    catch(Exception $e){
-        echo $e->getMessage();
-    }
-}
 }
 //月別ＩＤを作成する関数
 function monthlyIdGeneration($date){
     $pdo = connectDb('cooopshinren');
     try{
-        $sql="SELECT monthly_id FROM monthly WHERE date =?";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($date));
+        $sql  = "SELECT monthly_id FROM monthly WHERE date =?";
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute(array($date));
         $monthlyId = $stmt->fetchColumn();
         if($monthlyId==false){ // == -> ===
             $sql="INSERT INTO monthly VALUES (NULL,?,0,0)";
@@ -299,7 +286,6 @@ function stockListRegistrationWhenNewlyDetermineWhether($monthlyId,$stockList){
              stockListEdit($stockList[$i]);
         }
         else{
-            
             stockListRegistration($monthlyId,$stockList[$i]);
         }
     }

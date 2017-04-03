@@ -4,11 +4,13 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once($PATH.'/public/assets/php/lib/administrator/category.php');
 $categories = [];
+$errors     = [];
 try{
     $pdo  = connectDb('coop');
     $sql  = "SELECT * FROM category;";
     $stmt = $pdo->prepare($sql);
     $res  = $stmt->execute(null);
+    if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
     $i = 0;
     foreach ($stmt as $key => $value)
     {
@@ -16,19 +18,19 @@ try{
         $i++;
     }
 }catch (Exception $e){
-    echo $e->getMessage();
+    $errors[] = $e->getMessage();
 }
 if(count($_POST) > 0 && isset($_POST['update']))
 {
-    echo "update";
-    updateCategory($_POST);
+//    echo "update";
+    $errors = updateCategory($_POST);
     header('location: ./index.php');
     exit();
 }
 if(count($_POST) > 0 && isset($_POST['insert']))
 {
-    echo "insert";
-    insertCategory($_POST);
+//    echo "insert";
+    $errors = insertCategory($_POST);
     header('location: ./index.php');
     exit();
 }

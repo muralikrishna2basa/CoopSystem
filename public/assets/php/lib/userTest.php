@@ -1,6 +1,6 @@
 <?php 
 require_once ("user/userProcess.php");
-require_once('../connectDb.php');
+require_once('./common/connectDb.php');
 /**
 * 
 */

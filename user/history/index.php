@@ -2,9 +2,16 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-    require_once('../../public/assets/php/lib/user/userProcess.php');
-    $lists = displayHistory(1, 1);
-    $total = 0;
+require_once('../../public/assets/php/lib/user/userProcess.php');
+$res  = displayHistory($_SESSION['USERID']);
+$errors = [];
+$lists  = [];
+if(!$res['result']){
+    $errors = $res['return'];
+}else{
+    $lists  = $res['return'];
+}
+$total = 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +30,7 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
     </div>
     <div class="col-10 container">
         <h1>注文した履歴を確認する</h1>
+        <?php if(count($lists) > 0){ ?>
         <table class="table-hover border-bottom">
             <thead>
                 <tr>
@@ -64,6 +72,12 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
                 </tr>
             </tbody>
         </table>
+        <?php }else{ ?>
+        <p>履歴はありません。</p>
+        <?php } ?>
+
+        <?php errorMessages($errors) ?>
+
     </div>
 </div>
 

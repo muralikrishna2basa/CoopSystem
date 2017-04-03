@@ -6,7 +6,7 @@ require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
 $errors = [];
-$lists = orderListDisplay(1);
+$lists = orderListDisplay();
 
 // TODO: stock_quantity の取得 teshima -> kawanishi 2017/04/03
 ?>
@@ -21,9 +21,9 @@ $lists = orderListDisplay(1);
 <body>
 
 <?php include("../../public/assets/php/partial/header.php"); ?>
-<!--
+
 <pre><?php var_dump($lists) ?></pre>
--->
+
 
 <button class="col-btn" col-target="#col-menu"></button>
 
@@ -32,7 +32,7 @@ $lists = orderListDisplay(1);
         <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container">
-        <h2></h2>
+        <h2>発注リストを修正する</h2>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>
@@ -56,10 +56,10 @@ $lists = orderListDisplay(1);
                             <p><?php echo $list['goods_name'] ?></p>
                         </td>
                         <td class="text-center">
-                            <p><?php echo $list['detail_amount_per_one'] ?></p>
+                            <p><?php //echo $list['detail_amount_per_one'] ?></p>
                         </td>
                         <td class="text-center">
-                            <p><?php echo $list['required_quantity'] ?>個</p>
+                            <p><?php echo $list['ordering_quantity'] ?>個</p>
                         </td>
                         <td class="text-right">
                             <p><?php echo number_format($list['unit_price']) ?>円</p>

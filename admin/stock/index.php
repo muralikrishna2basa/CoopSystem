@@ -6,9 +6,13 @@ require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
 $errors = [];
-$lists = stockListTemporaryCreating();
-
+try {
+    $lists = stockListTemporaryCreating();
+} catch (Exception $e) {
+    
+}
 // TODO: stock_quantity の取得 teshima -> kawanishi 2017/04/03
+// TODO: Notice: Undefined index: order_list_id in C:\xampp\htdocs\sys\sam\CoopSystem\public\assets\php\lib\administrator\administratorProcess.php on line 241
 
 if(count($_POST) > 0)
 {
@@ -24,12 +28,12 @@ if(count($_POST) > 0)
 <html>
 <head>
     <title>CoopSystem</title>
-    <?php include("../../public/assets/php/partial/head.php"); ?>
+    <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
 </head>
 <body>
 
-<?php include("../../public/assets/php/partial/header.php"); ?>
+<?php include($PATH."/public/assets/php/partial/header.php"); ?>
 <!--
 <pre><?php var_dump($lists) ?></pre>
 -->
@@ -38,10 +42,11 @@ if(count($_POST) > 0)
 
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
-        <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
+        <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container">
-        <h2></h2>
+        <h2>在庫を編集する</h2>
+        <pre><?php var_dump($lists) ?></pre>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>
@@ -103,6 +108,6 @@ TODO: stock_quantityとinitial_stock_quantityのセット teshima 2017/04/03
     </div>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
-<?php include("../../public/assets/php/partial/footer.php"); ?>
+<?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

@@ -2,20 +2,32 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-    require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
-    $lists      = returnStockList(9,0);
-    $i          = 0;
-    $priceTotal = 0;
-    if(count($_POST)>0){
-            $error =stockListFromOrderWhenNewlyDetermineWhether(9,$_POST);
-        if($error!=null)
-        {
-            echo $error;
-        }
-        else{
-            header('location: ./index.php');
-        }
+require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
+$res        = returnStockList($_SESSION['USERID']);
+$errors     = [];
+$lists      = [];
+$i          = 0;
+$priceTotal = 0;
+
+if(!$res['result']){
+    $errors = $res['return'];
+}else{
+    $lists  = $res['return'];
+}
+if(count($_POST)>0){
+    $errors =stockListFromOrderWhenNewlyDetermineWhether(9,$_POST);
+    if(count($errors) === 0) header('location: ./index.php');
+/*
+    if($error!=null)
+    {
+        echo $error;
     }
+    else{
+        header('location: ./index.php');
+    }
+*/
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,6 +46,7 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
     </div>
     <div class="col-10 container">
         <h1>在庫から注文する</h1>
+        <?php if(count($lists) > 0){ ?>
         <form method="post" action="">
         <table class="table-hover border-bottom">
             <thead>
@@ -118,6 +131,12 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
                 </table>
             </div>
         </div>
+        <?php }else{ ?>
+        <p>現在、購入可能な在庫商品はありません。</p>
+        <?php } ?>
+
+        <?php errorMessages($errors) ?>
+
     </div>
 </div>
 <script src="<?php echo $PATH ?>/public/assets/js/users.js"></script>

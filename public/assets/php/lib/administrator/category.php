@@ -11,8 +11,9 @@ function insertCategory($post)
         $res   = $stmt->execute($array);
         if($res === false) throw new Exception("追加処理に失敗しました。");
     }catch (Exception $e){
-        echo $e->getMessage();
+        return [$e->getMessage()];
     }
+    return [];
 }
 
 function updateCategory($post)
@@ -47,7 +48,7 @@ function updateCategory($post)
                     $array = [$id];
                 }
                 $stmt  = $pdo->prepare($sql);
-                $res = true;
+//                $res = true;
                 $res   = $stmt->execute($array);
                 if(!$res) $error[] = "{$id}の処理に失敗しました。";
 //                var_dump($sql);
@@ -56,11 +57,12 @@ function updateCategory($post)
                 $error[] = "ID:".($i+1)."は処理に失敗しました。";
             }
         }
-        var_dump($error);
+//        var_dump($error);
 
     }catch (Exception $e){
-        echo $e->getMessage();
+        return [$e->getMessage()];
     }
+    if(count($error) > 0) return $error;
 }
 
 ?>

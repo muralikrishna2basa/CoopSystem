@@ -150,7 +150,7 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
             <?php if($csvFlag){ ?>
             <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
             <?php }else{ ?>
-            <p class="text-red">指定した月は既に確定済みであるため商品の追加ができません。</p>
+            <p class="text-red">指定した月は公開中もしくは確定済みであるため、商品の追加・編集はできません。</p>
             <?php } ?>
             <?php if($editFlag){ ?>
             <a href="../productlist?id=<?php echo $monthlyId ?>" class="btn btn-yellow"><?php echo $displayEdit ?></a>

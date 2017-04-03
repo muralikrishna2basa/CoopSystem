@@ -40,8 +40,8 @@ if(isset($_POST) && count($_POST) > 0){
             $param     = [$monthlyId, $user['userid'],];
             $stmt      = $pdo->prepare($sql);
             $res       = $stmt->execute($param);
-            $orderFlag = $stmt->fetchColumn();
-            if(!$res || !$orderFlag) throw new Exception("order_flag読み込み時にエラーが発生しました。");
+            $orderFlag = intval($stmt->fetchColumn());
+            if(!$res || $orderFlag !== 0) throw new Exception("order_flag読み込み時にエラーが発生しました。");
             $orderFlag = intval($orderFlag);
 
             // フラグが0の場合、1に書き換える

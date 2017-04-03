@@ -167,23 +167,21 @@ function productListCreation($csvArray,$monthlyId){
     for($i=1;$i<count($csvArray);$i++){
         try{
 
-            $sql="INSERT INTO  coopsystemdb.monthly_goods (
-            monthly_goods_id,
-            goods_name,
-            unit_price,
-            detail_amount_per_one,
-            required_quantity,
-            monthly_id,
-            category_id)
+            $sql="INSERT INTO  coopsystemdb.monthly_goods
             VALUES (NULL,?,?,?,?,?,?);";
-            $stmt=$pdo->prepare($sql);
-            $res= $stmt->execute(array(
+            $param = [
                 $csvArray[$i][0],
-                $csvArray[$i][1],
                 $csvArray[$i][2],
+                $csvArray[$i][1],
                 $csvArray[$i][3],
                 $monthlyId,
-                $csvArray[$i][4],));
+                $csvArray[$i][4],
+            ];
+            $stmt = $pdo->prepare($sql);
+            $res  = $stmt->execute($param);
+            if(!$res) throw new Exception("INSERT文実行時にエラーが発生しました。");
+//            var_dump($param);
+//            var_dump($sql);
         }
         catch(Exception $e){
             echo $e->getMessage();
@@ -288,9 +286,6 @@ function orderListEdit($orderList){
         echo $e->getMessage();
     }
 }
-    }catch(Exception $e){
-        echo $e->getMessage();
-    }
 }
 //月別ＩＤを作成する関数
 function monthlyIdGeneration($date){

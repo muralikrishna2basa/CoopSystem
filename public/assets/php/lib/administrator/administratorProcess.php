@@ -96,7 +96,7 @@ function stockListEdit($stockList){
     if($quantaity!=0){ // != -> !==
         try{
            $pdo = connectDb('cooopshinren');
-           $sql="UPDATE stock_list SET stock_quantit` = ? WHERE monthly_goods_id = ?";
+           $sql="UPDATE stock_list SET stock_quantit = ? WHERE monthly_goods_id = ?";
            $stmt=$pdo->prepare($sql);
            $res= $stmt->execute(array(intval($stockList['stock_quantity'][$i])),$stockList['monthly_goods_id'][$i]);
        }
@@ -107,7 +107,7 @@ function stockListEdit($stockList){
 else{
    try{
        $pdo = connectDb('cooopshinren');
-       $sql="INSERT INTO stock_list VALUES (NULL, '?', '?', '?');";
+       $sql="INSERT INTO stock_list VALUES (NULL,?,?,?);";
        $stmt=$pdo->prepare($sql);
        $res= $stmt->execute(array($stockList['monthly_goods_id'][$i],$monthlyId,intval($stockList['stock_quantity'][$i])));
    }
@@ -218,7 +218,6 @@ function productListEdit($productList){
         unit_price=?,
         detail_amount_per_one=?,
         required_quantity=?,
-
         category_id=?
         WHERE monthly_goods_id=?";
         $stmt=$pdo->prepare($sql);

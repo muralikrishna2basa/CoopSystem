@@ -115,11 +115,11 @@ function csvFileCheck($csvArray){
            $str = $number."番目の商品の";
         if(count($csvArray[$i])===5){ // == -> ===
            
-           if(nb_strlen($csvArray[$i][0])===0){
+           if(mb_strlen($csvArray[$i][0])===0){
             $errorflag=1;
             $str=$str."商品名が空白です,";
         }
-        if(nb_strlen($csvArray[$i][1])===0){
+        if(mb_strlen($csvArray[$i][1])===0){
             $errorflag=1;
             $str=$str."内容量が空白です,";
         }
@@ -159,12 +159,12 @@ function productListCreation($csvArray,$monthlyId){
             $sql="INSERT INTO  coopsystemdb.monthly_goods
             VALUES (NULL,?,?,?,?,?,?);";
             $param = [
-                $csvArray[$i][0],
-                $csvArray[$i][2],
-                $csvArray[$i][1],
-                $csvArray[$i][3],
-                $monthlyId,
-                $csvArray[$i][4],
+                $csvArray[$i][0], /* goods_name */
+                $csvArray[$i][3], /* unit_price */
+                $csvArray[$i][1], /* detail_amount_per_one */
+                $csvArray[$i][2], /* required_quantity */
+                $monthlyId,       /* monthly_id */
+                $csvArray[$i][4], /* category_id */
             ];
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute($param);

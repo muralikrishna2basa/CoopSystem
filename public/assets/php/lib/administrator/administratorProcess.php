@@ -124,13 +124,13 @@ function csvFileCheck($csvArray){
         $errorflag=0;
            $number=$i-1;
            $str = $number."番目の商品の";
-        if(count($csvArray[$i])==5){ // == -> ===
+        if(count($csvArray[$i])===5){ // == -> ===
            
-           if($csvArray[$i][0]==null){
+           if(nb_strlen($csvArray[$i][0])===0){
             $errorflag=1;
             $str=$str."商品名が空白です,";
         }
-        if($csvArray[$i][1]==null){
+        if(nb_strlen($csvArray[$i][1])===0){
             $errorflag=1;
             $str=$str."内容量が空白です,";
         }
@@ -213,24 +213,24 @@ function productListEdit($productList){
  $pdo = connectDb('cooopshinren');
  for($i=0;$i<count($productList['monthly_goods_id']);$i++){
     try{
-        $sql="UPDATE monthly_goods SET monthly_goods_id=?,
+        $sql="UPDATE monthly_goods SET 
         goods_name=?,
         unit_price=?,
         detail_amount_per_one=?,
         required_quantity=?,
-        monthly_id=?,
+
         category_id=?
         WHERE monthly_goods_id=?";
         $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($productList['monthly_goods_id'][$i],
+        $param=[
             $productList['goods_name'][$i],
             $productList['unit_price'][$i],
             $productList['detail_amount_per_one'][$i],
             $productList['required_quantity'][$i],
-            $productList['monthly_id'][$i],
             $productList['category_id'][$i],
-            $productList['monthly_goods_id'][$i]));
-    }
+            $productList['monthly_goods_id'][$i]];
+        $res= $stmt->execute($param);
+   } 
     catch(Exception $e){
         echo $e->getMessage();
     }
@@ -264,23 +264,14 @@ function orderListDisplay($monthlyId){
 function orderListEdit($orderList){
     for($i=0;$i<count($orderList['order_list_id']);$i++){
     try{
-        $sql="UPDATE ordering_list SET monthly_goods_id=?,
-        goods_name=?,
-        unit_price=?,
-        detail_amount_per_one=?,
-        required_quantity=?,
-        monthly_id=?,
-        category_id=?
-        WHERE monthly_goods_id=?";
+        $sql="UPDATE ordering_list SET ordering_quantity=?
+        WHERE order_list_id=?";
         $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($orderList['monthly_goods_id'][$i],
-            $orderList['goods_name'][$i],
-            $orderList['unit_price'][$i],
-            $orderList['detail_amount_per_one'][$i],
-            $orderList['required_quantity'][$i],
-            $orderList['monthly_id'][$i],
-            $orderList['category_id'][$i],
-            $orderList['monthly_goods_id'][$i]));
+        $param=[
+        $orderList['ordering_quantity'][$i],
+        $orderList['order_list_id'][$i]
+        ];
+        $res= $stmt->execute();
     }
     catch(Exception $e){
         echo $e->getMessage();

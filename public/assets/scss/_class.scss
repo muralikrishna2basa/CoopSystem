@@ -48,6 +48,9 @@
     margin: 5px 2px;
     outline: none;
     font-weight: bold;
+    font-size: 0.9em;
+    cursor: pointer;
+    outline: none;
     &:hover{
         transition: $timer;
         background: darken($bg-base-color, 20%);
@@ -64,19 +67,19 @@
 }
 
 .btn-blue{
-    @include btnColor($blue, lighten($blue, 15%));
+    @include btnColor($blue, darken($blue, 5%));
 }
 .btn-red{
-    @include btnColor($red, lighten($red, 15%));
+    @include btnColor($red, darken($red, 5%));
 }
 .btn-yellow{
-    @include btnColor($yellow, lighten($yellow, 15%));
+    @include btnColor($yellow, darken($yellow, 5%));
 }
 .btn-green{
-    @include btnColor($green, lighten($green, 15%));
+    @include btnColor($green, darken($green, 5%));
 }
 .btn-purple{
-    @include btnColor($purple, lighten($purple, 15%));
+    @include btnColor($purple, darken($purple, 5%));
 }
 
 .bg-blue,

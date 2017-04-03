@@ -2,7 +2,7 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-    require_once('../../public/assets/php/lib/user/userProcess.php');
+    require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
     $lists      = returnStockList(9,0);
     $i          = 0;
     $priceTotal = 0;
@@ -21,16 +21,16 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 <html>
 <head>
     <title>CoopSystem</title>
-    <?php include("../../public/assets/php/partial/head.php"); ?>
-    <link rel="stylesheet" type="text/css" href="../../public/assets/stylesheets/users.css">
+    <?php include($PATH."/public/assets/php/partial/head.php"); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo $PATH ?>/public/assets/stylesheets/users.css">
 </head>
 <body>
-<?php include("../../public/assets/php/partial/header.php"); ?>
+<?php include($PATH."/public/assets/php/partial/header.php"); ?>
 
 <button class="col-btn" col-target="#col-menu"></button>
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
-        <?php include("../../public/assets/php/partial/menu_user.php"); ?>
+        <?php include($PATH."/public/assets/php/partial/menu_user.php"); ?>
     </div>
     <div class="col-10 container">
         <h1>在庫から注文する</h1>
@@ -120,7 +120,7 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
         </div>
     </div>
 </div>
-<script src="../../public/assets/js/users.js"></script>
-<?php include("../../public/assets/php/partial/footer.php"); ?>
+<script src="<?php echo $PATH ?>/public/assets/js/users.js"></script>
+<?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

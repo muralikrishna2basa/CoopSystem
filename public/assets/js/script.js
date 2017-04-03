@@ -37,7 +37,8 @@ $(function(){
     });
 
     //Modal
-    $(".modal-btn").click(function(){
+    $(".modal-btn").click(function(e){
+        e.preventDefault();
         var src = $(this).attr("modal-target");
         $("body").append('<div class="modal-bg"></div>');
         $(".modal-bg").hide().fadeIn(function(){

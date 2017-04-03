@@ -61,17 +61,17 @@ a:active {
 
 /* line 34, ../scss/_base.scss */
 .btn:visited {
-  color: #e6e6e6;
+  color: #fff;
 }
 
 /* line 35, ../scss/_base.scss */
 .btn:hover {
-  color: #f2f2f2;
+  color: #fff;
 }
 
 /* line 36, ../scss/_base.scss */
 .btn:active {
-  color: #e6e6e6;
+  color: #fff;
 }
 
 /* line 38, ../scss/_base.scss */
@@ -530,14 +530,17 @@ footer {
   margin: 5px 2px;
   outline: none;
   font-weight: bold;
+  font-size: 0.9em;
+  cursor: pointer;
+  outline: none;
 }
-/* line 51, ../scss/_class.scss */
+/* line 54, ../scss/_class.scss */
 .btn:hover, button:hover {
   transition: 0.6s;
   background: #c2c2c2;
 }
 
-/* line 56, ../scss/_class.scss */
+/* line 59, ../scss/_class.scss */
 .block {
   display: block;
   width: 100%;
@@ -545,72 +548,72 @@ footer {
   text-align: center;
 }
 
-/* line 62, ../scss/_class.scss */
+/* line 65, ../scss/_class.scss */
 .inline {
   display: inline-block;
 }
 
-/* line 66, ../scss/_class.scss */
+/* line 69, ../scss/_class.scss */
 .btn-blue {
   background: #2d579a;
   color: #fff;
-  border: 1px solid #4a7bca;
+  border: 1px solid #274c86;
 }
 /* line 6, ../scss/mixin/_btnColor.scss */
 .btn-blue:hover {
   transition: 0.6s;
-  background: #4a7bca;
+  background: #274c86;
 }
 
-/* line 69, ../scss/_class.scss */
+/* line 72, ../scss/_class.scss */
 .btn-red {
   background: #b32034;
   color: #fff;
-  border: 1px solid #dd4257;
+  border: 1px solid #9d1c2e;
 }
 /* line 6, ../scss/mixin/_btnColor.scss */
 .btn-red:hover {
   transition: 0.6s;
-  background: #dd4257;
+  background: #9d1c2e;
 }
 
-/* line 72, ../scss/_class.scss */
+/* line 75, ../scss/_class.scss */
 .btn-yellow {
   background: #f2bc09;
   color: #fff;
-  border: 1px solid #f8d14f;
+  border: 1px solid #d9a908;
 }
 /* line 6, ../scss/mixin/_btnColor.scss */
 .btn-yellow:hover {
   transition: 0.6s;
-  background: #f8d14f;
+  background: #d9a908;
 }
 
-/* line 75, ../scss/_class.scss */
+/* line 78, ../scss/_class.scss */
 .btn-green {
   background: #93b11d;
   color: #fff;
-  border: 1px solid #bedf3c;
+  border: 1px solid #819b19;
 }
 /* line 6, ../scss/mixin/_btnColor.scss */
 .btn-green:hover {
   transition: 0.6s;
-  background: #bedf3c;
+  background: #819b19;
 }
 
-/* line 78, ../scss/_class.scss */
+/* line 81, ../scss/_class.scss */
 .btn-purple {
   background: #693a8a;
   color: #fff;
-  border: 1px solid #9158b9;
+  border: 1px solid #5b3278;
 }
 /* line 6, ../scss/mixin/_btnColor.scss */
 .btn-purple:hover {
   transition: 0.6s;
-  background: #9158b9;
+  background: #5b3278;
 }
 
-/* line 82, ../scss/_class.scss */
+/* line 85, ../scss/_class.scss */
 .bg-blue,
 .bg-red,
 .bg-yellow,
@@ -619,109 +622,109 @@ footer {
   color: #fff;
 }
 
-/* line 91, ../scss/_class.scss */
+/* line 94, ../scss/_class.scss */
 .bg-blue {
   background: #2d579a !important;
 }
 
-/* line 94, ../scss/_class.scss */
+/* line 97, ../scss/_class.scss */
 .bg-red {
   background: #b32034 !important;
 }
 
-/* line 97, ../scss/_class.scss */
+/* line 100, ../scss/_class.scss */
 .bg-yellow {
   background: #f2bc09 !important;
 }
 
-/* line 100, ../scss/_class.scss */
+/* line 103, ../scss/_class.scss */
 .bg-green {
   background: #93b11d !important;
 }
 
-/* line 103, ../scss/_class.scss */
+/* line 106, ../scss/_class.scss */
 .bg-purple {
   background: #693a8a !important;
 }
 
-/* line 106, ../scss/_class.scss */
+/* line 109, ../scss/_class.scss */
 .bg-glay {
   background: gainsboro;
 }
 
-/* line 109, ../scss/_class.scss */
+/* line 112, ../scss/_class.scss */
 .bg-white {
   background: #fff;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-1 {
   opacity: 0.1;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-2 {
   opacity: 0.2;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-3 {
   opacity: 0.3;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-4 {
   opacity: 0.4;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-5 {
   opacity: 0.5;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-6 {
   opacity: 0.6;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-7 {
   opacity: 0.7;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-8 {
   opacity: 0.8;
 }
 
-/* line 115, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .opacity-9 {
   opacity: 0.9;
 }
 
-/* line 119, ../scss/_class.scss */
+/* line 122, ../scss/_class.scss */
 .form-group label, .form-group .msg {
   display: block;
   font-size: 0.8em;
 }
-/* line 123, ../scss/_class.scss */
+/* line 126, ../scss/_class.scss */
 .form-group input, .form-group select, .form-group textarea {
   width: 100%;
 }
 
-/* line 130, ../scss/_class.scss */
+/* line 133, ../scss/_class.scss */
 .form-trans input, .form-trans select, .form-trans textarea {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* line 139, ../scss/_class.scss */
+/* line 142, ../scss/_class.scss */
 .radio label,
 .checkbox label {
   display: block;
   cursor: pointer;
   vertical-align: middle;
 }
-/* line 143, ../scss/_class.scss */
+/* line 146, ../scss/_class.scss */
 .radio label input[type="checkbox"],
 .radio label input[type="radio"],
 .checkbox label input[type="checkbox"],
@@ -732,11 +735,11 @@ footer {
   margin: 0;
 }
 
-/* line 155, ../scss/_class.scss */
+/* line 158, ../scss/_class.scss */
 .form-group-inline label {
   display: inline-block;
 }
-/* line 158, ../scss/_class.scss */
+/* line 161, ../scss/_class.scss */
 .form-group-inline input, .form-group-inline select, .form-group-inline textarea {
   width: auto;
 }
@@ -789,17 +792,17 @@ footer {
   color: #881827;
 }
 
-/* line 174, ../scss/_class.scss */
+/* line 177, ../scss/_class.scss */
 .border-left {
   border-left: 1px solid #ccc;
 }
 
-/* line 178, ../scss/_class.scss */
+/* line 181, ../scss/_class.scss */
 .border-right {
   border-right: 1px solid #ccc;
 }
 
-/* line 182, ../scss/_class.scss */
+/* line 185, ../scss/_class.scss */
 .label {
   color: #fff;
   display: inline-block;
@@ -815,7 +818,7 @@ footer {
   min-width: 50px;
 }
 
-/* line 194, ../scss/_class.scss */
+/* line 197, ../scss/_class.scss */
 .border-radius {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -825,7 +828,7 @@ footer {
   -o-border-radius: 5px;
 }
 
-/* line 199, ../scss/_class.scss */
+/* line 202, ../scss/_class.scss */
 .has-error {
   border: 1px solid #d92d44;
   border-radius: 5px;

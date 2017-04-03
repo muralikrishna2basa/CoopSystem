@@ -6,18 +6,9 @@ require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
 $errors = [];
-$lists = stockListTemporaryCreating();
+$lists = orderListDisplay(1);
 
 // TODO: stock_quantity の取得 teshima -> kawanishi 2017/04/03
-
-if(count($_POST) > 0)
-{
-    try {
-        orderListEdit($_POST);
-    } catch (Exception $e) {
-        $errors[] = $e->getMessage();
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +89,6 @@ TODO: stock_quantityとinitial_stock_quantityのセット teshima 2017/04/03
                     <?php } ?>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-blue">send</button>
         </form>
     </div>
 </div>

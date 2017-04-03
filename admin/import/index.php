@@ -2,32 +2,73 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-require_once('../../public/assets/php/convertCsvFileToArray.php');
-require_once("../../public/assets/php/lib/administrator/administratorProcess.php");
+require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
+require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
 $extension    = 'nofiles';
 $displayMonth = '月を選択する';
+$displayEdit  = '月のリストを編集する';
 $monthlyId    = '';
+$editFlag     = true;
+$csvFlag      = true;
 $csv          = [];
-$errorMessage = [];
+$errors       = [];
 $rows         = [];
+
+try {
+    $pdo = connectDb('coop');
+} catch (Exception $e) {
+}
 for($i = -3; $i < 3; $i++)
 {
     $date = date('Y-m-01');
-    if($i <  0) $dateSerial = strtotime($date."{$i} month");
-    if($i == 0) $dateSerial = strtotime($date);
-    if($i >  0) $dateSerial = strtotime($date."+{$i} month");
+    if($i <   0) $dateSerial = strtotime($date."{$i} month");
+    if($i === 0) $dateSerial = strtotime($date);
+    if($i >   0) $dateSerial = strtotime($date."+{$i} month");
     $rows[] = $dateSerial;
 }
+
+// option=selectedの調整
+//if(){
+
+//}
 
 if(count($_POST) > 0 && isset($_POST['month']))
 {
     try {
         // monthlyにデータを作成して、月別IDを取得する
         $monthlyId    = monthlyIdGeneration($_POST['month']);
-        $displayMonth = date('Y年n月が選択されています', strtotime($_POST['month']));
+        // [取込ボタン]月別IDが既に確定済みであれば処理中止
+//        $sql  = "SELECT fixed_flag FROM monthly WHERE date=? LIMIT 1;";
+        $sql  = "SELECT (fixed_flag + public_flag) FROM monthly WHERE monthly_id=?;";
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute([$monthlyId,]);
+//        var_dump($stmt->fetch());
+        if(!$res) throw new Exception("monthlyDB接続時にエラーが発生しました。");
+        if(intval($stmt->fetchColumn()) > 0) $csvFlag = false;
+        $displayMonth = date('Y年n月', strtotime($_POST['month']))."が選択されています";
+
+        // [編集画面へのリンク]確定済みでなければリンクを表示させる
+//        $sql  = "SELECT COUNT(*)
+//                FROM monthly_goods, monthly
+//                WHERE monthly_goods.monthly_id=?
+//                AND fixed_flag=1;"
+//        ;
+        $sql = "SELECT COUNT(*)
+            FROM monthly_goods
+            NATURAL JOIN monthly
+            WHERE monthly_goods.monthly_id=?
+            AND fixed_flag =0
+            AND public_flag =0;"
+        ;
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute([$monthlyId,]);
+        if(!$res) throw new Exception("montyly_goodsDB接続時にエラーが発生しました。");
+        $cnt  = $stmt->fetchColumn();
+        if(intval($cnt) === 0 || !$cnt) $editFlag = false;
+
     } catch (Exception $e) {
-        $errorMessage[] = $e->getMessage();
+        $errors[] = $e->getMessage();
         exit();
     }
 }
@@ -50,11 +91,11 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         if(!isset($_POST['monthlyId'])) throw new Exception("月が選択されていないようです。");
 
         // tmpファイルを正式にアップロード
-        $filePath = '../../public/assets/files/upload.csv';
+        $filePath = $PATH.'/public/assets/files/upload.csv';
         move_uploaded_file($_FILES['csv']['tmp_name'], $filePath);
         chmod($filePath, 0644);
         // CSVファイルを配列に変換
-        $csvArray = convertCsvFileToArray('../../public/assets/files/upload.csv');
+        $csvArray = convertCsvFileToArray($PATH.'/public/assets/files/upload.csv');
         // ファイル内容のチェック
         $errorMessage=csvFileCheck($csvArray);
         // 結果をDBに格納
@@ -64,10 +105,11 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         // アップロードしたファイルを削除
         if(file_exists($filePath)) unlink($filePath);
         // ページ遷移
+//        exit();
         header('location: ../productlist/index.php?id='.$monthlyId);
     }catch (Exception $e)
     {
-        $errorMessage[] = $e->getMessage();
+        $errors[] = $e->getMessage();
     }
 }
 
@@ -76,20 +118,20 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
 <html>
 <head>
     <title>CoopSystem</title>
-    <?php include("../../public/assets/php/partial/head.php"); ?>
+    <?php include($PATH."/public/assets/php/partial/head.php"); ?>
 </head>
 <body>
 
-<?php include("../../public/assets/php/partial/header.php"); ?>
+<?php include($PATH."/public/assets/php/partial/header.php"); ?>
 
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
-        <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
+        <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container">
-        <h2>生協商品リストを取り込む</h2>
+        <h2>生協商品リストを編集する</h2>
         <form method="post">
             <select name="month">
                 <?php foreach ($rows as $val){ ?>
@@ -105,11 +147,19 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         <form method="post" action="" enctype="multipart/form-data">
             <input type="file"    name="csv" id="csv">
             <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
+            <?php if($csvFlag){ ?>
             <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
+            <?php }else{ ?>
+            <p class="text-red">指定した月は既に確定済みであるため商品の追加ができません。</p>
+            <?php } ?>
+            <?php if($editFlag){ ?>
+            <a href="../productlist?id=<?php echo $monthlyId ?>" class="btn btn-yellow"><?php echo $displayEdit ?></a>
+            <?php }else{ ?>
+            <?php } ?>
         </form>
         <?php } ?>
 
-        <?php errorMessages($errorMessage) ?>
+        <?php errorMessages($errors) ?>
     </div>
 </div>
 <script type="text/javascript">
@@ -119,6 +169,6 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         return false;
     }
 </script>
-<?php include("../../public/assets/php/partial/footer.php"); ?>
+<?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

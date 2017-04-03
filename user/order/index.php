@@ -2,12 +2,13 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-    require_once('../../public/assets/php/lib/user/userProcess.php');
+    require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
     $lists      = returnCurrentMonthProductList(9);
     $i          = 0;
     $priceTotal = 0;
     if(count($_POST)>0){
-            $error =currentMonthListFromOrderWhenNewlyDetermineWhether(9,$_POST);
+            if($_POST['order'] == 1) $error =currentMonthListFromOrderWhenNewlyDetermineWhether(9,$_POST);
+            if($_POST['order'] == 0) echo 'update'; // TODO: update status
         if($error!=null)
         {
             echo $error;
@@ -22,16 +23,16 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 <html>
 <head>
     <title>CoopSystem</title>
-    <?php include("../../public/assets/php/partial/head.php"); ?>
-    <link rel="stylesheet" type="text/css" href="../../public/assets/stylesheets/users.css">
+    <?php include($PATH."/public/assets/php/partial/head.php"); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
 </head>
 <body>
-<?php include("../../public/assets/php/partial/header.php"); ?>
+<?php include($PATH."/public/assets/php/partial/header.php"); ?>
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
     <div class="col-2 border-right min-height bg-white" id="col-menu">
-        <?php include("../../public/assets/php/partial/menu_user.php"); ?>
+        <?php include($PATH."/public/assets/php/partial/menu_user.php"); ?>
     </div>
     <div class="col-10 container">
         <h1>生協商品を注文する</h1>
@@ -98,7 +99,8 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
             </tbody>
         </table>
         <p class="text-right form-group">
-            <button type="submit" class="btn btn-blue">注文する</button>
+            <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
+            <button type="submit" name="order" value="0" class="btn btn-blue">いいえ、今月は注文しません</button>
         </p>
         </form>
 
@@ -117,7 +119,7 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
     </div>
 </div>
-<script src="../../public/assets/js/users.js"></script>
-<?php include("../../public/assets/php/partial/footer.php"); ?>
+<script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
+<?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

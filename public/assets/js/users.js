@@ -20,7 +20,13 @@ function setPrice(selector, sign)
     var trgStock = selector.parent().attr('data-stock');
     var num      = document.getElementById(trgNum).defaultValue * 1;
     if(num + sign < 0) return;
-
+    var log =
+        'trgPrice:'+trgPrice+"\n"+
+        'trgTotal:'+trgTotal+"\n"+
+        'trgNum  :'+trgNum+"\n"+
+        'trgDisp :'+trgDisp
+    ;
+    console.log(log);
         // 在庫数の計算
         if(trgStock !== void 0)
         {
@@ -41,9 +47,11 @@ function setPrice(selector, sign)
         $('#'+trgDisp).html(num);
 
         // 合計金額を再計算
-        var price    = getPrice($('#'+trgPrice).html());
-        $('#'+trgTotal).html(separate(price * num));
-
+        if(trgPrice !== void 0)
+        {
+            var price    = getPrice($('#'+trgPrice).html());
+            $('#'+trgTotal).html(separate(price * num));
+        }
         $('#price_total').html('0');
         $("form [id *= 'total_']").each(function(){
             var total = getPrice($('#price_total').html());

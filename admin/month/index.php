@@ -2,8 +2,8 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
-require_once('../../public/assets/php/lib/administrator/administratorProcess.php');
-require_once('../../public/assets/php/auth.php');
+require_once($PATH.'/public/assets/php/lib/administrator/administratorProcess.php');
+require_once($PATH.'/public/assets/php/auth.php');
 
 try {
     $pdo  = connectDb('coop');
@@ -37,25 +37,26 @@ if(count($_POST) > 0 && isset($_POST['btn']) && $_POST['btn'] === 'publish')
 <html>
 <head>
     <title>CoopSystem</title>
-    <?php include("../../public/assets/php/partial/head.php"); ?>
+    <?php include($PATH."/public/assets/php/partial/head.php"); ?>
 </head>
 <body>
 
-<?php include("../../public/assets/php/partial/header.php"); ?>
+<?php include($PATH."/public/assets/php/partial/header.php"); ?>
 
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
     <div class="col-2 border-right min-height" id="col-menu">
-        <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
+        <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container">
         <h2>月を選択して公開する</h2>
         <form method="post" action="" enctype="multipart/form-data">
             <table class="border-none">
                 <tr>
-                    <td width="30%" class="text-center"><p>現在公開されている月</p></td>
-                    <td width="70%" class="text-center"><h2><?php echo mb_strlen($publishMonth) > 0 ? date('Y年n月', strtotime($publishMonth)) : '公開されていません' ?></h2></td>
+                    <td class="text-center"><p>現在公開されている月</p></td>
+                    <td class="text-center"><h2><?php echo mb_strlen($publishMonth) > 0 ? date('Y年n月', strtotime($publishMonth)) : '公開されていません' ?></h2></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td class="text-center">
@@ -72,13 +73,15 @@ if(count($_POST) > 0 && isset($_POST['btn']) && $_POST['btn'] === 'publish')
                             </select>
                         </p>
                     </td>
+                    <td>
+                        <button type="submit" name="btn" value="publish" class="btn btn-blue block">選択した月の生協商品リストを公開する</button>
+                    </td>
                 </tr>
             </table>
-            <p class="text-right"><button type="submit" name="btn" value="publish" class="btn btn-blue">選択した月の生協商品リストを公開する</button></p>
         </form>
     </div>
 </div>
 
-<?php include("../../public/assets/php/partial/footer.php"); ?>
+<?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

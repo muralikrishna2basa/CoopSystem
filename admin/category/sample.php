@@ -39,6 +39,11 @@ if(count($_POST) > 0 && isset($_POST['insert']))
 <head>
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
+<style type="text/css">
+    .scroll-Y{
+        overflow-y: scroll;
+    }
+</style>
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
@@ -49,9 +54,10 @@ if(count($_POST) > 0 && isset($_POST['insert']))
     <div class="col-2 border-right min-height" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll-Y">
         <h2>
             <span>カテゴリを編集する</span>
+            <button class="btn btn-yellow modal-btn" modal-target="#modal-category">カテゴリ追加</button>
         </h2>
         <form method="post">
             <table class="border-bottom table-hover">
@@ -90,10 +96,59 @@ if(count($_POST) > 0 && isset($_POST['insert']))
                         </td>
                     </tr>
                     <?php } ?>
+                    <?php foreach($categories as $category){ ?>
+                    <tr>
+                        <td class="text-center"><p><?php echo $category['category_id'] ?></p></td>
+                        <td>
+                            <p class="form-group form-trans">
+                                <input type="hidden" name="category_id[]" value="<?php echo $category['category_id'] ?>">
+                                <input type="text" name="category_name[]" value="<?php echo $category['category_name'] ?>">
+                            </p>
+                        </td>
+                        <td>
+                            <p class="form-group">
+                                <input type="color" name="color[]" sample-target="#sample_<?php echo $category['category_id'] ?>" value="<?php echo $category['color'] ?>">
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="label" id="sample_<?php echo $category['category_id'] ?>" style="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']) ?>"><?php echo $category['category_name'] ?></p>
+                        </td>
+                        <td class="text-center">
+                            <p class="form-group">
+                                <input type="hidden"   id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>" value="off">
+                                <input type="checkbox" id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>">
+                            </p>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                    <?php foreach($categories as $category){ ?>
+                    <tr>
+                        <td class="text-center"><p><?php echo $category['category_id'] ?></p></td>
+                        <td>
+                            <p class="form-group form-trans">
+                                <input type="hidden" name="category_id[]" value="<?php echo $category['category_id'] ?>">
+                                <input type="text" name="category_name[]" value="<?php echo $category['category_name'] ?>">
+                            </p>
+                        </td>
+                        <td>
+                            <p class="form-group">
+                                <input type="color" name="color[]" sample-target="#sample_<?php echo $category['category_id'] ?>" value="<?php echo $category['color'] ?>">
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="label" id="sample_<?php echo $category['category_id'] ?>" style="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']) ?>"><?php echo $category['category_name'] ?></p>
+                        </td>
+                        <td class="text-center">
+                            <p class="form-group">
+                                <input type="hidden"   id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>" value="off">
+                                <input type="checkbox" id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>">
+                            </p>
+                        </td>
+                    </tr>
+                    <?php } ?>
                 </tbody>
             </table>
             <p class="text-right">
-                <span class="btn btn-yellow modal-btn" modal-target="#modal-category">カテゴリ追加</span>
                 <button type="submit" name="update" class="btn btn-blue">更新する</button>
             </p>
         </form>

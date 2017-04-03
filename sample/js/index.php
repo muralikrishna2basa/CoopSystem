@@ -1,3 +1,6 @@
+<?php
+include     ('../../public/assets/php/partial/require_common.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>

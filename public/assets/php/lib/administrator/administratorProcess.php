@@ -237,6 +237,7 @@ function productListEdit($productList){
 }
 //発注リストを表示する関数
 function orderListDisplay($monthlyId){
+    $ren = [];
     $pdo = connectDb('cooopshinren');
     try{
          $sql = "SELECT category_name,color,goods_name,unit_price,

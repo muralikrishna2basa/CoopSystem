@@ -3,7 +3,6 @@ include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
-$res        = returnCurrentMonthProductList($_SESSION['USERID']);
 $errors     = [];
 $lists      = [];
 $i          = 0;
@@ -12,19 +11,16 @@ $errors     = [];
 $pdo        = connectDb('coop');
 $orderBtn   = '';
 $orderState = '';
-if(!$res['result']){
-    $errors = $res['return'];
-}else{
-    $lists  = $res['return'];
-}
 
 try {
+    $lists = returnCurrentMonthProductList($_SESSION['USERID']);
     $sql = "SELECT order_flag FROM ordering
-    WHERE monthly_id=(SELECT monthly_id FROM monthly WHERE public_flag=1 LIMIT 1)
-    AND orderer=?;";
+            WHERE monthly_id=(SELECT monthly_id FROM monthly WHERE public_flag=1 LIMIT 1)
+            AND orderer=?;"
+    ;
     $stmt = $pdo->prepare($sql);
     $res  = $stmt->execute([$_SESSION['USERID']]);
-    if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
+    if(!$res) throw new Exception("[order]:DB接続時にエラーが発生しました。");
 
     switch(intval($stmt->fetchColumn()))
     {
@@ -48,12 +44,6 @@ try {
 if(count($_POST) > 0){
     if($_POST['order'] == 1) $errors = currentMonthListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
     if($_POST['order'] == 0) echo 'update'; // TODO: update status
-//    if($error!=null)
-//    {
-//        echo $error;
-//    }
-//    else{
-    var_dump($errors);
     if(count($errors) === 0) header('location: ./index.php');
 }
 
@@ -80,12 +70,12 @@ if(count($_POST) > 0){
             <thead>
                 <tr>
                     <th width="10%" class="text-center">カテゴリ</th>
-                    <th width="30%">商品名</th>
+                    <th width="30%"                    >商品名</th>
                     <th width="10%" class="text-center">内容量</th>
                     <th width="10%" class="text-center">必要数</th>
-                    <th width="10%" class="text-right">単価</th>
+                    <th width="10%" class="text-right" >単価</th>
                     <th width="15%" class="text-center">購入数</th>
-                    <th width="15%" class="text-right">合計金額</th>
+                    <th width="15%" class="text-right" >合計金額</th>
                 </tr>
             </thead>
             <tbody>

@@ -3,15 +3,15 @@ include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once('../../public/assets/php/lib/user/userProcess.php');
-$res  = displayHistory($_SESSION['USERID']);
 $errors = [];
 $lists  = [];
-if(!$res['result']){
-    $errors = $res['return'];
-}else{
-    $lists  = $res['return'];
+$total  = 0;
+
+try {
+    $lists = displayHistory($_SESSION['USERID']);
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
 }
-$total = 0;
 ?>
 <!DOCTYPE html>
 <html>

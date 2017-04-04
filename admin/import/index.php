@@ -29,9 +29,9 @@ for($i = -3; $i < 3; $i++)
 }
 
 // option=selectedの調整
-//if(){
 
-//}
+$compareDate = date('Ym');
+if(isset($_POST['month'])) $compareDate = date('Ym', strtotime($_POST['month']));
 
 if(count($_POST) > 0 && isset($_POST['month']))
 {
@@ -127,16 +127,16 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right  scroll bg-glay" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll">
         <h2>生協商品リストを編集する</h2>
         <form method="post">
             <select name="month">
                 <?php foreach ($rows as $val){ ?>
                 <option value="<?php echo date('Ymd', $val); ?>"
-                 <?php if(date('Ym') === date('Ym', $val)) echo 'selected' ?>>
+                 <?php if($compareDate === date('Ym', $val)) echo 'selected' ?>>
                  <?php echo date('Y年n月分', $val) ?></option>
                 <?php } ?>
             </select>

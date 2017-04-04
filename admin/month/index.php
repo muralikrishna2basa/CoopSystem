@@ -46,37 +46,40 @@ if(count($_POST) > 0 && isset($_POST['btn']) && $_POST['btn'] === 'publish')
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right scroll bg-glay" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll">
         <h2>月を選択して公開する</h2>
         <form method="post" action="" enctype="multipart/form-data">
             <table class="border-none">
-                <tr>
-                    <td class="text-center"><p>現在公開されている月</p></td>
-                    <td class="text-center"><h2><?php echo mb_strlen($publishMonth) > 0 ? date('Y年n月', strtotime($publishMonth)) : '公開されていません' ?></h2></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="text-center">
-                        <p>公開する月</p>
-                    </td>
-                    <td class="text-center">
-                        <p class="form-group form-trans">
-                            <select name="month_id">
-                                <?php foreach($rows as $row){ ?>
-                                <option value="<?php echo $row['monthly_id'] ?>" <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>>
-                                    <?php echo date('Y年n月', strtotime($row['date'])) ?>
-                                </option>
-                                <?php } ?>
-                            </select>
-                        </p>
-                    </td>
-                    <td>
-                        <button type="submit" name="btn" value="publish" class="btn btn-blue block">選択した月の生協商品リストを公開する</button>
-                    </td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th width="40%" class="text-center">公開されている月</th>
+                        <th width="40%">公開したい月</th>
+                        <th width="20%"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="text-center"><h2><?php echo mb_strlen($publishMonth) > 0 ? date('Y年n月', strtotime($publishMonth)) : '公開されていません' ?></h2></td>
+                        <td class="text-center">
+                            <p class="form-group form-trans">
+                                <select name="month_id">
+                                    <?php foreach($rows as $row){ ?>
+                                    <option value="<?php echo $row['monthly_id'] ?>" <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>>
+                                        <?php echo date('Y年n月', strtotime($row['date'])) ?>
+                                    </option>
+                                    <?php } ?>
+                                </select>
+                            </p>
+                        </td>
+                        <td>
+                            <button type="submit" name="btn" value="publish" class="btn btn-blue block">商品リストを公開する</button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </form>
     </div>

@@ -41,10 +41,10 @@ if(count($_POST) > 0)
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right scroll bg-glay" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll">
         <h2>在庫を編集する</h2>
         <pre><?php var_dump($lists) ?></pre>
         <form method="post">

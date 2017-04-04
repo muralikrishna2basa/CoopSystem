@@ -58,10 +58,10 @@ if(count($_POST) > 0){
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right  scroll bg-glay" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll bg-glay">
         <h2>生協商品リストを修正する</h2>
         <form method="post">
             <table class="border-bottom table-hover">

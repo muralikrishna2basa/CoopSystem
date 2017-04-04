@@ -34,17 +34,17 @@ if(count($_POST)>0){
 <head>
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo $PATH ?>/public/assets/stylesheets/users.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
 
 <button class="col-btn" col-target="#col-menu"></button>
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right scroll bg-glay" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_user.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll">
         <h1>在庫から注文する</h1>
         <?php if(count($lists) > 0){ ?>
         <form method="post" action="">
@@ -118,7 +118,7 @@ if(count($_POST)>0){
 
         <div class="flex">
             <div class="col-6"></div>
-            <div class="draggable border-radius col-6 bg-white opacity-7">
+            <div class="draggable border-radius col-6 bg-white opacity-8">
                 <table class="border-none">
                     <tr>
                         <td class="text-center">
@@ -139,7 +139,7 @@ if(count($_POST)>0){
 
     </div>
 </div>
-<script src="<?php echo $PATH ?>/public/assets/js/users.js"></script>
+<script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

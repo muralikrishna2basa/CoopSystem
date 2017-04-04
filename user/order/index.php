@@ -10,7 +10,8 @@ $i          = 0;
 $priceTotal = 0;
 $errors     = [];
 $pdo        = connectDb('coop');
-
+$orderBtn   = '';
+$orderState = '';
 if(!$res['result']){
     $errors = $res['return'];
 }else{
@@ -24,10 +25,25 @@ try {
     $stmt = $pdo->prepare($sql);
     $res  = $stmt->execute([$_SESSION['USERID']]);
     if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
+
+    switch(intval($stmt->fetchColumn()))
+    {
+        case 0:
+        case 1:
+            $orderBtn   = "<button type=\"submit\" name=\"order\" value=\"0\" class=\"btn btn-red\">いいえ、今月は注文しません</button>";
+            $orderState = "<p class=\"label bg-yellow\">今月の注文はしていません</p>";
+            break;
+        case 2:
+            $orderState = "<p class=\"label bg-red\">今月は注文をしません</p>";
+            break;
+        case 3:
+            $orderState = "<p class=\"label bg-green\">今月の注文をしました</p>";
+            break;
+    }
+
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
-
 
 if(count($_POST) > 0){
     if($_POST['order'] == 1) $errors = currentMonthListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
@@ -54,10 +70,10 @@ if(count($_POST) > 0){
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height bg-white" id="col-menu">
+    <div class="col-2 border-right scroll bg-glay" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_user.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll">
         <h1>生協商品を注文する</h1>
         <form method="post" action="">
         <table class="table-hover border-bottom">
@@ -123,15 +139,18 @@ if(count($_POST) > 0){
         </table>
         <p class="text-right form-group">
             <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
-            <button type="submit" name="order" value="0" class="btn btn-red">いいえ、今月は注文しません</button>
+            <?php echo $orderBtn //今月は注文しませんボタンを表示 ?>
         </p>
         </form>
 
         <div class="flex">
             <div class="col-6"></div>
-            <div class="draggable border-radius col-6 bg-white opacity-7">
+            <div class="draggable border-radius col-6 bg-white opacity-8">
                 <table class="border-none">
                     <tr>
+                        <td class="text-center">
+                            <?php echo $orderState ?>
+                        </td>
                         <td class="text-center">
                             <p>購入金額</p>
                         </td>

@@ -6,14 +6,15 @@ function windowSizing()
     var siz = win - top - btm;
 
 //    console.log(win+' , '+top+' , '+btm+' , '+siz);
-    $("body").css({paddingTop: top+'px', paddingBottom: btm+'px', minHeight: siz+'px'});
-    $(".min-height").each(function(){ $(this).css({minHeight: siz+'px'}) });
+//    $("body").css({paddingTop: top+'px', paddingBottom: btm+'px', minHeight: siz+'px'});
+//    $(".min-height").each(function(){ $(this).css({minHeight: siz+'px'}) });
 
     var trg  = $(".col-btn").attr("col-target");
     var btm  = $(window).height();
     var side = $(trg).innerWidth();
 //    console.log(side);
-    $(".col-btn").css({top: (btm-100)+"px", left: (side-40)+"px"});
+//    $(".col-btn").css({top: (top)+"px", left: (side-35)+"px"});
+    $(".col-btn").css({left: (side)+"px"});
 
 }
 
@@ -65,12 +66,14 @@ $(function(){
     $(".col-btn").click(function(){
         var trg = $(this).attr("col-target");
         if($(trg).is(":hidden")){
-            $(trg).fadeIn();
+            $(trg).fadeIn(200);
             var side = $(trg).innerWidth();
-            $(this).removeClass('col-close').css({left: (side-40)+'px'});
+//            $(this).removeClass('col-close').css({left: (side-35)+'px'});
+            $(this).removeClass('col-close').css({left: (side)+'px'});
         }else{
-            $(trg).fadeOut();
-            $(this).addClass('col-close').css({left: '5px'});
+            $(trg).fadeOut(200);
+//            $(this).addClass('col-close').css({left: '5px'});
+            $(this).addClass('col-close').css({left: '0px'});
         }
     });
 })

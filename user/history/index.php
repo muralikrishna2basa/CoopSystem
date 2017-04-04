@@ -25,10 +25,10 @@ $total = 0;
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right  scroll bg-glay" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_user.php"); ?>
     </div>
-    <div class="col-10 container">
+    <div class="col-10 container scroll">
         <h1>注文した履歴を確認する</h1>
         <?php if(count($lists) > 0){ ?>
         <table class="table-hover border-bottom">

@@ -204,3 +204,26 @@
     @include setPrefix(border-radius, 5px);
     background: lighten($red, 40%);
 }
+
+.scroll{
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.draggable{
+    position: absolute !important;
+    top: 70px;
+    right: 10px;
+    &:after{
+        content: '';
+        background-image: url(../imgs/draggable.png);
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+    }
+}

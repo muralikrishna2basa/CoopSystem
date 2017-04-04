@@ -26,7 +26,7 @@ function setPrice(selector, sign)
         'trgNum  :'+trgNum+"\n"+
         'trgDisp :'+trgDisp
     ;
-    console.log(log);
+//    console.log(log);
         // 在庫数の計算
         if(trgStock !== void 0)
         {

@@ -39,11 +39,6 @@ if(count($_POST) > 0 && isset($_POST['insert']))
 <head>
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
-<style type="text/css">
-    .scroll-Y{
-        overflow-y: scroll;
-    }
-</style>
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
@@ -51,10 +46,10 @@ if(count($_POST) > 0 && isset($_POST['insert']))
 <button class="col-btn" col-target="#col-menu"></button>
 
 <div class="flex">
-    <div class="col-2 border-right min-height" id="col-menu">
+    <div class="col-2 border-right scroll bg-glay" id="col-menu">
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container scroll-Y">
+    <div class="col-10 container scroll">
         <h2>
             <span>カテゴリを編集する</span>
             <button class="btn btn-yellow modal-btn" modal-target="#modal-category">カテゴリ追加</button>

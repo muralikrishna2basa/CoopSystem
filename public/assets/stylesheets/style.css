@@ -1,85 +1,81 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
 @import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 @import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
-/* line 1, ../scss/_base.scss */
-html {
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-/* line 6, ../scss/_base.scss */
+/* line 7, ../scss/_base.scss */
 body {
-  padding: 50px 0;
-  height: 100%;
+  padding: 0;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  min-width: 600px;
+  height: calc(100vh - 100px);
 }
 
-/* line 10, ../scss/_base.scss */
+/* line 16, ../scss/_base.scss */
 html, body {
   font-family: "Noto Sans Japanese";
   background: #f5f5f5;
   font-size: 16px;
   margin: 0;
   position: relative;
-  min-height: 100%;
 }
 
-/* line 19, ../scss/_base.scss */
+/* line 25, ../scss/_base.scss */
 a {
   text-decoration: none;
   padding: 5px;
   outline: none;
 }
-/* line 23, ../scss/_base.scss */
+/* line 29, ../scss/_base.scss */
 a:hover {
   transition: 0.6s;
 }
 
-/* line 28, ../scss/_base.scss */
+/* line 34, ../scss/_base.scss */
 a:link {
   color: #3261ab;
 }
 
-/* line 29, ../scss/_base.scss */
+/* line 35, ../scss/_base.scss */
 a:visited {
   color: #2c5697;
 }
 
-/* line 30, ../scss/_base.scss */
+/* line 36, ../scss/_base.scss */
 a:hover {
   color: #bf1e56;
 }
 
-/* line 31, ../scss/_base.scss */
+/* line 37, ../scss/_base.scss */
 a:active {
   color: #bf1e56;
 }
 
-/* line 33, ../scss/_base.scss */
+/* line 39, ../scss/_base.scss */
 .btn:link {
   color: #fff;
 }
 
-/* line 34, ../scss/_base.scss */
+/* line 40, ../scss/_base.scss */
 .btn:visited {
   color: #fff;
 }
 
-/* line 35, ../scss/_base.scss */
+/* line 41, ../scss/_base.scss */
 .btn:hover {
   color: #fff;
 }
 
-/* line 36, ../scss/_base.scss */
+/* line 42, ../scss/_base.scss */
 .btn:active {
   color: #fff;
 }
 
-/* line 38, ../scss/_base.scss */
+/* line 44, ../scss/_base.scss */
 p {
   margin: 5px 0;
 }
 
-/* line 42, ../scss/_base.scss */
+/* line 48, ../scss/_base.scss */
 h1,
 h2,
 h3,
@@ -90,45 +86,45 @@ h6 {
   margin: 10px 0;
 }
 
-/* line 53, ../scss/_base.scss */
+/* line 59, ../scss/_base.scss */
 ul,
 ol {
   margin: 10px 0;
 }
 
-/* line 59, ../scss/_base.scss */
+/* line 65, ../scss/_base.scss */
 table {
   width: 100%;
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin: 10px 0;
 }
-/* line 64, ../scss/_base.scss */
+/* line 70, ../scss/_base.scss */
 table th {
   text-align: left;
 }
-/* line 68, ../scss/_base.scss */
+/* line 74, ../scss/_base.scss */
 table td {
   padding: 2px 5px;
 }
-/* line 70, ../scss/_base.scss */
+/* line 76, ../scss/_base.scss */
 table td:first-child:before {
   content: "";
   display: block;
   height: 35px;
   float: left;
 }
-/* line 77, ../scss/_base.scss */
+/* line 83, ../scss/_base.scss */
 table th, table td {
   border: 1px solid #ccc;
 }
 
-/* line 81, ../scss/_base.scss */
+/* line 87, ../scss/_base.scss */
 form {
   margin: 0;
 }
 
-/* line 84, ../scss/_base.scss */
+/* line 90, ../scss/_base.scss */
 input,
 select,
 textarea {
@@ -143,7 +139,7 @@ textarea {
   font-family: "Noto Sans Japanese";
   outline: none;
 }
-/* line 94, ../scss/_base.scss */
+/* line 100, ../scss/_base.scss */
 input:hover,
 select:hover,
 textarea:hover {
@@ -155,14 +151,14 @@ textarea:hover {
   -o-box-shadow: 2px 2px 4px rgba(102, 102, 102, 0.2);
 }
 
-/* line 100, ../scss/_base.scss */
+/* line 106, ../scss/_base.scss */
 input[type="radio"],
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
   padding: 0;
 }
-/* line 106, ../scss/_base.scss */
+/* line 112, ../scss/_base.scss */
 input[type="radio"]:hover,
 input[type="checkbox"]:hover {
   transition: 0;
@@ -173,7 +169,7 @@ input[type="checkbox"]:hover {
   -o-box-shadow: none;
 }
 
-/* line 112, ../scss/_base.scss */
+/* line 118, ../scss/_base.scss */
 input[type="button"],
 input[type="submit"],
 input[type="radio"],
@@ -184,20 +180,20 @@ a {
   cursor: pointer;
 }
 
-/* line 122, ../scss/_base.scss */
+/* line 128, ../scss/_base.scss */
 input[type="color"] {
   padding: 0;
   height: 30px;
   width: 60px;
 }
 
-/* line 127, ../scss/_base.scss */
+/* line 133, ../scss/_base.scss */
 pre, code {
   font-family: "Source Code Pro", sans-serif;
   font-size: 0.85em;
 }
 
-/* line 131, ../scss/_base.scss */
+/* line 137, ../scss/_base.scss */
 pre {
   border: 1px solid #ccc;
   background: #ededed;
@@ -210,14 +206,14 @@ pre {
   z-index: 0;
 }
 
-/* line 138, ../scss/_base.scss */
+/* line 144, ../scss/_base.scss */
 code {
   position: relative;
   white-space: pre-wrap;
   word-break: break-all;
   z-index: 0;
 }
-/* line 143, ../scss/_base.scss */
+/* line 149, ../scss/_base.scss */
 code:before {
   white-space: pre-wrap;
   word-break: normal;
@@ -328,17 +324,64 @@ code:before {
   min-width: 150px;
 }
 
-/* line 22, ../scss/_container.scss */
+/*
+$btn-width: 30px;
+.col-btn{
+    width: $btn-width;
+    height: $btn-width;
+    position: fixed;
+    z-index: 1;
+    @include setPrefix(border-radius, 50%);
+    padding: 0;
+    background-color: darken($bg-base-color, 40%);
+    background-image: url(../imgs/toggle.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    @include setPrefix(transform, rotateZ(180deg));
+    transition: $timer;
+    opacity: 0.5;
+    border: 1px solid darken($line-color, 30%);
+    &:hover{
+    background-color: darken($bg-base-color, 30%);
+        background-image: url(../imgs/toggle.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+}
+.col-close{
+    @include setPrefix(transform, rotateZ(0deg));
+    transition: $timer;
+}
+*/
+/* line 51, ../scss/_container.scss */
 .col-btn {
-  width: 30px;
-  height: 30px;
+  width: 15px;
+  height: calc(100vh - 100px);
   position: fixed;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+  z-index: 1;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
   padding: 0;
+  margin: 0;
+  right: 15px;
+  background-color: #8f8f8f;
+  transition: 0.6s;
+  opacity: 0.5;
+  border: 1px solid gray;
+}
+/* line 61, ../scss/_container.scss */
+.col-btn:after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   background-image: url(../imgs/toggle.png);
   background-position: center center;
   background-repeat: no-repeat;
@@ -347,24 +390,25 @@ code:before {
   -moz-transform: rotateZ(180deg);
   -ms-transform: rotateZ(180deg);
   -o-transform: rotateZ(180deg);
-  transition: 0.6s;
-  opacity: 0.5;
 }
-/* line 34, ../scss/_container.scss */
+/* line 78, ../scss/_container.scss */
 .col-btn:hover {
-  background-image: url(../imgs/toggle.png);
-  background-position: center center;
-  background-repeat: no-repeat;
+  background-color: darkgray;
 }
 
-/* line 40, ../scss/_container.scss */
-.col-close {
+/* line 83, ../scss/_container.scss */
+.col-close:after {
   transform: rotateZ(0deg);
   -webkit-transform: rotateZ(0deg);
   -moz-transform: rotateZ(0deg);
   -ms-transform: rotateZ(0deg);
   -o-transform: rotateZ(0deg);
   transition: 0.6s;
+}
+
+/* line 89, ../scss/_container.scss */
+#col-menu + div {
+  margin-left: 15px;
 }
 
 /* line 1, ../scss/_header.scss */
@@ -375,8 +419,9 @@ header {
   width: 100%;
   top: 0;
   z-index: 99;
+  height: 60px;
 }
-/* line 9, ../scss/_header.scss */
+/* line 10, ../scss/_header.scss */
 header .logo {
   display: inline-block;
   width: 170px;
@@ -385,23 +430,23 @@ header .logo {
   background-repeat: no-repeat;
   background-position: center center;
 }
-/* line 16, ../scss/_header.scss */
+/* line 17, ../scss/_header.scss */
 header .logo:hover {
   transition: 0.6s;
   background-image: url(../imgs/logo_2_hover.png);
 }
-/* line 22, ../scss/_header.scss */
+/* line 23, ../scss/_header.scss */
 header .user-name {
   position: absolute;
   right: 10px;
   top: 10px;
   text-align: center;
 }
-/* line 27, ../scss/_header.scss */
+/* line 28, ../scss/_header.scss */
 header .user-name .honorific {
   font-size: 0.8em;
 }
-/* line 32, ../scss/_header.scss */
+/* line 33, ../scss/_header.scss */
 header .logout {
   position: absolute;
   right: 5px;
@@ -462,11 +507,21 @@ header .logout {
 footer {
   background: #444;
   color: #fff;
-  padding: 10px;
   position: absolute;
   width: 100%;
   bottom: 0;
   box-sizing: border-box;
+  height: 40px;
+}
+/* line 10, ../scss/_footer.scss */
+footer h6 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  margin: auto;
+  height: 10px;
+  line-height: 10px;
 }
 
 /* line 1, ../scss/_class.scss */
@@ -837,4 +892,30 @@ footer {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   background: #f1aeb7;
+}
+
+/* line 208, ../scss/_class.scss */
+.scroll {
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* line 214, ../scss/_class.scss */
+.draggable {
+  position: absolute !important;
+  top: 70px;
+  right: 10px;
+}
+/* line 218, ../scss/_class.scss */
+.draggable:after {
+  content: '';
+  background-image: url(../imgs/draggable.png);
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
 }

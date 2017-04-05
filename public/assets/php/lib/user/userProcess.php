@@ -20,7 +20,7 @@ function displayHistory($userId,$monthlyId = 0){
                     INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
                     INNER JOIN category ON monthly_goods.category_id = category.category_id
                     INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-                    WHERE ordering.orderer = ?;"
+                    WHERE ordering.orderer = ? ORDER BY category.category_id;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute(array($userId));
@@ -33,7 +33,7 @@ function displayHistory($userId,$monthlyId = 0){
                     INNER JOIN ordering      ON ordering_list.ordering_id      = ordering.ordering_id
                     INNER JOIN category      ON monthly_goods.category_id      = category.category_id
                     INNER JOIN monthly       ON ordering.monthly_id            = monthly.monthly_id
-                    WHERE ordering.orderer = ? AND ordering.monthly_id = ?;"
+                    WHERE ordering.orderer = ? AND ordering.monthly_id = ? ORDER BY category.category_id;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute(array($userId,$monthlyId));
@@ -115,7 +115,7 @@ function returnCurrentMonthProductList($userId){
 
     try{
         $sql = "SELECT monthly_goods_id,goods_name,unit_price,detail_amount_per_one, required_quantity,category_name,color
-                FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category WHERE public_flag=1;"
+                FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category WHERE public_flag=1 ORDER BY category.category_id;"
         ;
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(null);
@@ -141,7 +141,7 @@ function returnCurrentMonthProductList($userId){
                 INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
                 INNER JOIN category ON monthly_goods.category_id = category.category_id
                 INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-                WHERE ordering.orderer = ? AND monthly.public_flag=1;"
+                WHERE ordering.orderer = ? AND monthly.public_flag=1 ORDER BY category.category_id;"
         ;
         $stmt= $pdo->prepare($sql);
         $res = $stmt->execute(array($userId));

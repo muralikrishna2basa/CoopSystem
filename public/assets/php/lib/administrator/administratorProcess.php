@@ -251,18 +251,30 @@ function orderListDisplay($monthlyId = 0){
     $pdo = connectDb('cooopshinren');
     try{
         $sql = "SELECT category_name,color,goods_name,unit_price,
-        ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id,ordering.orderer
+        ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id,orderer
         FROM  ordering_list
         INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
         INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
         INNER JOIN category ON monthly_goods.category_id = category.category_id
         INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-        WHERE ordering.monthly_id = (SELECT MIN(monthly_id) FROM monthly WHERE fixed_flag =0);";
+        WHERE ordering.monthly_id = (SELECT MIN(monthly_id) FROM monthly WHERE fixed_flag =0)
+        ORDER BY category.category_id;";
         $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute(array($monthlyId));
+        $res= $stmt->execute();
         if(!$res) throw new Exception("関数orderListDisplayでSELECT文実行時にエラーが発生しました。");
         while ($row = $stmt->fetch()) {
             $orderList[] =$row;
+        }
+        $users=getAllUsers();
+        for ($i=0; $i <count($orderList); $i++) { 
+            $orderList[$i]['name'] = "";
+            $orderList[$i][8] = "";
+            for ($j=0; $j <count($users) ; $j++) { 
+                if($orderList[$i]['orderer']==$users[$j]['userid']){
+                    $orderList[$i]['name'] = $users[$j]['userName'];
+                    $orderList[$i][8] = $users[$j]['userName'];
+                }
+            }
         }
         return $orderList;
     }catch(Exception $e){
@@ -337,28 +349,42 @@ function isInventoryListNewly($stockList){
             }
         }
     }catch(Exception $e){
-
+        throw $e;
     }
 
     
 }
 //発注を確定する関数
-function fixOrder(){
+function fixOrder($monthlyId ){
     $pdo = connectDb('cooopshinren');
     try{
-        $sql="SELECT MIN(monthly_id) FROM monthly WHERE fixed_flag =0";
-        $stmt=$pdo->prepare($sql);
-        $res= $stmt->execute();
-        $monthlyId = $stmt->fetchColumn();
-        if(!$res) throw new Exception("関数fixOrderで$monthlyId取得時にエラーが発生しました。");
         $sql= "UPDATE monthly SET fixed_flag = 1 WHERE monthly_id = ?";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($monthlyId));
         if(!$res) throw new Exception("関数fixOrderでUPDATE文実行時にエラーが発生しました。");
 
     }catch(Exception $e){
-
+        throw $e;
     }
 }
-//
+//在庫リストを表示する管理者用関数
+function administratorReturnStockList(){
+ $pdo = connectDb('cooopshinren');
+  try{
+        $sql="SELECT stock_list.monthly_goods_id,goods_name,unit_price,detail_amount_per_one,
+                    stock_quantity,category_name,color
+                    FROM stock_list
+                    INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                    INNER JOIN category ON monthly_goods.category_id = category.category_id";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute();
+        while ($row = $stmt->fetch()) {
+            $stockList[] =$row;
+        }
+        if(!$res) throw new Exception("関数fixOrderでmonthlyId取得時にエラーが発生しました。");
+        return $stockList;
+    }catch(Exception $e){
+        throw $e;
+    }
+}
 ?>

@@ -6,19 +6,22 @@ require_once('../../convertCsvFileToArray.php');
 class administratorTest extends PHPUnit_Framework_TestCase{
      /**
     * @test
-    */function testMonthSelectionAndOrderCreation()
+    */
+     function testMonthSelectionAndOrderCreation()
      {
        // monthSelectionAndOrderCreation(4);
      }
  /**
     * @test
-    */function testStockListTemporaryCreating()
+    */
+ function testStockListTemporaryCreating()
  {
-    var_dump(stockListTemporaryCreating());
+   // var_dump(stockListTemporaryCreating());
 }
  /**
     * @test
-    */function testMonthlyIdGeneration()
+    */
+ function testMonthlyIdGeneration()
  {
     $date=20170920;
  //monthlyIdGeneration($date);
@@ -26,14 +29,22 @@ class administratorTest extends PHPUnit_Framework_TestCase{
 
 /**
     * @test
-    */function testOrderListDisplay(){
+    */
+function testOrderListDisplay(){
    // var_dump(orderListDisplay(2));
 
 }
 /**
     * @test
-    */function testFixOrder(){
-fixOrder();
+    */
+function testFixOrder(){
+   // fixOrder();
+}
+/**
+    * @test
+    */
+function testAdministratorReturnStockList(){
+    var_dump(administratorReturnStockList());
 }
 }
- ?>
+?>

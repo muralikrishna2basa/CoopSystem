@@ -4,7 +4,7 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
-
+require_once($PATH.'/public/assets/php/auth.php');
 $errors = [];
 $lists = orderListDisplay();
 

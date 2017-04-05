@@ -17,7 +17,7 @@ try {
 if(count($_POST) > 0)
 {
     try {
-        orderListEdit($_POST);
+        isInventoryListNewly($_POST);
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
     }

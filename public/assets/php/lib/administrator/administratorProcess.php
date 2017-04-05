@@ -58,14 +58,16 @@ function monthSelectionAndOrderCreation($monthlyId)
 function stockListTemporaryCreating(){
     try{
          $stock=[];
+         $returnList=[];
         $pdo = connectDb('cooopshinren');
         $sql="SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1)";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute();
         if(!$res) throw new Exception("関数stockListTemporaryCreatingでSELECT実行時にエラーが発生しました。");
-        while ($row = $stmt->fetch()) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $monthlyGoods[] =$row;
         }
+       
         for ($i=0; $i <count($monthlyGoods) ; $i++) {
             $monthlyGoods[$i]['initial_stock_quantity'] = 0;
             $monthlyGoods[$i][9]                   = 0;
@@ -78,17 +80,18 @@ function stockListTemporaryCreating(){
             $stock[] =$row;
         }
         for($i=0;$i<count($monthlyGoods);$i++){
+            $flag=true;
              for($j=0;$j<count($stock);$j++){
-
-                
-
                 if($monthlyGoods[$i]['monthly_goods_id']==$stock[$j]['monthly_goods_id']){
-                    $monthlyGoods[$i]['initial_stock_quantity'] = $stock[$j]['stock_quantity'];
-                    $monthlyGoods[$i][9]                   = $stock[$j]['stock_quantity'];
+                  $flag=false;
+                  break;
                 }
+                }
+                if($flag){
+                    $returnList[]=$monthlyGoods[$i];
              }
         }
-        return $monthlyGoods;
+        return $returnList;
     }
     catch(Exception $e){
      return ['result'=>false, 'return'=>$e->getMessage()];

@@ -12,7 +12,7 @@ class userTest extends PHPUnit_Framework_TestCase
     function testReturnCurrentMonthProductList()
     {
 
-       $a = returnCurrentMonthProductList(12);
+     //  $a = returnCurrentMonthProductList(12);
     // var_dump($a);
 
    }
@@ -21,8 +21,8 @@ class userTest extends PHPUnit_Framework_TestCase
     */
  function testReturnStockList()
  {
-    $b =returnStockList(9,0);
-    var_dump($b);
+   // $b =returnStockList(9,0);
+    //var_dump($b);
 }
 /**
     * @test
@@ -41,9 +41,15 @@ function testDoOrder()
     */
 function testDisplayHistory()
 {
-    $d =displayHistory(1,3);
+   // $d =displayHistory(1,3);
     //var_dump($d);
 }
-
+/**
+    * @test
+    */
+function testNoOrder()
+{
+    noOrder(244);
+}
 }
 ?>

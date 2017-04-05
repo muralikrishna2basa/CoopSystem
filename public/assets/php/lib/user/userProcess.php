@@ -8,7 +8,7 @@
  */
 function displayHistory($userId,$monthlyId = 0){
     $functionName = 'displayHistory';
-    $ren = []; // TODO: $renのリネーム kawanishi 2017/04/04
+    $history = []; 
     $errorMessage = [];
     try{
         $pdo = connectDb('cooopshinren');
@@ -40,9 +40,9 @@ function displayHistory($userId,$monthlyId = 0){
             if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
         }
         while ($row = $stmt->fetch()) {
-            $ren[] =$row; // TODO: $renのリネーム kawanishi 2017/04/04
+            $history[] =$row; 
         }
-        return $ren; // TODO: $renのリネーム kawanishi 2017/04/04
+        return $history; 
     }catch(Exception $e){
         throw $e;
     }
@@ -99,15 +99,16 @@ where ordering.order_flag = 3 and ordering.orderer = 163 and monthly_goods.month
  */
 function returnCurrentMonthProductList($userId){
     $functionName = 'returnCurrentMonthProductList';
-    $ren   = [];// TODO: $renのリネーム kawanishi 2017/04/04
+    $order_flag   = [];
     $order = [];
+    $currentMonthList=[];
     try{
         $pdo = connectDb('cooopshinren');
         $sql = "SELECT order_flag FROM ordering WHERE orderer= ?";
         $stmt=$pdo->prepare($sql);
         $res = $stmt->execute(array($userId));
         if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
-        $ren = $stmt->fetchColumn(); // TODO: $renのリネーム kawanishi 2017/04/04
+        $order_flag = $stmt->fetchColumn(); 
     }catch(Exception $e){
         throw $e;
     }
@@ -175,7 +176,7 @@ function returnCurrentMonthProductList($userId){
  */
 function returnStockList($userId,$monthlyId = 0){
     $functionName = 'returnStockList';
-    $ren       = []; // TODO: $renのリネーム kawanishi 2017/04/04
+    $order_flag   = []; 
     $stockList = [];
     try{
         $pdo = connectDb('cooopshinren');
@@ -186,7 +187,7 @@ function returnStockList($userId,$monthlyId = 0){
         if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
 
         while ($row = $stmt->fetch()) {
-            $ren =$row[0]; // TODO: $renのリネーム kawanishi 2017/04/04
+            $order_flag =$row[0]; 
         }
     }catch(Exception $e){
         throw $e;
@@ -230,7 +231,7 @@ function returnStockList($userId,$monthlyId = 0){
         $stockList[$i][7]                   = 0;
     }
 
-    if($ren != 3) return $stockList; // TODO: $renのリネーム kawanishi 2017/04/04
+    if($order_flag != 3) return $stockList; 
 
     try{
         $sql = "SELECT
@@ -271,7 +272,7 @@ function returnStockList($userId,$monthlyId = 0){
 //ユーザーIDと配列（商品ＩＤと個数）を受け取り登録する
 function doOrder($userId,$orderGoodsList){
     $functionName = 'doOrder';
-    $ren = ''; // TODO: $renのリネーム kawanishi 2017/04/04
+    $ordering_id = '';
     $errorMessage = [];
     try{
         $pdo  = connectDb('cooopshinren');
@@ -281,13 +282,13 @@ function doOrder($userId,$orderGoodsList){
         if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
 
         while ($row = $stmt->fetch()) {
-            $ren = $row[0]; // TODO: $renのリネーム kawanishi 2017/04/04
+            $ordering_id = $row[0]; 
         }
 
         $sql  = "UPDATE ordering SET order_flag = 3 WHERE ordering.ordering_id=?;";
         $stmt = $pdo->prepare($sql);
-        $res  = $stmt->execute(array($ren)); // TODO: $renのリネーム kawanishi 2017/04/04
-        if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
+        $res  = $stmt->execute(array($ordering_id));
+        if(!$res) throw new Exception("[{$functionName}]:UPDATE文実行時にエラーが発生しました。");
 
         for($i = 0; $i < count($orderGoodsList['monthly_goods_id']); $i++){
             $quantaity = intval($orderGoodsList["ordering_quantity"][$i]);
@@ -296,8 +297,8 @@ function doOrder($userId,$orderGoodsList){
                 $stmt  = $pdo->prepare($sql);
                 $param = [
                     $orderGoodsList['monthly_goods_id'],     /* monthly_goods_id */
-                    $ren,                                    /* ordering_id */ // TODO: エラー発生場所 ordering_idはどうやって取得してる？ teshima 2017/04/03
-                                                             // TODO: $renのリネーム kawanishi 2017/04/04
+                    $ordering_id,                                    /* ordering_id */ // TODO: エラー発生場所 ordering_idはどうやって取得してる？ teshima 2017/04/03
+                                                            
                     $quantaity,                              /* ordering_quantity */
                 ];
                 $res   = $stmt->execute($param);
@@ -315,13 +316,13 @@ function doOrder($userId,$orderGoodsList){
 function doOrderStock($userId,$newOrderGoodsList){
     $functionName = 'doOrderStock';
     $errorMessage = array();
-    $ren = ''; // TODO: $renのリネーム kawanishi 2017/04/04
+    $ordering_id = ''; // TODO: $renのリネーム kawanishi 2017/04/04
     try{
         $pdo  = connectDb('cooopshinren');
         $sql  = "SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?;";
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute(array($userId));
-        $ren  = $stmt->fetchColumn(); // TODO: $renのリネーム kawanishi 2017/04/04
+        $ordering_id  = $stmt->fetchColumn();
 
         for($i = 0; $i < count($newOrderGoodsList['monthly_goods_id']); $i++){
             $goodsId   = $newOrderGoodsList['monthly_goods_id'];
@@ -336,7 +337,7 @@ function doOrderStock($userId,$newOrderGoodsList){
             if($quantaity > 0 && $stock-$quantaity >= 0){
                 $sql        = "INSERT INTO ordering_list VALUES (NULL,?,?,?);";
                 $stmt       = $pdo->prepare($sql);
-                $res        = $stmt->execute(array($goodsId,$ren,$quantaity)); // TODO: $renのリネーム kawanishi 2017/04/04
+                $res        = $stmt->execute(array($goodsId,$ordering_id,$quantaity));
                 $sql        = "UPDATE stock_list SET stock_quantity = ? WHERE stock_list.monthly_goods_id= ?;";
                 $stmt       = $pdo->prepare($sql);
                 $difference = $stock-$quantaity;
@@ -364,7 +365,7 @@ function doOrderStock($userId,$newOrderGoodsList){
 //$editOrderGoodsList は 商品ＩＤ 変更後の発注数 変更前の発注数
 function currentMonthListFromPlacedEdit($userId,$editOrderGoodsList){
     $functionName = 'currentMonthListFromPlacedEdit';
-    $ren = ''; // TODO: $renのリネーム kawanishi 2017/04/04
+    $ordering_id = '';
     try{
         $pdo  = connectDb('cooopshinren');
         $sql  = "SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?;";
@@ -372,7 +373,7 @@ function currentMonthListFromPlacedEdit($userId,$editOrderGoodsList){
         $res  = $stmt->execute(array($userId));
         if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
 
-        $ren  = $stmt->fetchColumn(); // TODO: $renのリネーム kawanishi 2017/04/04
+        $ordering_id  = $stmt->fetchColumn(); 
     }catch(Exception $e){
         throw $e;
     }
@@ -381,7 +382,7 @@ function currentMonthListFromPlacedEdit($userId,$editOrderGoodsList){
             try{
                 $sql  = "DELETE FROM ordering_list WHERE monthly_goods_id =? AND ordering_id =?;";
                 $stmt = $pdo->prepare($sql);
-                $res  = $stmt->execute(array($editOrderGoodsList['monthly_goods_id'],$ren)); // TODO: $renのリネーム kawanishi 2017/04/04
+                $res  = $stmt->execute(array($editOrderGoodsList['monthly_goods_id'],$ordering_id)); 
                 if(!$res) throw new Exception("[{$functionName}]:monthly_goods_id[{$$editOrderGoodsList['monthly_goods_id']}]削除時にエラーが発生しました。");
             }catch(Exception $e){
                 throw $e;
@@ -390,7 +391,7 @@ function currentMonthListFromPlacedEdit($userId,$editOrderGoodsList){
             try{
                 $sql  = "UPDATE ordering_list SET ordering_quantity=? WHERE monthly_goods_id =? AND ordering_id =?;";
                 $stmt = $pdo->prepare($sql);
-                $res  = $stmt->execute(array($editOrderGoodsList['ordering_quantity'],$editOrderGoodsList['monthly_goods_id'],$ren)); // TODO: $renのリネーム kawanishi 2017/04/04
+                $res  = $stmt->execute(array($editOrderGoodsList['ordering_quantity'],$editOrderGoodsList['monthly_goods_id'],$ordering_id)); 
                 if(!$res) throw new Exception("[{$functionName}]:monthly_goods_id[{$editOrderGoodsList['monthly_goods_id']}]更新時にエラーが発生しました。");
             }catch(Exception $e){
                 throw $e;
@@ -405,14 +406,14 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
 {
     $functionName = 'stockListFromPlacedEditDelete';
     $errorMessage = array();
-    $ren = ''; // TODO: $renのリネーム kawanishi 2017/04/04
+    $ordering_id = ''; // TODO: $renのリネーム kawanishi 2017/04/04
     try{
         $pdo = connectDb('cooopshinren');
         $sql = "SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?;";
         $stmt= $pdo->prepare($sql);
         $res = $stmt->execute(array($userId));
         if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
-        $ren = $stmt->fetchColumn(); // TODO: $renのリネーム kawanishi 2017/04/04
+        $ordering_id = $stmt->fetchColumn(); // TODO: $renのリネーム kawanishi 2017/04/04
     }
     catch(Exception $e){
         throw $e;
@@ -434,7 +435,7 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
             try{
                 $sql   = "DELETE FROM ordering_list WHERE monthly_goods_id =? AND ordering_id =?;";
                 $stmt  = $pdo->prepare($sql);
-                $res   = $stmt->execute(array($editOrderGoodsList['monthly_goods_id'],$ren)); // TODO: $renのリネーム kawanishi 2017/04/04
+                $res   = $stmt->execute(array($editOrderGoodsList['monthly_goods_id'],$ordering_id)); 
                 if(!$res) throw new Exception("[{$functionName}]:ID[{$editOrderGoodsList['monthly_goods_id']}]削除時にエラーが発生しました。");
                 $stock = $stock + $editOrderGoodsList['initial_ordering_quantity'][$i];
                 $sql   = "UPDATE stock_list SET stock_quantity = ? WHERE stock_list.monthly_goods_id= ?;";
@@ -452,9 +453,9 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
                 $param = [
                     $editOrderGoodsList['ordering_quantity'],   /* ordering_quantity */
                     $editOrderGoodsList['monthly_goods_id'],    /* monthly_goods_id */
-                    $ren,                                       /* ordering_id */
+                    $ordering_id,                                       /* ordering_id */
                 ];
-                $res   = $stmt->execute($param); // TODO: $renのリネーム kawanishi 2017/04/04
+                $res   = $stmt->execute($param); 
                 if(!$res) throw new Exception("[{$functionName}]:ID[{$editOrderGoodsList['monthly_goods_id'][$i]}]更新時にエラーが発生しました。");
                 $stock = $stock + $editOrderGoodsList['initial_ordering_quantity'][$i] - $editOrderGoodsList['ordering_quantity'];
             }catch(Exception $e){
@@ -539,4 +540,27 @@ function stockListFromOrderWhenNewlyDetermineWhether($userId,$orderGoodsList)
         throw $e;
     }
     return $errorMessage;
+}
+//今月は注文しないフラグを立てる関数
+function noOrder($userId){
+    $pdo = connectDb('cooopshinren');
+    $functionName = 'noOrder';
+    try{
+       $pdo  = connectDb('cooopshinren');
+       $sql  = "SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?;";
+       $stmt = $pdo->prepare($sql);
+       $res  = $stmt->execute(array($userId));
+       if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
+
+       while ($row = $stmt->fetch()) {
+        $ordering_id = $row[0]; 
+    }
+
+    $sql  = "UPDATE ordering SET order_flag = 2 WHERE ordering.ordering_id=? AND order_flag != 3;";
+    $stmt = $pdo->prepare($sql);
+    $res  = $stmt->execute(array($ordering_id));
+    if(!$res) throw new Exception("[{$functionName}]:UPDATE文実行時にエラーが発生しました。");
+    }catch (Exception $e) {
+        throw $e;
+    }
 }

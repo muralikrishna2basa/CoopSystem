@@ -387,4 +387,17 @@ function administratorReturnStockList(){
         throw $e;
     }
 }
+//発注の確定をなかったことにする関数
+function unFixOrder($monthlyId ){
+    $pdo = connectDb('cooopshinren');
+    try{
+        $sql= "UPDATE monthly SET fixed_flag = 0 WHERE monthly_id = ?";
+        $stmt=$pdo->prepare($sql);
+        $res= $stmt->execute(array($monthlyId));
+        if(!$res) throw new Exception("関数fixOrderでUPDATE文実行時にエラーが発生しました。");
+
+    }catch(Exception $e){
+        throw $e;
+    }
+}
 ?>

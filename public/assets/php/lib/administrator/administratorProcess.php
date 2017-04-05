@@ -403,4 +403,42 @@ function unFixOrder($monthlyId ){
         throw $e;
     }
 }
+/**
+ * [getOrderListBeforeFixed 確定前のリストを出力する関数]
+ * @param  [int] $monthlyId  [月別ID。フォーム上で生成。]
+ * @return [type]            [表示するリストを返す。]
+ */
+function getOrderListBeforeFixed($monthlyId)
+{
+    $lists = [];
+    try {
+        $pdo  = connectDb('coop');
+        $sql  = "SELECT *, (monthly_goods.unit_price * ordering_list.ordering_quantity) AS total FROM ordering
+                 INNER JOIN ordering_list ON ordering.ordering_id           = ordering_list.ordering_id
+                 INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                 INNER JOIN category      ON monthly_goods.category_id      = category.category_id
+                 WHERE ordering.monthly_id = ? ORDER BY monthly_goods.category_id ASC, monthly_goods.monthly_goods_id ASC, ordering.orderer ASC;"
+        ;
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute([$monthlyId, ]);
+        if(!$res) throw new Exception("Error Processing Request", 1);
+
+        $users = getAllUsers();
+        foreach ($stmt as $row)
+        {
+            $row['user_name'] = '';
+            foreach ($users as $user){
+                if($row['orderer'] == $user['userid']){
+                    $row['user_name'] = $user['userName'];
+                    break;
+                }
+            }
+            $lists[] = $row;
+        }
+    } catch (Exception $e) {
+        throw $e;
+    }
+    return $lists;
+}
+?>
 ?>

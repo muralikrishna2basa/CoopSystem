@@ -2,6 +2,7 @@
 include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
+require_once($PATH.'/public/assets/php/lib/administrator/administratorProcess.php');
 require_once($PATH.'/public/assets/php/lib/administrator/category.php');
 require_once($PATH.'/public/assets/php/auth.php');
 $lists  = [];
@@ -21,45 +22,15 @@ try{
 
     $lists = getOrderListBeforeFixed($monthlyId);
 
-    if(count($_POST) > 0) fixOrder();
+    if(count($_POST) > 0)
+    {
+        fixOrder($_POST['monthly_id']);
+        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./";</script>';
+    }
 }catch (Exception $e){
     $errors[] = $e->getMessage();
 }
-
-function getOrderListBeforeFixed($monthlyId)
-{
-    $lists = [];
-    try {
-        $pdo  = connectDb('coop');
-        $sql  = "SELECT *, (monthly_goods.unit_price * ordering_list.ordering_quantity) AS total FROM ordering
-                 INNER JOIN ordering_list ON ordering.ordering_id           = ordering_list.ordering_id
-                 INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
-                 INNER JOIN category      ON monthly_goods.category_id      = category.category_id
-                 WHERE ordering.monthly_id = ? ORDER BY monthly_goods.category_id ASC, monthly_goods.monthly_goods_id ASC;"
-        ;
-        $stmt = $pdo->prepare($sql);
-        $res  = $stmt->execute([$monthlyId, ]);
-        if(!$res) throw new Exception("Error Processing Request", 1);
-
-        $users = getAllUsers();
-        foreach ($stmt as $row)
-        {
-            $row['user_name'] = '';
-            foreach ($users as $user){
-                if($row['orderer'] == $user['userid']){
-                    $row['user_name'] = $user['userName'];
-                    break;
-                }
-            }
-            $lists[] = $row;
-        }
-    } catch (Exception $e) {
-        throw $e;
-    }
-    return $lists;
-}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +48,7 @@ function getOrderListBeforeFixed($monthlyId)
     </div>
     <div class="col-10 container scroll">
         <h2><?php echo date('Y年n月', strtotime($date)) ?>分の発注を確定する</h2>
+        <?php if(count($lists) > 0){ ?>
         <table class="table-hover border-bottom">
             <thead>
                 <th>カテゴリ名</th>
@@ -107,6 +79,9 @@ function getOrderListBeforeFixed($monthlyId)
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">
             <p class="text-right"><button type="submit" class="btn btn-green" name="submit" value="1">確定処理を実行する</button></p>
         </form>
+        <?php }else{ ?>
+        <p>確定する対象が存在しないようです。</p>
+        <?php } ?>
     </div>
 </div>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

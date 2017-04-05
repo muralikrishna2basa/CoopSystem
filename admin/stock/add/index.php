@@ -1,5 +1,5 @@
 <?php
-include     ('../../public/assets/php/partial/require_common.php');
+include     ('../../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
@@ -42,7 +42,7 @@ if(count($_POST) > 0)
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container scroll">
-        <h2>在庫を編集する</h2>
+        <h2>在庫を登録する</h2>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>

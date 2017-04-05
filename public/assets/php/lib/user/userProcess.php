@@ -75,7 +75,7 @@ where ordering.order_flag = 3 and ordering.orderer = 163 and monthly_goods.month
                     INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
                     INNER JOIN monthly       ON ordering.monthly_id            = monthly.monthly_id
                     WHERE  ordering.orderer         = ?
-                    AND    monthly_goods.monthly_id = ?;"
+                    AND    ordering.monthly_id = ?;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute([$userId, $monthly['monthly_id'],]);

@@ -441,4 +441,3 @@ function getOrderListBeforeFixed($monthlyId)
     return $lists;
 }
 ?>
-?>

@@ -14,7 +14,7 @@ function windowSizing()
     var side = $(trg).innerWidth();
 //    console.log(side);
 //    $(".col-btn").css({top: (top)+"px", left: (side-35)+"px"});
-    $(".col-btn").css({left: (side)+"px"});
+    $(".col-btn").css({left: (side-35)+"px"});
 
 }
 
@@ -69,7 +69,7 @@ $(function(){
             $(trg).fadeIn(200);
             var side = $(trg).innerWidth();
 //            $(this).removeClass('col-close').css({left: (side-35)+'px'});
-            $(this).removeClass('col-close').css({left: (side)+'px'});
+            $(this).removeClass('col-close').css({left: (side-35)+'px'});
         }else{
             $(trg).fadeOut(200);
 //            $(this).addClass('col-close').css({left: '5px'});

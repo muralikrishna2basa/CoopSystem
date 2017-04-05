@@ -6,9 +6,8 @@ require_once('../../public/assets/php/lib/user/userProcess.php');
 $errors = [];
 $lists  = [];
 $total  = 0;
-
 try {
-    $lists = displayHistory($_SESSION['USERID']);
+    $lists = getHistoryMonthlyList($_SESSION['USERID']);
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
@@ -30,52 +29,28 @@ try {
     </div>
     <div class="col-10 container scroll">
         <h1>注文した履歴を確認する</h1>
-        <?php if(count($lists) > 0){ ?>
-        <table class="table-hover border-bottom">
+        <table class="table-stripe border-bottom">
             <thead>
                 <tr>
-                    <th width="15%" class="text-center">カテゴリ</th>
-                    <th width="30%" class="text-left">商品名</th>
-                    <th width="20%" class="text-center">単価</th>
-                    <th width="20%" class="text-center">購入数</th>
-                    <th width="15%" class="text-right">合計金額</th>
+                    <th width="35%" class="text-center">購入した月</th>
+                    <th width="35%" class="text-right" >合計金額</th>
+                    <th width="30%" class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($lists as $list){ ?>
                 <tr>
+                    <td class="text-center"><?php echo date('Y年n月', strtotime($list['date'])) ?></td>
+                    <td class="text-right" ><?php echo number_format(intval($list['total'])) ?>円</td>
                     <td class="text-center">
-                        <p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>;">
-                            <?php echo $list['category_name'] ?>
-                        </p>
-                    </td>
-                    <td class="text-left">
-                        <p><?php echo $list['goods_name'] ?></p>
-                    </td>
-                    <td class="text-center">
-                        <p><?php echo number_format(intval($list['unit_price'])) ?>円</p>
-                    </td>
-
-                    <td class="text-center">
-                        <p><?php echo $list['ordering_quantity'] ?>個</p>
-                    </td>
-                    <td class="text-right">
-                        <p><?php echo number_format(intval($list['amount'])) ?>円</p>
-                        <?php $total += intval($list['amount']) ?>
+                        <?php if(intval($list['total']) > 0){ ?>
+                        <a href="./list?id=<?php echo $list['monthly_id'] ?>">内訳を見る</a>
+                        <?php } ?>
                     </td>
                 </tr>
                 <?php } ?>
-                <tr>
-                    <td colspan="3"></td>
-                    <td class="text-center">合計</td>
-                    <td class="text-right"><?php echo number_format($total) ?>円</td>
-                </tr>
             </tbody>
         </table>
-        <?php }else{ ?>
-        <p>履歴はありません。</p>
-        <?php } ?>
-
         <?php errorMessages($errors) ?>
 
     </div>

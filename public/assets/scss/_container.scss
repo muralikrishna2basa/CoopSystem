@@ -17,7 +17,6 @@
         }
     }
 }
-/*
 $btn-width: 30px;
 .col-btn{
     width: $btn-width;
@@ -30,7 +29,7 @@ $btn-width: 30px;
     background-image: url(../imgs/toggle.png);
     background-position: center center;
     background-repeat: no-repeat;
-    @include setPrefix(transform, rotateZ(180deg));
+    @include setPrefix(transform, rotateZ(0deg));
     transition: $timer;
     opacity: 0.5;
     border: 1px solid darken($line-color, 30%);
@@ -42,11 +41,10 @@ $btn-width: 30px;
     }
 }
 .col-close{
-    @include setPrefix(transform, rotateZ(0deg));
+    @include setPrefix(transform, rotateZ(180deg) scale(0.7));
     transition: $timer;
 }
-*/
-
+/*
 $btn-width: 15px;
 .col-btn{
     width: $btn-width;
@@ -89,3 +87,4 @@ $btn-width: 15px;
 #col-menu + div{
     margin-left: $btn-width;
 }
+*/

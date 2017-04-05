@@ -11,7 +11,6 @@ $errors     = [];
 $pdo        = connectDb('coop');
 $orderBtn   = '';
 $orderState = '';
-
 try {
     $lists = returnCurrentMonthProductList($_SESSION['USERID']);
     $sql = "SELECT order_flag FROM ordering
@@ -36,7 +35,7 @@ try {
             $orderState = "<p class=\"label bg-green\">今月の注文をしました</p>";
             break;
     }
-
+var_dump($lists);
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }

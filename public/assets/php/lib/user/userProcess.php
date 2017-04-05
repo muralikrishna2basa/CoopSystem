@@ -27,19 +27,17 @@ function displayHistory($userId,$monthlyId = 0){
             if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
         }else{
             $sql = "SELECT category_name,color,goods_name,unit_price,
-                    ordering_quantity,(unit_price*ordering_quantity)AS amount
+                           ordering_quantity,(unit_price*ordering_quantity) AS amount
                     FROM  ordering_list
                     INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
-                    INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
-                    INNER JOIN category ON monthly_goods.category_id = category.category_id
-                    INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-                    WHERE ordering.orderer = ? AND ordering.monthly_id=?;"
+                    INNER JOIN ordering      ON ordering_list.ordering_id      = ordering.ordering_id
+                    INNER JOIN category      ON monthly_goods.category_id      = category.category_id
+                    INNER JOIN monthly       ON ordering.monthly_id            = monthly.monthly_id
+                    WHERE ordering.orderer = ? AND ordering.monthly_id = ?;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute(array($userId,$monthlyId));
             if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
-
-            if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
         }
         while ($row = $stmt->fetch()) {
             $ren[] =$row; // TODO: $renのリネーム kawanishi 2017/04/04
@@ -49,6 +47,49 @@ function displayHistory($userId,$monthlyId = 0){
         throw $e;
     }
 }
+
+function getHistoryMonthlyList($userId){
+// TODO : sql
+/*
+select sum((unit_price*ordering_quantity)) as total, date from ordering
+inner join ordering_list on ordering_list.ordering_id = ordering.ordering_id
+inner join monthly_goods on ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+inner join monthly on ordering.monthly_id = monthly.monthly_id
+where ordering.order_flag = 3 and ordering.orderer = 163 and monthly_goods.monthly_id= 24 ここを副問合せにする;
+*/
+    $historyList  = [];
+    $functionName = 'getHistoryMonthlyList';
+    try {
+        $pdo  = connectDb('coop');
+        $sql  = "SELECT monthly_id, date FROM monthly ORDER BY date DESC;";
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute(null);
+        if(!$res) throw new Exception("[{$functionName}]:月別ID取得時にエラーが発生しました。");
+        foreach ($stmt as $monthly)
+        {
+            $tmp          = $monthly;
+            $tmp['total'] = 0;
+
+            $sql = "SELECT SUM((unit_price * ordering_quantity)) AS total FROM ordering
+                    INNER JOIN ordering_list ON ordering_list.ordering_id      = ordering.ordering_id
+                    INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                    INNER JOIN monthly       ON ordering.monthly_id            = monthly.monthly_id
+                    WHERE  ordering.orderer         = ?
+                    AND    monthly_goods.monthly_id = ?;"
+            ;
+            $stmt = $pdo->prepare($sql);
+            $res  = $stmt->execute([$userId, $monthly['monthly_id'],]);
+            if(!$res) throw new Exception("[{$functionName}]:合計金額取得時にエラーが発生しました。");
+            $total = $stmt->fetchColumn();
+            if($total) $tmp['total'] = $total;
+            $historyList[] = $tmp;
+        }
+    } catch (Exception $e) {
+        throw $e;
+    }
+    return $historyList;
+}
+
 /**
  * [returnCurrentMonthProductList 今月のリストを返す関数]
  * @param  [type] $userId [description]

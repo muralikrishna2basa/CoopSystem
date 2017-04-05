@@ -59,7 +59,7 @@ if(count($_POST) > 0)
                     <?php foreach($lists as $list){ ?>
                     <tr>
                         <td class="text-center">
-                            <input type="text" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">
+                            <input type="hidden" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">
                             <p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></p>
                         </td>
                         <td>

@@ -35,15 +35,18 @@ try {
             $orderState = "<p class=\"label bg-green\">今月の注文をしました</p>";
             break;
     }
-//var_dump($lists);
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
 
 if(count($_POST) > 0){
-    if($_POST['order'] == 1) $errors = currentMonthListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
-    if($_POST['order'] == 0) echo 'update'; // TODO: update status
-    if(count($errors) === 0) header('location: ./index.php');
+    try {
+        if($_POST['order'] == 1) $errors = currentMonthListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
+        if($_POST['order'] == 0) noOrder($_SESSION['USERID']);
+        if(count($errors) === 0) header('location: ./index.php');
+    } catch (Exception $e) {
+        $errors[] = $e->getMessage();
+    }
 }
 
 ?>

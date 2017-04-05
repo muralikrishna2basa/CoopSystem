@@ -82,13 +82,24 @@ try {
                     </td>
                 </tr>
                 <?php } ?>
-                <tr>
-                    <td colspan="3"></td>
-                    <td class="text-center">合計</td>
-                    <td class="text-right"><?php echo number_format($total) ?>円</td>
-                </tr>
             </tbody>
         </table>
+        <div class="flex">
+            <div class="col-8"></div>
+            <div class="draggable border-radius col-4 bg-white opacity-8">
+                <table class="border-none">
+                    <tr>
+                        <td class="text-center">
+                            <p>総合計金額</p>
+                        </td>
+                        <td>
+                            <p><span><?php echo number_format($total) ?></span>円</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
         <?php }else{ ?>
         <p>履歴はありません。</p>
         <?php } ?>

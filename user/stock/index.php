@@ -3,29 +3,24 @@ include     ('../../public/assets/php/partial/require_common.php');
 include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once($PATH.'/public/assets/php/lib/user/userProcess.php');
-$res        = returnStockList($_SESSION['USERID']);
 $errors     = [];
 $lists      = [];
 $i          = 0;
 $priceTotal = 0;
 
-if(!$res['result']){
-    $errors = $res['return'];
-}else{
-    $lists  = $res['return'];
+try {
+    $lists = returnStockList($_SESSION['USERID']);
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
 }
+
 if(count($_POST)>0){
-    $errors =stockListFromOrderWhenNewlyDetermineWhether(9,$_POST);
+    try {
+        $errors = stockListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
+    } catch (Exception $e) {
+        $errors[] = $e->getMessage();
+    }
     if(count($errors) === 0) header('location: ./index.php');
-/*
-    if($error!=null)
-    {
-        echo $error;
-    }
-    else{
-        header('location: ./index.php');
-    }
-*/
 }
 
 ?>

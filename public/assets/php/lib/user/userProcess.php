@@ -240,7 +240,8 @@ function returnStockList($userId,$monthlyId = 0){
                 INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
                 INNER JOIN category ON monthly_goods.category_id = category.category_id
                 INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-                WHERE ordering.orderer = ? AND monthly.public_flag=1;"
+                WHERE ordering.orderer = ?;"
+//                WHERE ordering.orderer = ? AND monthly.public_flag=1;"
         ;
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($userId));
@@ -251,9 +252,9 @@ function returnStockList($userId,$monthlyId = 0){
         }
 
 
-        for ($i=0; $i <count($stockList) ; $i++) {
+        for ($i=0; $i < count($stockList); $i++) {
             for ($j=0; $j < count($currentMonthList); $j++) {
-                if($stockList[$i][0]==$currentMonthList[$j][0]){
+                if($stockList[$i]['monthly_goods_id']==$currentMonthList[$j]['monthly_goods_id']){
                     $stockList[$i]['ordering_quantity'] = $currentMonthList[$j][1];
                     $stockList[$i][7]                   = $currentMonthList[$j][1];
                 }
@@ -328,7 +329,7 @@ function doOrderStock($userId,$newOrderGoodsList){
             $sql       = "SELECT stock_quantity FROM stock_list WHERE monthly_goods_id=?;";
             $stmt      = $pdo->prepare($sql);
             $res       = $stmt->execute(array($goodsId));
-            if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
+            if(!$res) $errorMessage[] = ("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
 
             $stock     = $stmt->fetchColumn();
 
@@ -354,6 +355,7 @@ function doOrderStock($userId,$newOrderGoodsList){
             }
         }
     }catch(Exception $e){
+        echo $e->getMessage();
         throw $e;
     }
     return $errorMessage;
@@ -409,6 +411,7 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
         $sql = "SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?;";
         $stmt= $pdo->prepare($sql);
         $res = $stmt->execute(array($userId));
+        if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
         $ren = $stmt->fetchColumn(); // TODO: $renのリネーム kawanishi 2017/04/04
     }
     catch(Exception $e){
@@ -444,11 +447,16 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
         }
         else{
             try {
-                $sql  = "UPDATE ordering_list SET ordering_quantity=? WHERE monthly_goods_id =? AND ordering_id =?;";
-                $stmt = $pdo->prepare($sql);
-                $res  = $stmt->execute(array($editOrderGoodsList['ordering_quantity'][$i],$editOrderGoodsList['monthly_goods_id'][$i],$ren)); // TODO: $renのリネーム kawanishi 2017/04/04
+                $sql   = "UPDATE ordering_list SET ordering_quantity=? WHERE monthly_goods_id =? AND ordering_id =?;";
+                $stmt  = $pdo->prepare($sql);
+                $param = [
+                    $editOrderGoodsList['ordering_quantity'],   /* ordering_quantity */
+                    $editOrderGoodsList['monthly_goods_id'],    /* monthly_goods_id */
+                    $ren,                                       /* ordering_id */
+                ];
+                $res   = $stmt->execute($param); // TODO: $renのリネーム kawanishi 2017/04/04
                 if(!$res) throw new Exception("[{$functionName}]:ID[{$editOrderGoodsList['monthly_goods_id'][$i]}]更新時にエラーが発生しました。");
-                $stock = $stock + $editOrderGoodsList['initial_ordering_quantity'][$i] - $editOrderGoodsList['ordering_quantity'][$i];
+                $stock = $stock + $editOrderGoodsList['initial_ordering_quantity'][$i] - $editOrderGoodsList['ordering_quantity'];
             }catch(Exception $e){
                 throw $e;
             }
@@ -473,17 +481,6 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
                         $errorMessage[] = $str;
                     }
                 }catch(Exception $e){
-                    throw $e;
-                }
-                try {
-                    $sql  = "SELECT goods_name FROM `monthly_goods` WHERE monthly_goods_id = ?;";
-                    $stmt = $pdo->prepare($sql);
-                    $res  = $stmt->execute(array($editOrderGoodsList['monthly_goods_id']));
-                    while ($row = $stmt->fetch()) {
-                        $str =$row[0]."は在庫以上の数を発注しようとしたためエラーが起きました。";
-                        $errorMessage[] = $str;
-                    }
-                } catch (Exception $e) {
                     throw $e;
                 }
             }
@@ -518,19 +515,28 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
 function stockListFromOrderWhenNewlyDetermineWhether($userId,$orderGoodsList)
 {
     $errorMessage = [];
-    for($i = 0; $i < count($orderGoodsList['monthly_goods_id']); $i++){
-        $array = [
-            'monthly_goods_id'         => $orderGoodsList['monthly_goods_id'][$i],
-            'initial_ordering_quantity'=> $orderGoodsList['initial_ordering_quantity'][$i],
-            'ordering_quantity'        => $orderGoodsList['ordering_quantity'][$i],
-        ];
-        if($orderGoodsList['initial_ordering_quantity'][$i]==0){
-            $error = doOrderStock($userId,$array);
-            if(mb_strlen($error) > 0) $errorMessage[] = $error;
+    $bufLen       = 0;
+    var_dump($userId);
+    try {
+        for($i = 0; $i < count($orderGoodsList['monthly_goods_id']); $i++){
+            $array = [
+                'monthly_goods_id'         => $orderGoodsList['monthly_goods_id'][$i],
+                'initial_ordering_quantity'=> $orderGoodsList['initial_ordering_quantity'][$i],
+                'ordering_quantity'        => $orderGoodsList['ordering_quantity'][$i],
+            ];
+            if($orderGoodsList['initial_ordering_quantity'][$i]==0){
+                $errors = doOrderStock($userId,$array);
+                foreach ($errors as $error) $bufLen += mb_strlen($error);
+                if($bufLen > 0) $errorMessage[] = $error;
+            }
+            else{
+                $errors = stockListFromPlacedEditDelete($userId,$array);
+                foreach ($errors as $error) $bufLen += mb_strlen($error);
+                if($bufLen > 0) $errorMessage[] = $error;
+            }
         }
-        else{
-            $error = stockListFromPlacedEditDelete($userId,$array);
-            if(mb_strlen($error) > 0) $errorMessage[] = $error;
-        }
+    } catch (Exception $e) {
+        throw $e;
     }
+    return $errorMessage;
 }

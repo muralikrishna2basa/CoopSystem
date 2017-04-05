@@ -7,7 +7,8 @@ function monthSelectionAndOrderCreation($monthlyId)
        $sql ="SELECT COUNT(*) FROM ordering WHERE monthly_id =?";
        $stmt=$pdo->prepare($sql);
        $res = $stmt->execute(array($monthlyId));
-       $ren = $stmt->fetchColumn();
+        if(!$res) throw new Exception("関数monthSelectionAndOrderCreationでmonthly_id取得時にエラーが発生しました。");
+       $monthlyIdCount= $stmt->fetchColumn();
 //       var_dump($ren);
 //       while ($row = $stmt->fetch()[0])
 //       {
@@ -17,17 +18,18 @@ function monthSelectionAndOrderCreation($monthlyId)
     catch(Exception $e){
         echo $e->getMessage();
     }
-    if(intval($ren)!==0){
+    if(intval($monthlyIdCount)!==0){
         try{
             $pdo = connectDb('cooopshinren');
             $sql = "UPDATE monthly SET public_flag = 0";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(null);
-
+            if(!$res) throw new Exception("関数monthSelectionAndOrderCreationでUPDATE実行時にエラーが発生しました。");
             $pdo = connectDb('cooopshinren');
             $sql = "UPDATE monthly SET public_flag = 1 WHERE monthly_id = ?";
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($monthlyId));
+            if(!$res) throw new Exception("関数monthSelectionAndOrderCreationでUPDATE実行時にエラーが発生しました。");
         }
         catch(Exception $e){
             echo $e->getMessage();
@@ -43,6 +45,7 @@ function monthSelectionAndOrderCreation($monthlyId)
                $stmt=$pdo->prepare($sql);
                $param=array($allUser[$i]["userid"],$monthlyId);
                $res= $stmt->execute($param);
+               if(!$res) throw new Exception("関数monthSelectionAndOrderCreationでINSERT実行時にエラーが発生しました。");
            }
        }
         catch(Exception $e){
@@ -59,7 +62,7 @@ function stockListTemporaryCreating(){
         $sql="SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1)";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute();
-        if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
+        if(!$res) throw new Exception("関数stockListTemporaryCreatingでSELECT実行時にエラーが発生しました。");
         while ($row = $stmt->fetch()) {
             $monthlyGoods[] =$row;
         }
@@ -70,7 +73,7 @@ function stockListTemporaryCreating(){
         $sql="SELECT stock_quantity,monthly_goods_id FROM stock_list WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1)";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array());
-        if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
+        if(!$res) throw new Exception("関数stockListTemporaryCreatingでstock_quantity,monthly_goods_id取得時にエラーが発生しました。");
         while ($row = $stmt->fetch()) {
             $stock[] =$row;
         }
@@ -107,9 +110,10 @@ function stockListRegistration($monthlyId,$stockList)
                 $stmt=$pdo->prepare($sql);
                 $param=array($stockList['monthly_goods_id'],$monthlyId,intval($stockList['stock_quantity']));
                 $res= $stmt->execute($param);
+                if(!$res) throw new Exception("関数stockListRegistrationでINSERT文実行時にエラーが発生しました。");
             }
             catch(Exception $e){
-                echo $e->getMessage();
+                throw $e;
         }
     }
 }
@@ -118,12 +122,13 @@ function stockListRegistration($monthlyId,$stockList)
 function stockListEdit($stockList){
     try{
         $pdo = connectDb('cooopshinren');
-        $sql = "UPDATE stock_list SET stock_quantit = ? WHERE monthly_goods_id = ?";
+        $sql = "UPDATE stock_list SET stock_quantity = ? WHERE monthly_goods_id = ?";
         $stmt= $pdo->prepare($sql);
         $res = $stmt->execute(array(intval($stockList['stock_quantity']),$stockList['monthly_goods_id']));
+        if(!$res) throw new Exception("関数stockListEditでSELECT文実行時にエラーが発生しました。");
     }
     catch(Exception $e){
-        echo $e->getMessage();
+        throw $e;
     }
 }
 //受け取ったCSVファイルが正しいかどうかチェックする関数
@@ -182,7 +187,7 @@ function productListCreation($csvArray,$monthlyId){
             ];
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute($param);
-            if(!$res) throw new Exception("INSERT文実行時にエラーが発生しました。");
+            if(!$res) throw new Exception("関数productListCreationで".$i."回目のINSERT文実行時にエラーが発生しました。");
 //            var_dump($param);
 //            var_dump($sql);
         }
@@ -199,6 +204,7 @@ function productListDisplay($monthlyId){
         $sql="SELECT * FROM monthly_goods WHERE monthly_id = ?";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($monthlyId));
+        if(!$res) throw new Exception("関数productListDisplayでSELECT文実行時にエラーが発生しました。");
         while ($row = $stmt->fetch()) {
             $order[] =$row;
         }
@@ -232,6 +238,7 @@ function productListEdit($productList){
                 $productList['category_id'][$i],
                 $productList['monthly_goods_id'][$i]];
             $res= $stmt->execute($param);
+            if(!$res) throw new Exception("関数productListEditで".$i."回目のUPDATE文実行時にエラーが発生しました。");
         }
         catch(Exception $e){
             echo $e->getMessage();
@@ -240,11 +247,11 @@ function productListEdit($productList){
 }
 //発注リストを表示する関数
 function orderListDisplay($monthlyId = 0){
-    $ren = [];
+    $orderList = [];
     $pdo = connectDb('cooopshinren');
     try{
         $sql = "SELECT category_name,color,goods_name,unit_price,
-        ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id
+        ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id,ordering.orderer
         FROM  ordering_list
         INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
         INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
@@ -253,10 +260,11 @@ function orderListDisplay($monthlyId = 0){
         WHERE ordering.monthly_id = (SELECT MIN(monthly_id) FROM monthly WHERE fixed_flag =0);";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($monthlyId));
+        if(!$res) throw new Exception("関数orderListDisplayでSELECT文実行時にエラーが発生しました。");
         while ($row = $stmt->fetch()) {
-            $ren[] =$row;
+            $orderList[] =$row;
         }
-        return $ren;
+        return $orderList;
     }catch(Exception $e){
         echo $e->getMessage();
     }
@@ -304,7 +312,6 @@ function monthlyIdGeneration($date){
     }
 }
 //在庫リストが新規かどうか
-//todo stockListの配列を正しくする
 function isInventoryListNewly($stockList){
     $pdo = connectDb('cooopshinren');
     
@@ -314,7 +321,7 @@ function isInventoryListNewly($stockList){
         $res= $stmt->execute();
         if(!$res) throw new Exception("関数isInventoryListNewlyでmonthly_id取得時にエラーが発生しました。");
         $monthlyId = $stmt->fetchColumn();
-        $sql ="SELECT COUNT(*) FROM ordering_list WHERE monthly_goods_id = ?";
+        $sql ="SELECT COUNT(*) FROM stock_list WHERE monthly_goods_id = ?";
         for($i=0;$i<count($stockList['monthly_goods_id']);$i++){
             $stmt=$pdo->prepare($sql);
             $res= $stmt->execute(array($stockList['monthly_goods_id'][$i]));
@@ -344,7 +351,6 @@ function fixOrder(){
         $res= $stmt->execute();
         $monthlyId = $stmt->fetchColumn();
         if(!$res) throw new Exception("関数fixOrderで$monthlyId取得時にエラーが発生しました。");
-        echo $monthlyId;
         $sql= "UPDATE monthly SET fixed_flag = 1 WHERE monthly_id = ?";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($monthlyId));
@@ -354,4 +360,5 @@ function fixOrder(){
 
     }
 }
+//
 ?>

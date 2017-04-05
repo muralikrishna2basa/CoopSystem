@@ -6,20 +6,20 @@ require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
 $errors = [];
+$lists  = [];
 try {
     $lists = stockListTemporaryCreating();
 } catch (Exception $e) {
-    
+    $errors [] = $e->getMessage();
 }
-// TODO: stock_quantity の取得 teshima -> kawanishi 2017/04/03
-// TODO: Notice: Undefined index: order_list_id in C:\xampp\htdocs\sys\sam\CoopSystem\public\assets\php\lib\administrator\administratorProcess.php on line 241
-
 if(count($_POST) > 0)
 {
     try {
         isInventoryListNewly($_POST);
+        header('location: ./');
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
+//        echo $e->getMessage();
     }
 }
 ?>
@@ -34,9 +34,6 @@ if(count($_POST) > 0)
 <body>
 
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
-<!--
-<pre><?php var_dump($lists) ?></pre>
--->
 
 <button class="col-btn" col-target="#col-menu"></button>
 
@@ -46,24 +43,23 @@ if(count($_POST) > 0)
     </div>
     <div class="col-10 container scroll">
         <h2>在庫を編集する</h2>
-        <pre><?php var_dump($lists) ?></pre>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>
                     <tr>
-                        <th>カテゴリ名</th>
-                        <th>商品名</th>
+                        <th class="text-center">カテゴリ名</th>
+                        <th                    >商品名</th>
                         <th class="text-center">内容量</th>
                         <th class="text-center">必要数</th>
-                        <th class="text-right">単価</th>
+                        <th class="text-right" >単価</th>
                         <th class="text-center">在庫数</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($lists as $list){ ?>
                     <tr>
-                        <td>
-                            <input type="hidden" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">
+                        <td class="text-center">
+                            <input type="text" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">
                             <p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></p>
                         </td>
                         <td>
@@ -78,33 +74,28 @@ if(count($_POST) > 0)
                         <td class="text-right">
                             <p><?php echo number_format($list['unit_price']) ?>円</p>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <p
                                 data-number ="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"
                                 data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
                             >
                                 <button class="ordering-minus">&minus;</button>
-<!--
-TODO: stock_quantityとinitial_stock_quantityのセット teshima 2017/04/03
-                                <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['monthly_goods_id']) ?></span>
--->
-                                <span id="display_number_<?php echo $list['monthly_goods_id'] ?>">0</span>個
+                                <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo $list['initial_stock_quantity'] ?></span>個
                                 <button class="ordering-plus">+</button>
                             </p>
-<!--
-                            <input type="text" id="initial_stock_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_stock_quantity[]" value="<?php echo intval($list['stock_quantity']) ?>">
-                            <input type="text" id="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="stock_quantity[]"         value="<?php echo intval($list['stock_quantity']) ?>">
--->
-                            <input type="text" id="initial_stock_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_stock_quantity[]" value="0">
-                            <input type="text" id="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="stock_quantity[]"         value="0">
+                            <input type="hidden" id="initial_stock_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_stock_quantity[]" value="<?php echo $list['initial_stock_quantity'] ?>">
+                            <input type="hidden" id="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="stock_quantity[]"         value="<?php echo $list['initial_stock_quantity'] ?>">
 
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-blue">send</button>
+            <p class="text-right"><button type="submit" class="btn btn-blue">在庫を登録する</button></p>
         </form>
+
+        <?php errorMessages($errors) ?>
+
     </div>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>

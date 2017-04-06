@@ -17,7 +17,7 @@ class administratorTest extends PHPUnit_Framework_TestCase{
  function testStockListTemporaryCreating()
  {
    // var_dump(stockListTemporaryCreating());
-}
+ }
  /**
     * @test
     */
@@ -49,8 +49,14 @@ function testAdministratorReturnStockList(){
 /**
     * @test
     */
-    function testProductListDisplay(){
-  var_dump(productListDisplay(3));
+function testProductListOneDeleting(){
+    productListOneDeleting(67);
+}
+/**
+    * @test
+    */
+function testProductListAllDeleting(){
+    productListAllDeleting(26);
 }
 }
 ?>

@@ -16,7 +16,7 @@ function monthSelectionAndOrderCreation($monthlyId)
 //    }
     }
     catch(Exception $e){
-        echo $e->getMessage();
+        throw $e;
     }
     if(intval($monthlyIdCount)!==0){
         try{
@@ -32,7 +32,7 @@ function monthSelectionAndOrderCreation($monthlyId)
             if(!$res) throw new Exception("関数monthSelectionAndOrderCreationでUPDATE実行時にエラーが発生しました。");
         }
         catch(Exception $e){
-            echo $e->getMessage();
+            throw $e;
         }
     }
     else{
@@ -49,7 +49,7 @@ function monthSelectionAndOrderCreation($monthlyId)
            }
        }
         catch(Exception $e){
-            echo $e->getMessage();
+            throw $e;
         }
     }
 }
@@ -197,7 +197,7 @@ function productListCreation($csvArray,$monthlyId){
 //            var_dump($sql);
         }
         catch(Exception $e){
-            echo $e->getMessage();
+            throw $e;
         }
     }
 }
@@ -217,7 +217,7 @@ function productListDisplay($monthlyId){
     }
     catch(Exception $e)
     {
-        echo $e->getMessage();
+        throw $e;
   }
 }
 
@@ -246,8 +246,40 @@ function productListEdit($productList){
             if(!$res) throw new Exception("関数productListEditで".$i."回目のUPDATE文実行時にエラーが発生しました。");
         }
         catch(Exception $e){
-            echo $e->getMessage();
+            throw $e;
         }
+    }
+}
+//商品リストを一件削除する関数
+function productListOneDeleting($monthlyGoodsId){
+   try{
+     $pdo = connectDb('cooopshinren');
+      $sql="DELETE FROM monthly_goods WHERE monthly_goods_id =?";
+      $stmt=$pdo->prepare($sql);
+      $param = [
+      $monthlyGoodsId
+      ];
+      $res= $stmt->execute($param);
+     if(!$res) throw new Exception("関数productListOneDeletingでDELETE実行時にエラーが発生しました。");
+    }
+    catch(Exception $e){
+     throw $e;
+    }
+}
+//商品リストとひと月分削除する関数
+function productListAllDeleting($monthlyId){
+   try{
+      $pdo = connectDb('cooopshinren');
+      $sql="DELETE FROM monthly_goods WHERE monthly_id =?";
+      $stmt=$pdo->prepare($sql);
+      $param = [
+      $monthlyId
+     ];
+        $res= $stmt->execute($param);
+        if(!$res) throw new Exception("関数productListAllDeletingでDELETE実行時にエラーが発生しました。");
+    }
+    catch(Exception $e){
+        throw $e;
     }
 }
 //発注リストを表示する関数
@@ -283,7 +315,7 @@ function orderListDisplay($monthlyId = 0){
         }
         return $orderList;
     }catch(Exception $e){
-        echo $e->getMessage();
+        throw $e;
     }
 }
 
@@ -302,7 +334,7 @@ function orderListEdit($orderList){
              if(!$res) throw new Exception("関数orderListEditでUPDATE実行時にエラーが発生しました。");
         }
         catch(Exception $e){
-            echo $e->getMessage();
+            throw $e;
         }
     }
 }
@@ -325,7 +357,7 @@ function monthlyIdGeneration($date){
         return $monthlyId;
     }
     catch(Exception $e){
-        echo $e->getMessage();
+        throw $e;
     }
 }
 //在庫リストが新規かどうか
@@ -369,7 +401,7 @@ function fixOrder($monthlyId ){
         if(!$res) throw new Exception("関数fixOrderでUPDATE文実行時にエラーが発生しました。");
 
     }catch(Exception $e){
-        throw $e;
+       throw $e;
     }
 }
 //在庫リストを表示する管理者用関数

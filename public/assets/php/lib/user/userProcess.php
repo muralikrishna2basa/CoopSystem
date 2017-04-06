@@ -356,7 +356,6 @@ function doOrderStock($userId,$newOrderGoodsList){
             }
         }
     }catch(Exception $e){
-        echo $e->getMessage();
         throw $e;
     }
     return $errorMessage;

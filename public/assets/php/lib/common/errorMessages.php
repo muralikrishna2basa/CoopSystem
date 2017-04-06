@@ -7,7 +7,7 @@ function errorMessages($messages)
         if(is_array($error)){
             foreach ($error as $buf) $len += mb_strlen($buf);
         }else{
-            $len += mb_strlen($buf);
+            $len += mb_strlen($error);
         }
     }
 

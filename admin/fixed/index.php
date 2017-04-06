@@ -48,6 +48,7 @@ try{
     </div>
     <div class="col-10 container scroll">
         <h2><?php echo date('Y年n月', strtotime($date)) ?>分の発注を確定する</h2>
+        <pre><?php var_dump($lists) ?></pre>
         <?php if(count($lists) > 0){ ?>
         <table class="table-hover border-bottom">
             <thead>

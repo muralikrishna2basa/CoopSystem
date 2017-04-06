@@ -5,31 +5,57 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 require_once($PATH.'/public/assets/php/lib/administrator/administratorProcess.php');
 require_once($PATH.'/public/assets/php/auth.php');
 
+$errors = [];
+
 try {
+    $rows = [];
+    $publishMonth = '';
     $pdo  = connectDb('coop');
+
+    // monthlyテーブルへの接続
     $sql  = "SELECT  * FROM monthly ORDER BY date DESC LIMIT 5;";
     $stmt = $pdo->prepare($sql);
     $res  = $stmt->execute(null);
-    $rows = [];
-    $publishMonth = '';
     if(!$res)              throw new Exception("monthly_id取得中に予期しないエラーが発生しました。");
     if(count($stmt) === 0) throw new Exception("monthly_idが登録されていないようです。");
     foreach($stmt as $key => $row)
     {
-        $rows[] = $row;
+        // monthly_goodsテーブルへの接続
+        $sql  = "SELECT COUNT(*) FROM monthly_goods WHERE monthly_id=?;";
+        $cnt  = $pdo->prepare($sql);
+        $res  = $cnt->execute([$row['monthly_id'], ]);
+        if(!$res) throw new Exception("monthly_goods取得中に予期しないエラーが発生しました。");
+        $row['cnt'] = (intval($cnt->fetchColumn()));
         if(intval($row['public_flag']) === 1) $publishMonth = $row['date'];
+        $rows[] = $row;
     }
 } catch (Exception $e) {
-    echo $e->getMessage();
-    exit();
+    $errors[] = $e->getMessage();
+    // echo $e->getMessage();
+    // exit();
 }
 
-if(count($_POST) > 0 && isset($_POST['btn']) && $_POST['btn'] === 'publish')
+if(count($_POST) > 0 && isset($_POST['btn']))
 {
-    // 選択した月のリストを公開する処理
-    echo 'publish';
-    monthSelectionAndOrderCreation($_POST['month_id']);
-    header('location: ./index.php');
+    try {
+        // 選択した月のリストを公開する処理
+    //    echo 'publish';
+        switch ($_POST['btn'])
+        {
+            case 'publish':
+                monthSelectionAndOrderCreation($_POST['month_id']);
+                break;
+            case 'unfixed':
+                unFixOrder($_POST['month_id']);
+                break;
+            case 'edit':
+                header("location: ../productlist/?id={$_POST['month_id']}");
+                exit();
+                break;
+        }
+    } catch (Exception $e) {
+        $errors[] = $e->getMessage();
+    }
 }
 ?>
 
@@ -55,33 +81,58 @@ if(count($_POST) > 0 && isset($_POST['btn']) && $_POST['btn'] === 'publish')
             <table class="border-none">
                 <thead>
                     <tr>
-                        <th width="40%" class="text-center">公開されている月</th>
-                        <th width="40%">公開したい月</th>
-                        <th width="20%"></th>
+                        <th width="10%"></th>
+                        <th width="30%">公開したい月</th>
+                        <th width="30%"></th>
+                        <th width="30%"></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td class="text-center"><h2><?php echo mb_strlen($publishMonth) > 0 ? date('Y年n月', strtotime($publishMonth)) : '公開されていません' ?></h2></td>
+                        <td></td>
                         <td class="text-center">
                             <p class="form-group form-trans">
                                 <select name="month_id">
                                     <?php foreach($rows as $row){ ?>
                                     <option value="<?php echo $row['monthly_id'] ?>" <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>>
                                         <?php echo date('Y年n月', strtotime($row['date'])) ?>
+                                        <?php                                       echo ' / '.$row['cnt'].'件' ?>
+                                        <?php if(intval($row['public_flag']) === 1) echo ' [ 公開中 ]' ?>
+                                        <?php if($row['fixed_flag'] == 1)           echo " [ 確定済 ]" ?>
                                     </option>
                                     <?php } ?>
                                 </select>
                             </p>
                         </td>
-                        <td>
-                            <button type="submit" name="btn" value="publish" class="btn btn-blue block">商品リストを公開する</button>
-                        </td>
+                        <td><button type="submit" name="btn" value="publish" class="btn btn-blue block">商品リストを公開する</button></td>
+                        <td></td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><button type="submit" name="btn" value="edit" class="btn btn-blue block" >商品リストの編集をする</button></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><button type="submit" name="btn" value="export" class="btn btn-blue block" >リストを出力する</button></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><button type="submit" name="btn" value="unfixed" class="btn btn-red block" >確定を解除する</button></td>
+                        <td></td>
+                    </tr>
+
                 </tbody>
             </table>
         </form>
+
+        <?php errorMessages($errors) ?>
+
     </div>
 </div>
 

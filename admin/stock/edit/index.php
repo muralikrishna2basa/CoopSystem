@@ -22,7 +22,6 @@ if(count($_POST) > 0)
 //        echo $e->getMessage();
     }
 }
-var_dump($lists);
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +49,6 @@ var_dump($lists);
                     <tr>
                         <th class="text-center">カテゴリ名</th>
                         <th                    >商品名</th>
-                        <th class="text-center">内容量</th>
                         <th class="text-center">必要数</th>
                         <th class="text-right" >単価</th>
                         <th class="text-center">在庫数</th>
@@ -65,9 +63,6 @@ var_dump($lists);
                         </td>
                         <td>
                             <p><?php echo $list['goods_name'] ?></p>
-                        </td>
-                        <td class="text-center">
-                            <p><?php echo $list['detail_amount_per_one'] ?></p>
                         </td>
                         <td class="text-center">
                             <p><?php //echo $list['required_quantity'] ?>個</p>

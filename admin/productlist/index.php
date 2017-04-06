@@ -38,7 +38,10 @@ try {
 
 if(count($_POST) > 0){
     try {
-        productListEdit($_POST);
+        if(isset($_POST['delete']))    productListOneDeleting($_POST['delete']);
+        if(isset($_POST['deleteAll'])) productListAllDeleting($_GET['id']);
+        if(isset($_POST['update'])) productListEdit($_POST);
+
         header("location: ./index.php?id={$_GET['id']}");
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
@@ -61,17 +64,17 @@ if(count($_POST) > 0){
     <div class="col-2 border-right  scroll bg-glay" id="col-menu">
         <?php include("../../public/assets/php/partial/menu_admin.php"); ?>
     </div>
-    <div class="col-10 container scroll bg-glay">
+    <div class="col-10 container scroll">
         <h2>生協商品リストを修正する</h2>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>
                     <tr>
                         <th>商品名</th>
-                        <th>内容量</th>
                         <th>必要数</th>
                         <th>単価</th>
                         <th>カテゴリ</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,11 +89,6 @@ if(count($_POST) > 0){
                         </td>
                         <td>
                             <p class="form-group form-trans">
-                                <input type="text" name="detail_amount_per_one[]" value="<?php echo $list['detail_amount_per_one'] ?>">
-                            </p>
-                        </td>
-                        <td>
-                            <p class="form-group form-trans">
                                 <input type="text" name="required_quantity[]" value="<?php echo $list['required_quantity'] ?>">
                             </p>
                         </td>
@@ -100,10 +98,23 @@ if(count($_POST) > 0){
                             </p>
 
                         </td>
+                        <td class="text-center">
+                            <p>
+                                <span class="label" id="label_<?php echo $list['monthly_goods_id'] ?>" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></span>
+                            </p>
+                            <p>
+                                <a  href        =""
+                                    class       ="modal-btn"
+                                    modal-target="#modal-category"
+                                    data-target ="#category_id_<?php echo $list['monthly_goods_id'] ?>"
+                                    label-target="#label_<?php echo $list['monthly_goods_id'] ?>"
+                                >カテゴリを選択する</a>
+                                <input type="hidden" name="category_id[]" id="category_id_<?php echo $list['monthly_goods_id'] ?>" value="<?php echo $list['category_id'] ?>">
+                            </p>
+                        </td>
                         <td>
-                            <p href="" class="btn btn-blue modal-btn" modal-target="#modal-category" data-target="#category_id_<?php echo $list['monthly_goods_id'] ?>">カテゴリを選択する</p>
-                            <p class="form-group form-trans form-group-inline">
-                                <input type="text" name="category_id[]" id="category_id_<?php echo $list['monthly_goods_id'] ?>" value="<?php echo $list['category_id'] ?>">
+                            <p>
+                            <button type="submit" name="delete" value="<?php echo $list['monthly_goods_id'] ?>" class="btn btn-red"  onclick="return confirm('データを削除してよろしいですか？');">削除する</button>
                             </p>
                         </td>
 
@@ -111,21 +122,30 @@ if(count($_POST) > 0){
                     <?php } ?>
                 </tbody>
             </table>
-            <p><button type="submit" class="btn btn-blue">送信する</button></p>
+            <?php if(count($lists) > 0){ ?>
+            <p class="text-right"><button type="submit" name="update" class="btn btn-blue">更新する</button></p>
+            <button type="submit" name="deleteAll" class="btn btn-red" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">月のリストを全て削除する</button>
+            <?php }else{ ?>
+            <p>リストが存在しません。先にデータの取り込みを行ってください。</p>
+            <?php } ?>
         </form>
 
         <div id="modal-category" class="modal-hide">
             <div class="modal-header bg-blue">
-                <h2>modal window</h2>
+                <h2>カテゴリ選択画面</h2>
             </div>
             <div class="modal-body">
                 <h2>カテゴリを選択する</h2>
                 <?php foreach ($categories as $category) { ?>
-                <span class="label" style="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']); ?>"><?php echo $category['category_name'] ?></span>
+                <span
+                    class  ="label select modal-close-btn"
+                    style  ="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']); ?>"
+                    data-id="<?php echo $category['category_id'] ?>"
+                ><?php echo $category['category_name'] ?></span>
                 <?php } ?>
             </div>
             <div class="modal-footer">
-                <h6>footer</h6>
+                <h6>　</h6>
             </div>
         </div>
 
@@ -137,7 +157,18 @@ if(count($_POST) > 0){
 
 
 <script type="text/javascript">
-    
+$(function(){
+var dataTrg = '';
+var labelTrg= '';
+    $('.modal-btn').click(function(){ dataTrg = $(this).attr('data-target'); labelTrg = $(this).attr('label-target') });
+    $(document).on('click', '.select', function(){
+        var style = $(this).attr('style');
+        var id    = $(this).attr('data-id');
+        var name  = $(this).html();
+        $(labelTrg).attr('style', style).html(name);
+        $(dataTrg).attr('value', id);
+    });
+})
 </script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>

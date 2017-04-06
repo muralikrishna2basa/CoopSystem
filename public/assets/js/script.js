@@ -51,7 +51,7 @@ $(function(){
             $(this).append(html);
         });
     });
-    $(document).on('click', '.modal-close', function(){ $(".modal-bg").fadeOut(function(){ $(this).remove() }) });
+    $(document).on('click', '.modal-close, .modal-close-btn', function(){ $(".modal-bg").fadeOut(function(){ $(this).remove() }) });
 
     //Tips
     $(".tips-trigger").hover(

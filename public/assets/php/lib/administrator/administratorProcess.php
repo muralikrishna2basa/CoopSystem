@@ -399,7 +399,7 @@ function fixOrder($monthlyId ){
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($monthlyId));
         if(!$res) throw new Exception("関数fixOrderでUPDATE文実行時にエラーが発生しました。");
-
+        deletingEmptystockList();
     }catch(Exception $e){
        throw $e;
     }
@@ -451,8 +451,7 @@ function getOrderListBeforeFixed($monthlyId)
                  INNER JOIN ordering_list ON ordering.ordering_id           = ordering_list.ordering_id
                  INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
                  INNER JOIN category      ON monthly_goods.category_id      = category.category_id
-                 WHERE ordering.monthly_id = ? ORDER BY monthly_goods.category_id ASC, monthly_goods.monthly_goods_id ASC, ordering.orderer ASC;"
-        ;
+                 WHERE ordering.monthly_id = ? ORDER BY monthly_goods.category_id ASC, monthly_goods.monthly_goods_id ASC, ordering.orderer ASC;";
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute([$monthlyId, ]);
         if(!$res) throw new Exception("Error Processing Request", 1);
@@ -474,4 +473,16 @@ function getOrderListBeforeFixed($monthlyId)
     }
     return $lists;
 }
-?>
+//確定時に在庫数が０の在庫をリストから削除する関数
+function deletingEmptystockList(){
+    $pdo  = connectDb('coop');
+    try{
+        $sql  = "DELETE FROM stock_list WHERE stock_quantity =0;";
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute();
+        if(!$res) throw new Exception("関数deletingEmptystockListでDELETE文実行時にエラーが発生しました");
+    }catch (Exception $e) {
+        throw $e;
+    }
+}
+    ?>

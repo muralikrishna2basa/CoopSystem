@@ -232,7 +232,7 @@ function productListEdit($productList){
             unit_price=?,
             required_quantity=?,
             category_id=?,
-            coopProductId=?
+            coop_product_id=?
             WHERE monthly_goods_id=?";
             $stmt=$pdo->prepare($sql);
             $param=[
@@ -409,7 +409,7 @@ function administratorReturnStockList(){
  $pdo = connectDb('cooopshinren');
   try{
         $sql="SELECT stock_list.monthly_goods_id,goods_name,unit_price,
-                    stock_quantity,category_name,color,coopProductId
+                    stock_quantity,category_name,color,coop_product_id
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
                     INNER JOIN category ON monthly_goods.category_id = category.category_id";

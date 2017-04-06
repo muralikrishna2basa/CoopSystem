@@ -15,13 +15,10 @@ try {
     $res   = $stmt->execute([$_GET['id'], ]);
     if(!$res) throw new Exception("DB接続時にエラーが発生しました。");
     $date  = date('Y年n月', strtotime($stmt->fetchColumn()));
-//    echo $date;
-//    var_dump($lists);
     exportCsv($lists, $date, $PATH);
 } catch (Exception $e) {
-
+    echo '<script type="text/javascript"> alert("'.$e->getMessage().'"); window.location.href = "../month";</script>';
 }
-
 
 function exportCsv($lists, $date, $path){
     $filePath = $path.'/public/assets/files/';
@@ -33,10 +30,7 @@ function exportCsv($lists, $date, $path){
         if(touch($fullPath))
         {
             $file = new SplFileObject($fullPath, 'w');
-            foreach ($csvTitle as $buf)
-            {
-                $header[] = mb_convert_encoding($buf, 'sjis', 'utf8');
-            }
+            foreach ($csvTitle as $buf) $header[] = mb_convert_encoding($buf, 'sjis', 'utf8');
 
             $file->fputcsv($header);
             foreach ($lists as $list)
@@ -67,4 +61,5 @@ function exportCsv($lists, $date, $path){
     } catch (Exception $e) {
         throw $e;
     }
-}?>
+}
+?>

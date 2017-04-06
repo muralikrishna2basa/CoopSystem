@@ -173,7 +173,7 @@ function productListCreation($csvArray,$monthlyId){
     for($i = 1; $i < count($csvArray)-1; $i++){
         try{
             $sql = "INSERT INTO  coopsystemdb.monthly_goods
-                    VALUES (NULL,?,?,?,?,?,?);"
+                    VALUES (NULL,?,?,?,?,?,?,1);"
             ;
             $param = [
                 $csvArray[$i][0], /* goods_name */
@@ -190,10 +190,12 @@ function productListCreation($csvArray,$monthlyId){
 //            var_dump($sql);
         }
         catch(Exception $e){
-            var_dump($param);
+            deleteFaultList();
             throw $e;
         }
     }
+    deleteFaultFlag();
+
 }
 //商品リストを表示する関数
 function productListDisplay($monthlyId){
@@ -477,6 +479,30 @@ function deletingEmptystockList(){
         $res  = $stmt->execute();
         if(!$res) throw new Exception("関数deletingEmptystockListでDELETE文実行時にエラーが発生しました");
     }catch (Exception $e) {
+        throw $e;
+    }
+}
+//CSVインポート成功時に異常フラグを消す関数
+function deleteFaultFlag(){
+    try{
+        $pdo  = connectDb('cooopshinren');
+        $sql  = "UPDATE monthly_goods SET fault_flag = 0 WHERE fault_flag = 1;";
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute();
+        if(!$res) throw new Exception("関数deleteFaultFlagでUPDATE文実行時にエラーが発生しました。");
+    }catch(Exception $e){
+        throw $e;
+    }
+}
+//CSVインポート失敗時に異常フラグが立っているリストを消す関数
+function deleteFaultList(){
+    try{
+        $pdo  = connectDb('cooopshinren');
+        $sql  = "DELETE FROM monthly_goods WHERE fault_flag = 1;";
+        $stmt = $pdo->prepare($sql);
+        $res  = $stmt->execute();
+        if(!$res) throw new Exception("関数deleteFaultListでDELETE文実行時にエラーが発生しました。");
+    }catch(Exception $e){
         throw $e;
     }
 }

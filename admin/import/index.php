@@ -9,7 +9,7 @@ $extension    = 'nofiles';
 $displayMonth = '月を選択する';
 $displayEdit  = '月のリストを編集する';
 $monthlyId    = '';
-$editFlag     = true;
+//$editFlag     = true;
 $csvFlag      = true;
 $csv          = [];
 $errors       = [];
@@ -54,6 +54,7 @@ if(count($_POST) > 0 && isset($_POST['month']))
 //                WHERE monthly_goods.monthly_id=?
 //                AND fixed_flag=1;"
 //        ;
+/*
         $sql = "SELECT COUNT(*)
             FROM monthly_goods
             NATURAL JOIN monthly
@@ -66,10 +67,10 @@ if(count($_POST) > 0 && isset($_POST['month']))
         if(!$res) throw new Exception("montyly_goodsDB接続時にエラーが発生しました。");
         $cnt  = $stmt->fetchColumn();
         if(intval($cnt) === 0 || !$cnt) $editFlag = false;
-
+*/
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
-        exit();
+//        exit();
     }
 }
 
@@ -106,7 +107,7 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         if(file_exists($filePath)) unlink($filePath);
         // ページ遷移
 //        exit();
-        header('location: ../productlist/index.php?id='.$monthlyId);
+        header('location: ../productlist/?id='.$monthlyId);
     }catch (Exception $e)
     {
         $errors[] = $e->getMessage();
@@ -131,7 +132,7 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container scroll">
-        <h2>生協商品リストを編集する</h2>
+        <h2>生協商品リストを取り込む</h2>
         <form method="post">
             <select name="month">
                 <?php foreach ($rows as $val){ ?>
@@ -143,20 +144,14 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
             <button type="submit" name='submit_month' class="btn btn-green"><?php echo $displayMonth ?></button>
         </form>
 
-        <?php if(isset($_POST['submit_month'])){ ?>
+        <?php if(isset($_POST['submit_month']) && $csvFlag){ ?>
         <form method="post" action="" enctype="multipart/form-data">
             <input type="file"    name="csv" id="csv">
             <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
-            <?php if($csvFlag){ ?>
             <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
-            <?php }else{ ?>
-            <p class="text-red">指定した月は公開中もしくは確定済みであるため、商品の追加・編集はできません。</p>
-            <?php } ?>
-            <?php if($editFlag){ ?>
-            <a href="../productlist?id=<?php echo $monthlyId ?>" class="btn btn-yellow"><?php echo $displayEdit ?></a>
-            <?php }else{ ?>
-            <?php } ?>
         </form>
+        <?php }else{ ?>
+        <p class="text-red">指定した月は公開中もしくは確定済みであるため、商品の追加・編集はできません。</p>
         <?php } ?>
 
         <?php errorMessages($errors) ?>

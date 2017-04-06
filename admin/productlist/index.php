@@ -125,8 +125,6 @@ if(count($_POST) > 0){
             <?php if(count($lists) > 0){ ?>
             <p class="text-right"><button type="submit" name="update" class="btn btn-blue">更新する</button></p>
             <button type="submit" name="deleteAll" class="btn btn-red" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">月のリストを全て削除する</button>
-            <?php }else{ ?>
-            <p>リストが存在しません。先にデータの取り込みを行ってください。</p>
             <?php } ?>
         </form>
 

@@ -53,6 +53,7 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                 exit();
                 break;
         }
+    header("location: ./");
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
     }
@@ -93,37 +94,42 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                         <td></td>
                         <td class="text-center">
                             <p class="form-group form-trans">
-                                <select name="month_id">
+                                <select name="month_id" id="month_id">
                                     <?php foreach($rows as $row){ ?>
-                                    <option value="<?php echo $row['monthly_id'] ?>" <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>>
+                                    <option
+                                        value      ="<?php echo $row['monthly_id'] ?>" <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>
+                                        data-public="<?php echo $row['public_flag'] ?>"
+                                        data-fixed ="<?php echo $row['fixed_flag'] ?>"
+                                        data-cnt   ="<?php echo $row['cnt'] ?>"
+                                    >
                                         <?php echo date('Y年n月', strtotime($row['date'])) ?>
-                                        <?php                                       echo ' / '.$row['cnt'].'件' ?>
-                                        <?php if(intval($row['public_flag']) === 1) echo ' [ 公開中 ]' ?>
-                                        <?php if($row['fixed_flag'] == 1)           echo " [ 確定済 ]" ?>
+                                        <?php                              echo ' / '.$row['cnt'].'件' ?>
+                                        <?php if($row['public_flag'] == 1) echo ' [ 公開中 ]' ?>
+                                        <?php if($row['fixed_flag']  == 1) echo " [ 確定済 ]" ?>
                                     </option>
                                     <?php } ?>
                                 </select>
                             </p>
                         </td>
-                        <td><button type="submit" name="btn" value="publish" class="btn btn-blue block">商品リストを公開する</button></td>
+                        <td><button type="submit" name="btn" value="publish" id="publish" class="btn btn-blue block">商品リストを公開する</button></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
-                        <td><button type="submit" name="btn" value="edit" class="btn btn-blue block" >商品リストの編集をする</button></td>
+                        <td><button type="submit" name="btn" value="edit" id="edit" class="btn btn-blue block" >商品リストの編集をする</button></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
-                        <td><button type="submit" name="btn" value="export" class="btn btn-blue block" >リストを出力する</button></td>
+                        <td><button type="submit" name="btn" value="export" id="export" class="btn btn-blue block" >リストを出力する</button></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
-                        <td><button type="submit" name="btn" value="unfixed" class="btn btn-red block" >確定を解除する</button></td>
+                        <td><button type="submit" name="btn" value="unfixed" id="unfixed" class="btn btn-red block" >確定を解除する</button></td>
                         <td></td>
                     </tr>
 
@@ -135,7 +141,37 @@ if(count($_POST) > 0 && isset($_POST['btn']))
 
     </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+        editBtn();
+        $('#month_id').change(function(){ editBtn() });
+    })
 
+function editBtn()
+{
+    $('.btn').each(function(){ $(this).show() });
+    var public = $('#month_id option:selected').attr('data-public');
+    var fixed  = $('#month_id option:selected').attr('data-fixed');
+    var cnt    = $('#month_id option:selected').attr('data-cnt');
+
+    if(cnt == 0)
+    {
+        $('#publish').hide();
+        $('#edit').hide();
+        $('#export').hide();
+        $('#unfixed').hide();
+    }
+    if(public == 1)
+    {
+        $('#publish').hide();
+        $('#edit').hide();
+    }
+    if(fixed == 1)
+    {
+        $('#edit').hide();
+    }
+}
+</script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

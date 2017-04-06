@@ -33,8 +33,7 @@ function connectDb($dbName){
     try{
         $pdo = new PDO($dns, $user, $pass);
     }catch(Exception $e){
-        echo($e->Getmessage());
-        return;
+        throw $e;
     }
 
     return $pdo;

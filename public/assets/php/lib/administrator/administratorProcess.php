@@ -84,7 +84,7 @@ function stockListTemporaryCreating(){
         return $returnList;
     }
     catch(Exception $e){
-        return e->getMessage();
+        throw $e;
     }
 }
 
@@ -216,7 +216,11 @@ function productListDisplay($monthlyId){
 //商品リストを編集する関数
  //productListは　商品ＩＤ、商品名、単価、内容量、必要量、カテゴリＩＤの配列　
 function productListEdit($productList){
-    $pdo = connectDb('cooopshinren');
+    try {
+        $pdo = connectDb('cooopshinren');
+    } catch (Exception $e) {
+        throw $e;
+    }
     for($i = 0; $i < count($productList['monthly_goods_id']); $i++){
         try{
             $sql = "UPDATE monthly_goods SET
@@ -274,8 +278,8 @@ function productListAllDeleting($monthlyId){
 //発注リストを表示する関数
 function orderListDisplay($monthlyId = 0){
     $orderList = [];
-    $pdo = connectDb('cooopshinren');
     try{
+        $pdo = connectDb('cooopshinren');
         $sql = "SELECT category_name,color,goods_name,unit_price,
                 ordering_quantity,(unit_price*ordering_quantity) AS amount,order_list_id,orderer
                 FROM  ordering_list
@@ -331,8 +335,8 @@ function orderListEdit($orderList){
 }
 //月別ＩＤを作成する関数
 function monthlyIdGeneration($date){
-    $pdo = connectDb('cooopshinren');
     try{
+        $pdo = connectDb('cooopshinren');
         $sql  = "SELECT monthly_id FROM monthly WHERE date =?;";
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute(array($date));

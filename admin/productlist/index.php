@@ -5,14 +5,15 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
-$errors = [];
-$lists  = [];
+$errors  = [];
+$lists   = [];
 /**
  * 月別IDのチェック処理
  * idがセットされており、かつ月別IDが存在し、かつ確定されていないときのみ処理を通す
  */
 try {
     $pdo    = connectDb('coop');
+//    deleteFaultList();
     if(count($_GET) <= 0){
         throw new Exception("月が選択されていないようです。再度月選択からやり直してください。");
     }else{
@@ -40,13 +41,25 @@ if(count($_POST) > 0){
     try {
         if(isset($_POST['delete']))    productListOneDeleting($_POST['delete']);
         if(isset($_POST['deleteAll'])) productListAllDeleting($_GET['id']);
-        if(isset($_POST['update'])) productListEdit($_POST);
+        if(isset($_POST['update']))    productListEdit($_POST);
 
         header("location: ./index.php?id={$_GET['id']}");
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
     }
 }
+
+try {
+    $tmp       = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $num       = 50;
+    $pages     = getPagenation($lists, $tmp);
+    $page      = $pages['page'];
+    $maxPage   = $pages['maxPage'];
+
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -70,51 +83,54 @@ if(count($_POST) > 0){
             <table class="border-bottom table-hover">
                 <thead>
                     <tr>
+                        <th class="text-center">No</th>
                         <th>商品名</th>
                         <th>必要数</th>
                         <th>単価</th>
-                        <th>カテゴリ</th>
+                        <th class="text-center">カテゴリ</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($lists as $list){ ?>
+                    <?php //foreach ($lists as $list){ ?>
+                    <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                     <tr>
+                        <td class="text-center"><?php echo $i ?></td>
                         <td>
-                            <input type="hidden" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">
-                            <input type="hidden" name="monthly_id[]"       value="<?php echo $list['monthly_id'] ?>">
+                            <input type="hidden" name="monthly_goods_id[]" value="<?php echo $lists[$i]['monthly_goods_id'] ?>">
+                            <input type="hidden" name="monthly_id[]"       value="<?php echo $lists[$i]['monthly_id'] ?>">
                             <p class="form-group form-trans">
-                                <input type="text" name="goods_name[]"     value="<?php echo $list['goods_name'] ?>">
+                                <input type="text" name="goods_name[]"     value="<?php echo $lists[$i]['goods_name'] ?>">
                             </p>
                         </td>
                         <td>
                             <p class="form-group form-trans">
-                                <input type="text" name="required_quantity[]" value="<?php echo $list['required_quantity'] ?>">
+                                <input type="text" name="required_quantity[]" value="<?php echo $lists[$i]['required_quantity'] ?>">
                             </p>
                         </td>
                         <td>
                             <p class="form-group form-trans">
-                                <input type="text" name="unit_price[]" value="<?php echo $list['unit_price'] ?>">
+                                <input type="text" name="unit_price[]" value="<?php echo $lists[$i]['unit_price'] ?>">
                             </p>
 
                         </td>
                         <td class="text-center">
                             <p>
-                                <span class="label" id="label_<?php echo $list['monthly_goods_id'] ?>" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></span>
+                                <span class="label" id="label_<?php echo $lists[$i]['monthly_goods_id'] ?>" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></span>
                             </p>
                             <p>
                                 <a  href        =""
-                                    class       ="modal-btn"
+                                    class       ="modal-btn btn-sm"
                                     modal-target="#modal-category"
-                                    data-target ="#category_id_<?php echo $list['monthly_goods_id'] ?>"
-                                    label-target="#label_<?php echo $list['monthly_goods_id'] ?>"
+                                    data-target ="#category_id_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                                    label-target="#label_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                                 >カテゴリを選択する</a>
-                                <input type="hidden" name="category_id[]" id="category_id_<?php echo $list['monthly_goods_id'] ?>" value="<?php echo $list['category_id'] ?>">
+                                <input type="hidden" name="category_id[]" id="category_id_<?php echo $lists[$i]['monthly_goods_id'] ?>" value="<?php echo $lists[$i]['category_id'] ?>">
                             </p>
                         </td>
                         <td>
                             <p>
-                            <button type="submit" name="delete" value="<?php echo $list['monthly_goods_id'] ?>" class="btn btn-red"  onclick="return confirm('データを削除してよろしいですか？');">削除する</button>
+                            <button type="submit" name="delete" value="<?php echo $lists[$i]['monthly_goods_id'] ?>" class="btn btn-red"  onclick="return confirm('データを削除してよろしいですか？');">削除する</button>
                             </p>
                         </td>
 
@@ -123,36 +139,41 @@ if(count($_POST) > 0){
                 </tbody>
             </table>
             <?php if(count($lists) > 0){ ?>
-            <p class="text-right"><button type="submit" name="update" class="btn btn-blue">更新する</button></p>
-            <button type="submit" name="deleteAll" class="btn btn-red" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">月のリストを全て削除する</button>
+            <p class="text-right">
+                <button type="submit" name="update" class="btn btn-blue">更新する</button>
+                <button type="submit" name="deleteAll" class="btn btn-red" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">月のリストを全て削除する</button>
+            </p>
             <?php } ?>
         </form>
-
-        <div id="modal-category" class="modal-hide">
-            <div class="modal-header bg-blue">
-                <h2>カテゴリ選択画面</h2>
-            </div>
-            <div class="modal-body">
-                <h2>カテゴリを選択する</h2>
-                <?php foreach ($categories as $category) { ?>
-                <span
-                    class  ="label select modal-close-btn"
-                    style  ="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']); ?>"
-                    data-id="<?php echo $category['category_id'] ?>"
-                ><?php echo $category['category_name'] ?></span>
-                <?php } ?>
-            </div>
-            <div class="modal-footer">
-                <h6>　</h6>
-            </div>
+        <div class="paging">
+            <?php for($i = 1; $i <= floor(count($lists) / $num); $i++){ ?>
+            <a href="./?id=<?php echo $_GET['id'] ?>&page=<?php echo $i ?>" class="page"><?php echo $i ?></a>
+            <?php } ?>
         </div>
-
-
 
         <?php errorMessages($errors) ?>
     </div>
 </div>
 
+
+<div id="modal-category" class="modal-hide">
+    <div class="modal-header bg-blue">
+        <h2>カテゴリ選択画面</h2>
+    </div>
+    <div class="modal-body">
+        <h2>カテゴリを選択する</h2>
+        <?php foreach ($categories as $category) { ?>
+        <span
+            class  ="label select modal-close-btn"
+            style  ="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']); ?>"
+            data-id="<?php echo $category['category_id'] ?>"
+        ><?php echo $category['category_name'] ?></span>
+        <?php } ?>
+    </div>
+    <div class="modal-footer">
+        <h6>　</h6>
+    </div>
+</div>
 
 <script type="text/javascript">
 $(function(){

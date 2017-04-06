@@ -59,7 +59,8 @@ $(function(){
             var html = $(this).nextAll('.tips-target').html();
             $(this).parent().append('<div class="tips-content">'+html+'</div>');
             $(".tips-content").css({left: $(this).scrollLeft()+20+"px"}).hide().fadeIn();
-        }, function(){ $(".tips-content").fadeOut(100, function(){ $(this).remove() }) }
+            $(this).parent().css({zIndex: 10});
+        }, function(){ $(this).parent().css({zIndex: ''}); $(".tips-content").fadeOut(100, function(){ $(this).remove() }); }
     );
 
     //col-btn

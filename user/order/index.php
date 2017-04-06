@@ -7,12 +7,24 @@ $errors     = [];
 $lists      = [];
 $i          = 0;
 $priceTotal = 0;
-$errors     = [];
-$pdo        = connectDb('coop');
+$date       = '';
+$fixed      = 0;
 $orderBtn   = '';
 $orderState = '';
 try {
+    $pdo        = connectDb('coop');
+    // monthlyテーブルに接続
+    $sql  = "SELECT * FROM monthly WHERE public_flag=1;";
+    $stmt = $pdo->prepare($sql);
+    $res  = $stmt->execute(null);
+    if(!$res) throw new Exception("[order]:DB接続時にエラーが発生しました。");
+    $date  = $stmt->fetch()['date'];
+    $fixed = intval($stmt->fetch()['fixed_flag']);
+
+    // 表示用リスト作成
     $lists = returnCurrentMonthProductList($_SESSION['USERID']);
+
+    // orderingテーブルに接続して今月の注文状況を取得
     $sql = "SELECT order_flag FROM ordering
             WHERE monthly_id=(SELECT monthly_id FROM monthly WHERE public_flag=1 LIMIT 1)
             AND orderer=?;"
@@ -20,7 +32,6 @@ try {
     $stmt = $pdo->prepare($sql);
     $res  = $stmt->execute([$_SESSION['USERID']]);
     if(!$res) throw new Exception("[order]:DB接続時にエラーが発生しました。");
-
     switch(intval($stmt->fetchColumn()))
     {
         case 0:
@@ -66,14 +77,13 @@ if(count($_POST) > 0){
         <?php include($PATH."/public/assets/php/partial/menu_user.php"); ?>
     </div>
     <div class="col-10 container scroll">
-        <h1>生協商品を注文する</h1>
+        <h1><?php echo date('Y年n月', strtotime($date)) ?>分の生協商品を注文する</h1>
         <form method="post" action="">
         <table class="table-hover border-bottom">
             <thead>
                 <tr>
                     <th width="10%" class="text-center">カテゴリ</th>
                     <th width="30%"                    >商品名</th>
-                    <th width="10%" class="text-center">内容量</th>
                     <th width="10%" class="text-center">必要数</th>
                     <th width="10%" class="text-right" >単価</th>
                     <th width="15%" class="text-center">購入数</th>
@@ -93,9 +103,6 @@ if(count($_POST) > 0){
                         <p><?php echo $list['goods_name'] ?></p>
                     </td>
                     <td class="text-center">
-                        <p><?php echo $list['detail_amount_per_one'] ?></p>
-                    </td>
-                    <td class="text-center">
                         <p><?php echo $list['required_quantity'] ?>個</p>
                     </td>
                     <td class="text-right">
@@ -112,7 +119,7 @@ if(count($_POST) > 0){
                             data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
                         >
                             <button class="ordering-minus">&minus;</button>
-                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?></span>
+                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?>個</span>
                             <button class="ordering-plus">+</button>
                         </p>
                         <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo $list['ordering_quantity'] ?>">
@@ -130,14 +137,18 @@ if(count($_POST) > 0){
             </tbody>
         </table>
         <p class="text-right form-group">
+            <?php if($fixed !== 1){ ?>
             <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
             <?php echo $orderBtn //今月は注文しませんボタンを表示 ?>
+            <?php }else{ ?>
+            <h2 class="text-red">今月の注文は確定されたため締め切られました。</h2>
+            <?php } ?>
         </p>
         </form>
 
         <div class="flex">
-            <div class="col-6"></div>
-            <div class="draggable border-radius col-6 bg-white opacity-8">
+            <div class="col-7"></div>
+            <div class="draggable border-radius col-5 bg-white opacity-8">
                 <table class="border-none">
                     <tr>
                         <td class="text-center">

@@ -87,7 +87,7 @@ if(count($_POST) > 0)
                     <?php } ?>
                 </tbody>
             </table>
-            <p class="text-right"><button type="submit" class="btn btn-blue">在庫を登録する</button></p>
+            <p class="text-right"><button type="submit" class="btn btn-blue">在庫を更新する</button></p>
         </form>
 
         <?php errorMessages($errors) ?>

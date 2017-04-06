@@ -85,8 +85,8 @@ try {
             </tbody>
         </table>
         <div class="flex">
-            <div class="col-8"></div>
-            <div class="draggable border-radius col-4 bg-white opacity-8">
+            <div class="col-7"></div>
+            <div class="draggable border-radius col-5 bg-white opacity-8">
                 <table class="border-none">
                     <tr>
                         <td class="text-center">

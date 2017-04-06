@@ -48,7 +48,6 @@ if(count($_POST)>0){
                 <tr>
                     <th width="10%" class="text-center">カテゴリ</th>
                     <th width="30%">商品名</th>
-                    <th width="10%" class="text-center">内容量</th>
                     <th width="10%" class="text-center">在庫数</th>
                     <th width="10%" class="text-center">単価</th>
                     <th width="15%" class="text-center">購入数</th>
@@ -64,9 +63,6 @@ if(count($_POST)>0){
                     </td>
                     <td>
                         <p><?php echo $list['goods_name'] ?></p>
-                    </td>
-                    <td class="text-center">
-                        <p><?php echo $list['detail_amount_per_one'] ?></p>
                     </td>
                     <td class="text-center">
                         <p>
@@ -89,7 +85,7 @@ if(count($_POST)>0){
                             data-stock  ="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"
                         >
                             <button class="ordering-minus">&minus;</button>
-                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?></span>
+                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?>個</span>
                             <button class="ordering-plus">+</button>
                         </p>
                         <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo intval($list['ordering_quantity']) ?>">
@@ -107,13 +103,13 @@ if(count($_POST)>0){
             </tbody>
         </table>
         <p class="text-right form-group">
-            <button type="submit" class="btn btn-blue">送信する</button>
+            <button type="submit" class="btn btn-blue">注文します</button>
         </p>
         </form>
 
         <div class="flex">
-            <div class="col-6"></div>
-            <div class="draggable border-radius col-6 bg-white opacity-8">
+            <div class="col-7"></div>
+            <div class="draggable border-radius col-5 bg-white opacity-8">
                 <table class="border-none">
                     <tr>
                         <td class="text-center">

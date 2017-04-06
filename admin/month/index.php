@@ -49,6 +49,8 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                 unFixOrder($_POST['month_id']);
                 break;
             case 'export':
+                header("location: ../export/?id={$_POST['month_id']}");
+                exit();
                 break;
             case 'edit':
                 header("location: ../productlist/?id={$_POST['month_id']}");
@@ -99,10 +101,11 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                                 <select name="month_id" id="month_id">
                                     <?php foreach($rows as $row){ ?>
                                     <option
-                                        value      ="<?php echo $row['monthly_id'] ?>" <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>
+                                        value      ="<?php echo $row['monthly_id'] ?>"
                                         data-public="<?php echo $row['public_flag'] ?>"
                                         data-fixed ="<?php echo $row['fixed_flag'] ?>"
                                         data-cnt   ="<?php echo $row['cnt'] ?>"
+                                        <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>
                                     >
                                         <?php echo date('Y年n月', strtotime($row['date'])) ?>
                                         <?php                              echo ' / '.$row['cnt'].'件' ?>

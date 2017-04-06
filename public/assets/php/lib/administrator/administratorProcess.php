@@ -146,24 +146,24 @@ function csvFileCheck($csvArray){
                 $errorflag=1;
                 $str=$str."商品名が空白です,";
             }
-            if(mb_strlen($csvArray[$i][1])===0){
-                $errorflag=1;
-                $str=$str."内容量が空白です,";
-            }
-            if(preg_match("[^0-9]",$csvArray[$i][2])==1){
+            if(preg_match("[^0-9]",$csvArray[$i][1])==1){
                 $errorflag=1;
                 $str=$str."必要数は数字しか使えません,";
             }
-            if(preg_match("[^0-9]",$csvArray[$i][3])==1){
+            if(preg_match("[^0-9]",$csvArray[$i][2])==1){
                 $errorflag=1;
                 $str=$str."単価は数字しか使えません,";
             }
-            if(preg_match("[^0-9]",$csvArray[$i][4])==1){
+            if(preg_match("[^0-9]",$csvArray[$i][3])==1){
                 $errorflag=1;
                 $str=$str."カテゴリは数字しか使えません,";
             }
+            if(preg_match("[^0-9]",$csvArray[$i][4])==1){
+                $errorflag=1;
+                $str=$str."生協商品ＩＤは数字しか使えません,";
+            }
             if($errorflag==1){
-                $errorMessage[$str];
+                $errorMessage[]=$str;
             }
         }else{
             $str=$str."情報が不足しています";
@@ -182,14 +182,16 @@ function productListCreation($csvArray,$monthlyId){
             VALUES (NULL,?,?,?,?,?,?);";
             $param = [
                 $csvArray[$i][0], /* goods_name */
-                $csvArray[$i][3], /* unit_price */
-                $csvArray[$i][1], /* detail_amount_per_one */
-                $csvArray[$i][2], /* required_quantity */
+                $csvArray[$i][2], /* unit_price */
+                $csvArray[$i][1], /* required_quantity */
                 $monthlyId,       /* monthly_id */
-                $csvArray[$i][4], /* category_id */
+                $csvArray[$i][3], /* category_id */
+                $csvArray[$i][4] /* coopProductId*/
             ];
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute($param);
+            var_dump($stmt);
+            var_dump($param);
             if(!$res) throw new Exception("関数productListCreationで".$i."回目のINSERT文実行時にエラーが発生しました。");
 //            var_dump($param);
 //            var_dump($sql);
@@ -228,17 +230,17 @@ function productListEdit($productList){
             $sql="UPDATE monthly_goods SET
             goods_name=?,
             unit_price=?,
-            detail_amount_per_one=?,
             required_quantity=?,
-            category_id=?
+            category_id=?,
+            coopProductId=?
             WHERE monthly_goods_id=?";
             $stmt=$pdo->prepare($sql);
             $param=[
                 $productList['goods_name'][$i],
                 $productList['unit_price'][$i],
-                $productList['detail_amount_per_one'][$i],
                 $productList['required_quantity'][$i],
                 $productList['category_id'][$i],
+                $productList['coopProductId'][$i],
                 $productList['monthly_goods_id'][$i]];
             $res= $stmt->execute($param);
             if(!$res) throw new Exception("関数productListEditで".$i."回目のUPDATE文実行時にエラーが発生しました。");
@@ -374,8 +376,8 @@ function fixOrder($monthlyId ){
 function administratorReturnStockList(){
  $pdo = connectDb('cooopshinren');
   try{
-        $sql="SELECT stock_list.monthly_goods_id,goods_name,unit_price,detail_amount_per_one,
-                    stock_quantity,category_name,color
+        $sql="SELECT stock_list.monthly_goods_id,goods_name,unit_price,
+                    stock_quantity,category_name,color,coopProductId
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
                     INNER JOIN category ON monthly_goods.category_id = category.category_id";
@@ -384,7 +386,7 @@ function administratorReturnStockList(){
         while ($row = $stmt->fetch()) {
             $stockList[] =$row;
         }
-        if(!$res) throw new Exception("関数fixOrderでmonthlyId取得時にエラーが発生しました。");
+        if(!$res) throw new Exception("関数administratorReturnStockListでSELECT文実行時にエラーが発生しました。");
         return $stockList;
     }catch(Exception $e){
         throw $e;

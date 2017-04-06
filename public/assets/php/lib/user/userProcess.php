@@ -114,7 +114,7 @@ function returnCurrentMonthProductList($userId){
     }
 
     try{
-        $sql = "SELECT monthly_goods_id,goods_name,unit_price,detail_amount_per_one, required_quantity,category_name,color
+        $sql = "SELECT monthly_goods_id,goods_name,unit_price,required_quantity,category_name,color
                 FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category WHERE public_flag=1 ORDER BY category.category_id;"
         ;
         $stmt=$pdo->prepare($sql);
@@ -194,7 +194,7 @@ function returnStockList($userId,$monthlyId = 0){
     }
     try{
         if ($monthlyId == 0){
-            $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,detail_amount_per_one,
+            $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,
                     stock_quantity,category_name,color
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
@@ -205,7 +205,7 @@ function returnStockList($userId,$monthlyId = 0){
             if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
 
         }else{
-            $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,detail_amount_per_one,
+            $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,
                     stock_quantity,category_name,color
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id

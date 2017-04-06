@@ -18,6 +18,7 @@ $rows         = [];
 
 try {
     $pdo   = connectDb('coop');
+    deleteFaultList();
     $sql   = "SELECT MAX(date) FROM monthly WHERE fixed_flag!=1 AND public_flag!=1;";
     $stmt  = $pdo->prepare($sql);
     $res   = $stmt->execute(null);
@@ -118,6 +119,7 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
         {
             $row[2] = preg_replace('/,/', '', $row[2]);
             $row[1] = preg_replace('/,/', '', $row[1]);
+            $row[0] = mb_convert_kana($row[0], "KV");
             $tmp[]  = $row;
         }
         $csvArray = $tmp;

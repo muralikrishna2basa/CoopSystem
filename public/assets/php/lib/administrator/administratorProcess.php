@@ -131,6 +131,8 @@ function csvFileCheck($csvArray){
         $errorflag = 0;
         $str = $i."番目の商品の";
         if(count($csvArray[$i])===5){ // == -> ===
+            preg_replace("/,/", "", $csvArray[$i][2]);
+             preg_replace("/,/", "", $csvArray[$i][1]);
             if(mb_strlen($csvArray[$i][0])===0){
                 $errorflag = 1;
                 $str .= "商品名が空白です,";

@@ -4,6 +4,7 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 
 require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
+set_time_limit(180);
 
 $extension    = 'nofiles';
 $displayMonth = '月を選択する';
@@ -47,27 +48,6 @@ if(count($_POST) > 0 && isset($_POST['month']))
         if(!$res) throw new Exception("monthlyDB接続時にエラーが発生しました。");
         if(intval($stmt->fetchColumn()) > 0) $csvFlag = false;
         $displayMonth = date('Y年n月', strtotime($_POST['month']))."が選択されています";
-
-        // [編集画面へのリンク]確定済みでなければリンクを表示させる
-//        $sql  = "SELECT COUNT(*)
-//                FROM monthly_goods, monthly
-//                WHERE monthly_goods.monthly_id=?
-//                AND fixed_flag=1;"
-//        ;
-/*
-        $sql = "SELECT COUNT(*)
-            FROM monthly_goods
-            NATURAL JOIN monthly
-            WHERE monthly_goods.monthly_id=?
-            AND fixed_flag =0
-            AND public_flag =0;"
-        ;
-        $stmt = $pdo->prepare($sql);
-        $res  = $stmt->execute([$monthlyId,]);
-        if(!$res) throw new Exception("montyly_goodsDB接続時にエラーが発生しました。");
-        $cnt  = $stmt->fetchColumn();
-        if(intval($cnt) === 0 || !$cnt) $editFlag = false;
-*/
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
 //        exit();
@@ -97,6 +77,14 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         chmod($filePath, 0644);
         // CSVファイルを配列に変換
         $csvArray = convertCsvFileToArray($PATH.'/public/assets/files/upload.csv');
+        $tmp = [];
+        foreach ($csvArray as $row)
+        {
+            $row[2] = preg_replace('/,/', '', $row[2]);
+            $row[1] = preg_replace('/,/', '', $row[1]);
+            $tmp[]  = $row;
+        }
+        $csvArray = $tmp;
         // ファイル内容のチェック
         $errorMessage=csvFileCheck($csvArray);
         // 結果をDBに格納

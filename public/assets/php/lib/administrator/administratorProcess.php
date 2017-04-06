@@ -131,8 +131,6 @@ function csvFileCheck($csvArray){
         $errorflag = 0;
         $str = $i."番目の商品の";
         if(count($csvArray[$i])===5){ // == -> ===
-            preg_replace("/,/", "", $csvArray[$i][2]);
-             preg_replace("/,/", "", $csvArray[$i][1]);
             if(mb_strlen($csvArray[$i][0])===0){
                 $errorflag = 1;
                 $str .= "商品名が空白です,";
@@ -174,8 +172,9 @@ function productListCreation($csvArray,$monthlyId){
     }
     for($i = 1; $i < count($csvArray)-1; $i++){
         try{
-            $sql="INSERT INTO  coopsystemdb.monthly_goods
-            VALUES (NULL,?,?,?,?,?,?);";
+            $sql = "INSERT INTO  coopsystemdb.monthly_goods
+                    VALUES (NULL,?,?,?,?,?,?);"
+            ;
             $param = [
                 $csvArray[$i][0], /* goods_name */
                 $csvArray[$i][2], /* unit_price */
@@ -186,11 +185,12 @@ function productListCreation($csvArray,$monthlyId){
             ];
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute($param);
-            if(!$res) throw new Exception("関数productListCreationで".$i."回目のINSERT文実行時にエラーが発生しました。");
+            if(!$res) throw new Exception("関数productListCreationで商品名:[".$csvArray[$i][0]."]のINSERT文実行時にエラーが発生しました。");
 //            var_dump($param);
 //            var_dump($sql);
         }
         catch(Exception $e){
+            var_dump($param);
             throw $e;
         }
     }

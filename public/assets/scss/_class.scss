@@ -56,6 +56,11 @@
         background: darken($bg-base-color, 20%);
     }
 }
+.btn-sm{
+    padding: 2px 5px;
+    font-size: 0.75em;
+    min-width: 20px;
+}
 .block{
     display: block;
     width: 100%;
@@ -240,5 +245,34 @@
         position: absolute;
         bottom: 2px;
         right: 2px;
+    }
+}
+
+.paging{
+    position: absolute;
+    left: 10px;
+    bottom: 7px;
+    z-index: 1;
+    letter-spacing: -1em;
+    .page{
+        &:link, &:visited{
+            color: $white;
+        }
+        &:hover{
+            color: $red;
+        }
+        letter-spacing: 0;
+        margin: 0;
+        border-bottom: 1px solid $white;
+        font-size: 0.75em;
+        font-weight: bold;
+        padding: 2px 3px;
+        display: inline-block;
+        min-width: 15px;
+        text-align: center;
+//        box-sizing: border-box;
+        &:hover{
+            background: lighten($black, 30%);
+        }
     }
 }

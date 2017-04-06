@@ -60,6 +60,16 @@ if(count($_POST) > 0){
     }
 }
 
+try {
+    $tmp       = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $num       = 50;
+    $pages     = getPagenation($lists, $tmp);
+    $page      = $pages['page'];
+    $maxPage   = $pages['maxPage'];
+
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,44 +101,45 @@ if(count($_POST) > 0){
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($lists as $list){ ?>
+                <?php //foreach ($lists as $list){ ?>
+                <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
                     <td class="text-center">
-                        <p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>;">
-                            <?php echo $list['category_name'] ?>
+                        <p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>;">
+                            <?php echo $lists[$i]['category_name'] ?>
                         </p>
-                        <input type="hidden" id="monthly_goods_id_<?php echo $list['monthly_goods_id'] ?>" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id']; ?>">
+                        <input type="hidden" id="monthly_goods_id_<?php echo $lists[$i]['monthly_goods_id'] ?>" name="monthly_goods_id[]" value="<?php echo $lists[$i]['monthly_goods_id']; ?>">
                     </td>
                     <td>
-                        <p><?php echo $list['goods_name'] ?></p>
+                        <p><?php echo $lists[$i]['goods_name'] ?></p>
                     </td>
                     <td class="text-center">
-                        <p><?php echo $list['required_quantity'] ?>個</p>
+                        <p><?php echo $lists[$i]['required_quantity'] ?>個</p>
                     </td>
                     <td class="text-right">
                         <p>
-                            <span id="unit_price_<?php echo $list['monthly_goods_id'] ?>"><?php echo number_format(intval($list['unit_price'])) ?></span>
+                            <span id="unit_price_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo number_format(intval($lists[$i]['unit_price'])) ?></span>
                             <span>円</span>
                         </p>
                     </td>
                     <td class="text-center">
                         <p
-                            data-price  ="unit_price_<?php echo $list['monthly_goods_id'] ?>"
-                            data-total  ="total_<?php echo $list['monthly_goods_id'] ?>"
-                            data-number ="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>"
-                            data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
+                            data-price  ="unit_price_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-total  ="total_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-number ="ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-display="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                         >
                             <button class="ordering-minus">&minus;</button>
-                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?></span>個
+                            <span id="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo intval($lists[$i]['ordering_quantity']) ?></span>個
                             <button class="ordering-plus">+</button>
                         </p>
-                        <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo $list['ordering_quantity'] ?>">
-                        <input type="hidden" id="ordering_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="ordering_quantity[]"         value="<?php echo $list['ordering_quantity'] ?>">
+                        <input type="hidden" id="initial_ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo $lists[$i]['ordering_quantity'] ?>">
+                        <input type="hidden" id="ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"         name="ordering_quantity[]"         value="<?php echo $lists[$i]['ordering_quantity'] ?>">
                     </td>
                     <td class="text-right">
                         <p>
-                            <?php $total = intval($list['ordering_quantity']) * intval($list['unit_price']) ?>
-                            <span id="total_<?php echo $list['monthly_goods_id'] ?>"><?php echo number_format($total) ?></span>
+                            <?php $total = intval($lists[$i]['ordering_quantity']) * intval($lists[$i]['unit_price']) ?>
+                            <span id="total_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo number_format($total) ?></span>
                             <span>円</span>
                         </p>
                     </td>
@@ -164,6 +175,12 @@ if(count($_POST) > 0){
                 </table>
             </div>
 
+        </div>
+
+        <div class="paging">
+            <?php for($i = 1; $i <= floor(count($lists) / $num); $i++){ ?>
+            <a href="./?page=<?php echo $i ?>" class="page"><?php echo $i ?></a>
+            <?php } ?>
         </div>
 
         <?php errorMessages($errors) ?>

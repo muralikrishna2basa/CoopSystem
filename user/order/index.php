@@ -119,7 +119,7 @@ if(count($_POST) > 0){
                             data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
                         >
                             <button class="ordering-minus">&minus;</button>
-                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?>個</span>
+                            <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo intval($list['ordering_quantity']) ?></span>個
                             <button class="ordering-plus">+</button>
                         </p>
                         <input type="hidden" id="initial_ordering_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo $list['ordering_quantity'] ?>">

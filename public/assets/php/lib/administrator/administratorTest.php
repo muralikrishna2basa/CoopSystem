@@ -44,7 +44,13 @@ function testFixOrder(){
     * @test
     */
 function testAdministratorReturnStockList(){
-    var_dump(administratorReturnStockList());
+  //  var_dump(administratorReturnStockList());
+}
+/**
+    * @test
+    */
+    function testProductListDisplay(){
+  var_dump(productListDisplay(3));
 }
 }
 ?>

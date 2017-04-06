@@ -206,7 +206,7 @@ function productListDisplay($monthlyId){
     $order = array();
     try{
         $pdo = connectDb('cooopshinren');
-        $sql="SELECT * FROM monthly_goods WHERE monthly_id = ?";
+        $sql="SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = ?";
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(array($monthlyId));
         if(!$res) throw new Exception("関数productListDisplayでSELECT文実行時にエラーが発生しました。");

@@ -112,7 +112,22 @@
 .bg-white{
     background: $white;
 }
+.text-red{
+    color: lighten($red, 5%);
+}
 
+.text-green{
+    color: darken($green, 5%);
+}
+.text-blue{
+    color: lighten($blue, 5%);
+}
+.text-yellow{
+    color: darken($yellow, 5%);
+}
+.text-purple{
+    color: lighten($purple, 15%);
+}
 @for $i from 1 through 9
 {
     .opacity-#{$i}{ opacity: #{$i*0.1} }

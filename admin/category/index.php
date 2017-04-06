@@ -20,17 +20,15 @@ try{
 }catch (Exception $e){
     $errors[] = $e->getMessage();
 }
-if(count($_POST) > 0 && isset($_POST['update']))
+if(count($_POST) > 0)
 {
-//    echo "update";
-    $errors = updateCategory($_POST);
-    header('location: ./index.php');
-    exit();
-}
-if(count($_POST) > 0 && isset($_POST['insert']))
-{
-//    echo "insert";
-    $errors = insertCategory($_POST);
+    try {
+        if(isset($_POST['update'])) $errors = updateCategory($_POST);
+        if(isset($_POST['insert'])) insertCategory($_POST);
+        if(isset($_POST['delete'])) deleteCategory($_PO);
+    } catch (Exception $e) {
+        $errors[] = $e->getMessage();
+    }
     header('location: ./index.php');
     exit();
 }
@@ -63,7 +61,6 @@ if(count($_POST) > 0 && isset($_POST['insert']))
                         <th width="45%" class="text-center">カテゴリ名</th>
                         <th width="10%" class="text-center">色</th>
                         <th width="15%" class="text-center">サンプル</th>
-                        <th width="15%" class="text-center">削除</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,12 +81,7 @@ if(count($_POST) > 0 && isset($_POST['insert']))
                         <td class="text-center">
                             <p class="label" id="sample_<?php echo $category['category_id'] ?>" style="background: <?php echo $category['color'] ?>; color: <?php echo getFontColor($category['color']) ?>"><?php echo $category['category_name'] ?></p>
                         </td>
-                        <td class="text-center">
-                            <p class="form-group">
-                                <input type="hidden"   id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>" value="off">
-                                <input type="checkbox" id="delete_<?php echo $category['category_id'] ?>" name="delete_<?php echo $category['category_id'] ?>">
-                            </p>
-                        </td>
+
                     </tr>
                     <?php } ?>
                 </tbody>

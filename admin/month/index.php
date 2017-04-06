@@ -48,6 +48,8 @@ if(count($_POST) > 0 && isset($_POST['btn']))
             case 'unfixed':
                 unFixOrder($_POST['month_id']);
                 break;
+            case 'export':
+                break;
             case 'edit':
                 header("location: ../productlist/?id={$_POST['month_id']}");
                 exit();
@@ -77,13 +79,13 @@ if(count($_POST) > 0 && isset($_POST['btn']))
         <?php include($PATH."/public/assets/php/partial/menu_admin.php"); ?>
     </div>
     <div class="col-10 container scroll">
-        <h2>月を選択して公開する</h2>
+        <h2>月を選択して処理をする</h2>
         <form method="post" action="" enctype="multipart/form-data">
             <table class="border-none">
                 <thead>
                     <tr>
                         <th width="10%"></th>
-                        <th width="30%">公開したい月</th>
+                        <th width="30%">対象月</th>
                         <th width="30%"></th>
                         <th width="30%"></th>
                     </tr>

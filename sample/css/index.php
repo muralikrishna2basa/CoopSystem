@@ -84,6 +84,13 @@ include     ('../../public/assets/php/partial/require_common.php');
     <h5>This text is header-5.</h5>
     <h6>This text is header-6.</h6>
     <p>This text is paragraph.</p>
+
+    <p class="text-red">This text is paragraph.</p>
+    <p class="text-blue">This text is paragraph.</p>
+    <p class="text-green">This text is paragraph.</p>
+    <p class="text-yellow">This text is paragraph.</p>
+    <p class="text-purple">This text is paragraph.</p>
+
 <pre><code>
     &lt;h1&gt;This text is header-1.&lt;/h1&gt;
     &lt;h2&gt;This text is header-2.&lt;/h2&gt;

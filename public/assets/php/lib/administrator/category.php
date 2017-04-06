@@ -11,9 +11,10 @@ function insertCategory($post)
         $res   = $stmt->execute($array);
         if($res === false) throw new Exception("追加処理に失敗しました。");
     }catch (Exception $e){
-        return [$e->getMessage()];
+//        return [$e->getMessage()];
+        throw $e;
     }
-    return [];
+//    return [];
 }
 
 function updateCategory($post)
@@ -42,11 +43,11 @@ function updateCategory($post)
 
                 $sql   = "UPDATE category SET category_name=?, color=? WHERE category_id=?;";
                 $array = [$name, $color, $id];
-                if(isset($post['delete_'.$id]) && $post['delete_'.$id] === 'on')
-                {
-                    $sql   = "DELETE FROM category WHERE category_id=?;";
-                    $array = [$id];
-                }
+                // if(isset($post['delete_'.$id]) && $post['delete_'.$id] === 'on')
+                // {
+                //     $sql   = "DELETE FROM category WHERE category_id=?;";
+                //     $array = [$id];
+                // }
                 $stmt  = $pdo->prepare($sql);
 //                $res = true;
                 $res   = $stmt->execute($array);

@@ -139,26 +139,26 @@ function csvFileCheck($csvArray){
     $errorMessage=[];
     for($i=1;$i<count($csvArray);$i++){
         $errorflag=0;
-        $number=$i-1;
-        $str = $number."番目の商品の";
+        $str = $i."番目の商品の";
         if(count($csvArray[$i])===5){ // == -> ===
             if(mb_strlen($csvArray[$i][0])===0){
                 $errorflag=1;
                 $str=$str."商品名が空白です,";
             }
-            if(preg_match("[^0-9]",$csvArray[$i][1])==1){
+            if(preg_match("/[^0-9]/",$csvArray[$i][1])==1){
                 $errorflag=1;
                 $str=$str."必要数は数字しか使えません,";
+                echo "string";
             }
-            if(preg_match("[^0-9]",$csvArray[$i][2])==1){
+            if(preg_match("/[^0-9]/",$csvArray[$i][2])==1){
                 $errorflag=1;
                 $str=$str."単価は数字しか使えません,";
             }
-            if(preg_match("[^0-9]",$csvArray[$i][3])==1){
+            if(preg_match("/[^0-9]/",$csvArray[$i][3])==1){
                 $errorflag=1;
                 $str=$str."カテゴリは数字しか使えません,";
             }
-            if(preg_match("[^0-9]",$csvArray[$i][4])==1){
+            if(preg_match("/[^0-9]/",$csvArray[$i][4])==1){
                 $errorflag=1;
                 $str=$str."生協商品ＩＤは数字しか使えません,";
             }
@@ -170,13 +170,15 @@ function csvFileCheck($csvArray){
         }
     }
     return $errorMessage;
+    
+    
 }
 
 
 //商品リストを作成する関数
 function productListCreation($csvArray,$monthlyId){
     $pdo = connectDb('cooopshinren');
-    for($i=1;$i<count($csvArray);$i++){
+    for($i=1;$i<count($csvArray)-1;$i++){
         try{
             $sql="INSERT INTO  coopsystemdb.monthly_goods
             VALUES (NULL,?,?,?,?,?,?);";
@@ -190,8 +192,6 @@ function productListCreation($csvArray,$monthlyId){
             ];
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute($param);
-            var_dump($stmt);
-            var_dump($param);
             if(!$res) throw new Exception("関数productListCreationで".$i."回目のINSERT文実行時にエラーが発生しました。");
 //            var_dump($param);
 //            var_dump($sql);

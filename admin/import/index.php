@@ -107,7 +107,10 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']))
         if(file_exists($filePath)) unlink($filePath);
         // ページ遷移
 //        exit();
-        header('location: ../productlist/?id='.$monthlyId);
+         if($errorMessage==null){
+            header('location: ../productlist/?id='.$monthlyId);
+        }
+         $errors[]=$errorMessage;
     }catch (Exception $e)
     {
         $errors[] = $e->getMessage();

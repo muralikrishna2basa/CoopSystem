@@ -440,19 +440,27 @@ function fixOrder($monthlyId ){
 function administratorReturnStockList(){
     try{
         $pdo = connectDb('cooopshinren');
-        $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,
-                stock_quantity,category_name,color,coop_product_id
-                FROM stock_list
-                INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
-                INNER JOIN category ON monthly_goods.category_id = category.category_id;"
-        ;
+        $sql  = "SELECT COUNT(*) FROM stock_list;";
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute();
-        while ($row = $stmt->fetch()) {
-            $stockList[] =$row;
+        if(!$res) throw new Exception("関数stockListTemporaryCreatingでgoodsCount取得時にエラーが発生しました。");
+        $stockCount = intval($stmt->fetchColumn());
+        if($stockCount!==0)
+        {
+            $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,
+                    stock_quantity,category_name,color,coop_product_id
+                    FROM stock_list
+                    INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                    INNER JOIN category ON monthly_goods.category_id = category.category_id;"
+            ;
+            $stmt = $pdo->prepare($sql);
+            $res  = $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                $stockList[] =$row;
+            }
+            if(!$res) throw new Exception("関数administratorReturnStockListでSELECT文実行時にエラーが発生しました。");
+            return $stockList;
         }
-        if(!$res) throw new Exception("関数administratorReturnStockListでSELECT文実行時にエラーが発生しました。");
-        return $stockList;
     }catch(Exception $e){
         throw $e;
     }

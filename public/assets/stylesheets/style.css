@@ -934,25 +934,6 @@ footer h6 {
 }
 
 /* line 234, ../scss/_class.scss */
-.draggable {
-  position: absolute !important;
-  top: 70px;
-  right: 10px;
-}
-/* line 238, ../scss/_class.scss */
-.draggable:after {
-  content: '';
-  background-image: url(../imgs/draggable.png);
-  background-repeat: no-repeat;
-  opacity: 0.3;
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-}
-
-/* line 251, ../scss/_class.scss */
 .paging {
   position: absolute;
   left: 10px;
@@ -960,7 +941,7 @@ footer h6 {
   z-index: 1;
   letter-spacing: -1em;
 }
-/* line 257, ../scss/_class.scss */
+/* line 240, ../scss/_class.scss */
 .paging .page {
   letter-spacing: 0;
   margin: 0;
@@ -972,15 +953,15 @@ footer h6 {
   min-width: 15px;
   text-align: center;
 }
-/* line 258, ../scss/_class.scss */
+/* line 241, ../scss/_class.scss */
 .paging .page:link, .paging .page:visited {
   color: #fff;
 }
-/* line 261, ../scss/_class.scss */
+/* line 244, ../scss/_class.scss */
 .paging .page:hover {
-  color: #b32034;
+  color: #e1586b;
 }
-/* line 274, ../scss/_class.scss */
+/* line 260, ../scss/_class.scss */
 .paging .page:hover {
   background: #6f6f6f;
 }

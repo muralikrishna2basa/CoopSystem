@@ -1,0 +1,18 @@
+.draggable{
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    cursor: move;
+    z-index: 2;
+    &:after{
+        content: '';
+        background-image: url(../imgs/draggable.png);
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+    }
+}

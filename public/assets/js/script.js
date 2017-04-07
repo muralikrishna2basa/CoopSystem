@@ -69,12 +69,17 @@ $(function(){
         if($(trg).is(":hidden")){
             $(trg).fadeIn(200);
             var side = $(trg).innerWidth();
-//            $(this).removeClass('col-close').css({left: (side-35)+'px'});
             $(this).removeClass('col-close').css({left: (side-35)+'px'});
         }else{
             $(trg).fadeOut(200);
-//            $(this).addClass('col-close').css({left: '5px'});
             $(this).addClass('col-close').css({left: '0px'});
         }
+    });
+
+    // logout btn
+    $('body,html').click(function(){ if(!$('.logout-content').is(':hidden')) $('.logout-content').hide() });
+    $('.logout-menu').click(function(){
+        $('.logout-content').show();
+        return false;
     });
 })

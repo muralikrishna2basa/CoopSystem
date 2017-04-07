@@ -231,23 +231,6 @@
     overflow-x: hidden;
 }
 
-.draggable{
-    position: absolute !important;
-    top: 70px;
-    right: 10px;
-    &:after{
-        content: '';
-        background-image: url(../imgs/draggable.png);
-        background-repeat: no-repeat;
-        opacity: 0.3;
-        width: 32px;
-        height: 32px;
-        position: absolute;
-        bottom: 2px;
-        right: 2px;
-    }
-}
-
 .paging{
     position: absolute;
     left: 10px;
@@ -259,11 +242,14 @@
             color: $white;
         }
         &:hover{
-            color: $red;
+            color: lighten($red, 20%);
         }
         letter-spacing: 0;
         margin: 0;
         border-bottom: 1px solid $white;
+//        border-left: 1px solid $white;
+//        &:first-child{border-left: none}
+//        border-top: 1px solid $white;
         font-size: 0.75em;
         font-weight: bold;
         padding: 2px 3px;

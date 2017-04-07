@@ -6,6 +6,11 @@ require_once($PATH.'/public/assets/php/lib/administrator/administratorProcess.ph
 require_once($PATH.'/public/assets/php/auth.php');
 
 $errors = [];
+try{
+    deleteFaultList();
+}catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
 
 try {
     $rows = [];

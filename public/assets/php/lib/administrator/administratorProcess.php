@@ -127,38 +127,61 @@ function stockListEdit($stockList){
 //受け取ったCSVファイルが正しいかどうかチェックする関数
 function csvFileCheck($csvArray){
     $errorMessage = [];
-    for($i = 1; $i < count($csvArray); $i++){
-        $errorflag = 0;
-        $str = $i."番目の商品の";
-        if(count($csvArray[$i])===5){ // == -> ===
-            if(mb_strlen($csvArray[$i][0])===0){
-                $errorflag = 1;
-                $str .= "商品名が空白です,";
-            }
-            if(preg_match("/[^0-9]/",$csvArray[$i][1])==1){
-                $errorflag=1;
-                $str .= "必要数は数字しか使えません,";
-//                echo "string";
-            }
-            if(preg_match("/[^0-9]/",$csvArray[$i][2])==1){
-                $errorflag = 1;
-                $str .= "単価は数字しか使えません,";
-            }
-            if(preg_match("/[^0-9]/",$csvArray[$i][3])==1){
-                $errorflag = 1;
-                $str .= "カテゴリは数字しか使えません,";
-            }
-            if(preg_match("/[^0-9]/",$csvArray[$i][4])==1){
-                $errorflag = 1;
-                $str .= "生協商品ＩＤは数字しか使えません,";
-            }
-            if($errorflag == 1){
-                $errorMessage[] = $str;
-            }
-        }else{
-            $str .= "情報が不足しています";
+    $categoryId   = [];
+    try{ 
+        $pdo = connectDb('cooopshinren');
+        $sql = "SELECT category_id FROM category";
+        $stmt= $pdo->prepare($sql);
+        $res = $stmt->execute();
+        if(!$res) throw new Exception("関数csvFileCheckでcategory_id取得時にエラーが発生しました。");
+        while ($row = $stmt->fetch()) {
+            $categoryId[] =$row;
         }
+    }catch(Exception $e){
+        throw $e;
     }
+    for($i = 1; $i < count($csvArray); $i++){
+    $errorflag = 0;
+    $categoryIdCheck = 1;
+    $num=$i+1;
+    $str = $i."番目の商品(".$num."行目)の";
+    if(count($csvArray[$i])===5){ // == -> ===
+        if(mb_strlen($csvArray[$i][0])===0){
+            $errorflag = 1;
+            $str .= "商品名が空白です,";
+        }
+        if(preg_match("/[^0-9]/",$csvArray[$i][1])==1){
+            $errorflag=1;
+            $str .= "必要数は数字しか使えません,";
+        }
+        if(preg_match("/[^0-9]/",$csvArray[$i][2])==1){
+            $errorflag = 1;
+            $str .= "単価は数字しか使えません,";
+        }
+        if(preg_match("/[^0-9]/",$csvArray[$i][3])==1){
+            $errorflag = 1;
+            $str .= "カテゴリは数字しか使えません,";
+        }
+        if(preg_match("/[^0-9]/",$csvArray[$i][4])==1){
+            $errorflag = 1;
+            $str .= "生協商品ＩＤは数字しか使えません,";
+        }
+        for ($j = 0; $j < count($categoryId) ; $j++) { 
+            if($categoryId[$j][0] == $csvArray[$i][3]) $categoryIdCheck=0;
+        }
+        if($categoryIdCheck===1){
+            $errorflag=1;
+            $str .= "カテゴリIDは存在しません,";
+        }
+
+    }else{
+        $errorflag=1;
+        $str .= "情報が不足しています";
+    }
+    if($errorflag == 1){
+            $errorMessage[] = $str;
+     }
+}
     return $errorMessage;
 }
 
@@ -506,4 +529,20 @@ function deleteFaultList(){
         throw $e;
     }
 }
+function test(){
+    try{ 
+        $pdo = connectDb('cooopshinren');
+        $sql = "SELECT category_id FROM category";
+        $stmt= $pdo->prepare($sql);
+        $res = $stmt->execute();
+        if(!$res) throw new Exception("関数csvFileCheckでcategory_id取得時にエラーが発生しました。");
+        while ($row = $stmt->fetch()) {
+            $categoryId[] =$row;
+        }
+        var_dump($categoryId);
+    }catch(Exception $e){
+        throw $e;
+    }
+}
+
     ?>

@@ -5,7 +5,6 @@
             <li><a href="<?php echo $URL ?>/user/order">商品を注文する</a></li>
             <li><a href="<?php echo $URL ?>/user/stock">在庫から注文する</a></li>
             <li><a href="<?php echo $URL ?>/user/history">履歴を確認する</a></li>
-            <li><a href="<?php echo $URL ?>/public/assets/php/partial/logout.php">ログアウトする</a></li>
         </ul>
     </nav>
 </div>

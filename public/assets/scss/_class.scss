@@ -38,7 +38,7 @@
 }
 
 .btn, button{
-    padding: 10px 20px;
+    padding: 7px 10px;
     border: 1px solid $line-color;
     color: $white;
     @include setPrefix(border-radius, 5px);
@@ -48,12 +48,39 @@
     margin: 5px 2px;
     outline: none;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.85em;
     cursor: pointer;
     outline: none;
     &:hover{
         transition: $timer;
         background: darken($bg-base-color, 20%);
+    }
+}
+
+.btn-group{
+    letter-spacing: -1em;
+    .btn{
+        margin: 0;
+    }
+    .btn:not(:last-child):not(:first-child),
+    {
+        letter-spacing: 0;
+        @include setPrefix(border-radius, 0);
+        border-right: none;
+    }
+    .btn:first-child{
+        @include setPrefix(border-top-right-radius, 0);
+        @include setPrefix(border-bottom-right-radius, 0);
+        border-right: none;
+    }
+    .btn:last-child{
+        @include setPrefix(border-top-left-radius, 0);
+        @include setPrefix(border-bottom-left-radius, 0);
+        border-right: 1px solid $line-color;
+    }
+    .btn:only-child{
+        @include setPrefix(border-radius, 5px);
+        border: 1px solid $line-color !important;
     }
 }
 .btn-sm{

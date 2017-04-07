@@ -48,6 +48,7 @@ function monthSelectionAndOrderCreation($monthlyId)
 //在庫リストを仮作成する関数
 //
 function stockListTemporaryCreating(){
+    $returnList = [];
     try{
         $pdo  = connectDb('coop');
         $sql  = "SELECT COUNT(*) FROM monthly_goods;";
@@ -61,7 +62,7 @@ function stockListTemporaryCreating(){
     if($goodsCount!==0){
         try{
             $stock = [];
-            $returnList = [];
+            
             $pdo  = connectDb('cooopshinren');
             $sql  = "SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1);";
             $stmt = $pdo->prepare($sql);
@@ -92,13 +93,13 @@ function stockListTemporaryCreating(){
                 }
                 if($flag) $returnList[]=$monthlyGoods[$i];
             }
-            return $returnList;
+            
         }
         catch(Exception $e){
             throw $e;
         }
     }
-    else return $goodsCount;
+    return $returnList;
 }
 
 //在庫リストを登録する関数
@@ -445,7 +446,7 @@ function administratorReturnStockList(){
         $res  = $stmt->execute();
         if(!$res) throw new Exception("関数stockListTemporaryCreatingでgoodsCount取得時にエラーが発生しました。");
         $stockCount = intval($stmt->fetchColumn());
-        if($stockCount!==0)
+        if($stockCount !== 0)
         {
             $sql = "SELECT stock_list.monthly_goods_id,goods_name,unit_price,
                     stock_quantity,category_name,color,coop_product_id

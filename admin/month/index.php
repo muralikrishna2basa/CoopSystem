@@ -136,22 +136,22 @@ function editBtn()
     var fixed  = $('#month_id option:selected').attr('data-fixed');
     var cnt    = $('#month_id option:selected').attr('data-cnt');
 
-    // if(cnt == 0)
-    // {
-    //     $('#publish').hide();
-    //     $('#edit').hide();
-    //     $('#export').hide();
-    //     $('#unfixed').hide();
-    // }
-    // if(public == 1)
-    // {
-    //     $('#publish').hide();
-    //     $('#edit').hide();
-    // }
-    // if(fixed == 1)
-    // {
-    //     $('#edit').hide();
-    // }
+    if(cnt == 0)
+    {
+        $('#publish').hide();
+        $('#edit').hide();
+        $('#export').hide();
+        $('#unfixed').hide();
+    }
+    if(public == 1)
+    {
+        $('#publish').hide();
+        $('#edit').hide();
+    }
+    if(fixed == 1)
+    {
+        $('#edit').hide();
+    }
 }
 </script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

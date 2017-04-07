@@ -83,7 +83,7 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
 
         // monthly_idの取得（既に存在していた場合DBのから取得）
         $monthlyId = monthlyIdGeneration($_POST['month']);
-        var_dump($monthlyId);
+       // var_dump($monthlyId);
 //        exit();
         // $sql  = "SELECT monthly_id FROM monthly WHERE date=?;";
         // $stmt = $pdo->prepare($sql);
@@ -115,12 +115,16 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
         // CSVファイルを配列に変換
         $csvArray = convertCsvFileToArray($PATH.'/public/assets/files/upload.csv');
         $tmp = [];
+        // var_dump($csvArray);
+        $s=0;
         foreach ($csvArray as $row)
         {
+            if(count($row)==5){
             $row[2] = preg_replace('/,/', '', $row[2]);
             $row[1] = preg_replace('/,/', '', $row[1]);
             $row[0] = mb_convert_kana($row[0], "KV");
             $tmp[]  = $row;
+            }
         }
         $csvArray = $tmp;
         // ファイル内容のチェック

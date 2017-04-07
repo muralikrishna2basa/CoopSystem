@@ -58,5 +58,11 @@ function testProductListOneDeleting(){
 function testProductListAllDeleting(){
     productListAllDeleting(26);
 }
+/**
+    * @test
+    */
+function aa(){
+test();
+}
 }
 ?>

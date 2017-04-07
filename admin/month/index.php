@@ -88,63 +88,35 @@ if(count($_POST) > 0 && isset($_POST['btn']))
     <div class="col-10 container scroll">
         <h2>月を選択して処理をする</h2>
         <form method="post" action="" enctype="multipart/form-data">
-            <table class="border-none">
-                <thead>
-                    <tr>
-                        <th width="10%"></th>
-                        <th width="30%">対象月</th>
-                        <th width="30%"></th>
-                        <th width="30%"></th>
-                    </tr>
-                </thead>
+            <p class="form-group form-trans form-group-inline">
+                <select name="month_id" id="month_id">
+                    <?php foreach($rows as $row){ ?>
+                    <option
+                        value      ="<?php echo $row['monthly_id'] ?>"
+                        data-public="<?php echo $row['public_flag'] ?>"
+                        data-fixed ="<?php echo $row['fixed_flag'] ?>"
+                        data-cnt   ="<?php echo $row['cnt'] ?>"
+                        <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>
+                    >
+                        <?php echo date('Y年n月', strtotime($row['date'])) ?>
+                        <?php                              echo ' / '.$row['cnt'].'件' ?>
+                        <?php if($row['public_flag'] == 1) echo ' [ 公開中 ]' ?>
+                        <?php if($row['fixed_flag']  == 1) echo " [ 確定済 ]" ?>
+                    </option>
+                    <?php } ?>
+                    <?php if(count($rows) === 0){ ?>
+                    <option>公開できる月が存在しません。</option>
+                    <?php } ?>
+                </select>
+            <div class="btn-group">
+                <button type="submit" name="btn" value="publish" id="publish" class="btn btn-blue">リストを公開する</button>
+                <button type="submit" name="btn" value="edit" id="edit" class="btn btn-blue" >リストの編集をする</button>
+                <button type="submit" name="btn" value="export" id="export" class="btn btn-blue" >リストを出力する</button>
+                <button type="submit" name="btn" value="unfixed" id="unfixed" class="btn btn-red" >確定を解除する</button>
+            </div>
 
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td class="text-center">
-                            <p class="form-group form-trans">
-                                <select name="month_id" id="month_id">
-                                    <?php foreach($rows as $row){ ?>
-                                    <option
-                                        value      ="<?php echo $row['monthly_id'] ?>"
-                                        data-public="<?php echo $row['public_flag'] ?>"
-                                        data-fixed ="<?php echo $row['fixed_flag'] ?>"
-                                        data-cnt   ="<?php echo $row['cnt'] ?>"
-                                        <?php if(intval($row['public_flag']) === 1) echo 'selected' ?>
-                                    >
-                                        <?php echo date('Y年n月', strtotime($row['date'])) ?>
-                                        <?php                              echo ' / '.$row['cnt'].'件' ?>
-                                        <?php if($row['public_flag'] == 1) echo ' [ 公開中 ]' ?>
-                                        <?php if($row['fixed_flag']  == 1) echo " [ 確定済 ]" ?>
-                                    </option>
-                                    <?php } ?>
-                                </select>
-                            </p>
-                        </td>
-                        <td><button type="submit" name="btn" value="publish" id="publish" class="btn btn-blue block">商品リストを公開する</button></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><button type="submit" name="btn" value="edit" id="edit" class="btn btn-blue block" >商品リストの編集をする</button></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><button type="submit" name="btn" value="export" id="export" class="btn btn-blue block" >リストを出力する</button></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><button type="submit" name="btn" value="unfixed" id="unfixed" class="btn btn-red block" >確定を解除する</button></td>
-                        <td></td>
-                    </tr>
+            </p>
 
-                </tbody>
-            </table>
         </form>
 
         <?php errorMessages($errors) ?>

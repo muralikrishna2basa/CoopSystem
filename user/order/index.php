@@ -147,7 +147,7 @@ try {
                 <?php $priceTotal += $total; $i++; } ?>
             </tbody>
         </table>
-        <p class="text-right form-group">
+        <p class="text-right form-group btn-group">
             <?php if($fixed !== 1){ ?>
             <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
             <?php echo $orderBtn //今月は注文しませんボタンを表示 ?>

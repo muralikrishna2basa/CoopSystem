@@ -637,6 +637,16 @@ include     ('../../public/assets/php/partial/require_common.php');
 
 </code></pre>
     </div>
+
+
+    <div style="margin-bottom: 100px">
+        <div class="btn-group">
+            <button class="btn">aa</button>
+            <button class="btn">bb</button>
+            <button class="btn">cc</button>
+            <button class="btn">dd</button>
+        </div>
+    </div>
 </div>
 
 <?php include("../../public/assets/php/partial/footer.php"); ?>

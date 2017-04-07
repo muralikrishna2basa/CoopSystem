@@ -87,8 +87,10 @@ if(count($_POST) > 0)
                 </tbody>
             </table>
             <p class="text-right">
-                <span class="btn btn-yellow modal-btn" modal-target="#modal-category">カテゴリ追加</span>
-                <button type="submit" name="update" class="btn btn-blue">更新する</button>
+                <div class="btn-group text-right">
+                    <button class="btn btn-yellow modal-btn" modal-target="#modal-category">カテゴリ追加</button>
+                    <button type="submit" name="update" class="btn btn-blue">更新する</button>
+                </div>
             </p>
         </form>
     </div>

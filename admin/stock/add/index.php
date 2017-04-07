@@ -43,6 +43,7 @@ if(count($_POST) > 0)
     </div>
     <div class="col-10 container scroll">
         <h2>在庫を登録する</h2>
+        <?php if(count($lists > 0)){ ?>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>
@@ -90,7 +91,9 @@ if(count($_POST) > 0)
             </table>
             <p class="text-right"><button type="submit" class="btn btn-blue">在庫を登録する</button></p>
         </form>
-
+        <?php }else{ ?>
+        <p>商品が登録されていないようです。</p>
+        <?php } ?>
         <?php errorMessages($errors) ?>
 
     </div>

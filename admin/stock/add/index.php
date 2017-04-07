@@ -56,7 +56,8 @@ if(count($_POST) > 0)
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($lists as $list){ ?>
+
+                    <?php if($lists!==0)foreach($lists as $list){ ?>
                     <tr>
                         <td class="text-center">
                             <input type="hidden" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">

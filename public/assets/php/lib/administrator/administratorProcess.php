@@ -49,43 +49,56 @@ function monthSelectionAndOrderCreation($monthlyId)
 //
 function stockListTemporaryCreating(){
     try{
-        $stock = [];
-        $returnList = [];
-        $pdo  = connectDb('cooopshinren');
-        $sql  = "SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1);";
+        $pdo  = connectDb('coop');
+        $sql  = "SELECT COUNT(*) FROM monthly_goods;";
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute();
-        if(!$res) throw new Exception("関数stockListTemporaryCreatingでSELECT実行時にエラーが発生しました。");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $monthlyGoods[] =$row;
-        }
-       
-        for ($i=0; $i <count($monthlyGoods) ; $i++) {
-            $monthlyGoods[$i]['initial_stock_quantity'] = 0;
-            $monthlyGoods[$i][9]                   = 0;
-        }
-        $sql  = "SELECT stock_quantity,monthly_goods_id FROM stock_list WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1);";
-        $stmt = $pdo->prepare($sql);
-        $res  = $stmt->execute(array());
-        if(!$res) throw new Exception("関数stockListTemporaryCreatingでstock_quantity,monthly_goods_id取得時にエラーが発生しました。");
-        while ($row = $stmt->fetch()) {
-            $stock[] =$row;
-        }
-        for($i = 0; $i < count($monthlyGoods); $i++){
-            $flag = true;
-            for($j = 0; $j < count($stock); $j++){
-                if($monthlyGoods[$i]['monthly_goods_id']==$stock[$j]['monthly_goods_id']){
-                  $flag = false;
-                  break;
-                }
-            }
-            if($flag) $returnList[]=$monthlyGoods[$i];
-        }
-        return $returnList;
-    }
-    catch(Exception $e){
+        if(!$res) throw new Exception("関数stockListTemporaryCreatingでgoodsCount取得時にエラーが発生しました。");
+        $goodsCount = intval($stmt->fetchColumn());
+    }catch (Exception $e) {
         throw $e;
     }
+    if($goodsCount!==0){
+        try{
+            $stock = [];
+            $returnList = [];
+            $pdo  = connectDb('cooopshinren');
+            $sql  = "SELECT * FROM monthly_goods NATURAL JOIN category WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1);";
+            $stmt = $pdo->prepare($sql);
+            $res  = $stmt->execute();
+            if(!$res) throw new Exception("関数stockListTemporaryCreatingでSELECT実行時にエラーが発生しました。");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $monthlyGoods[] =$row;
+            }
+           
+            for ($i=0; $i <count($monthlyGoods) ; $i++) {
+                $monthlyGoods[$i]['initial_stock_quantity'] = 0;
+                $monthlyGoods[$i][9]                   = 0;
+            }
+            $sql  = "SELECT stock_quantity,monthly_goods_id FROM stock_list WHERE monthly_id = (SELECT MAX(monthly_id) FROM monthly WHERE fixed_flag =1);";
+            $stmt = $pdo->prepare($sql);
+            $res  = $stmt->execute(array());
+            if(!$res) throw new Exception("関数stockListTemporaryCreatingでstock_quantity,monthly_goods_id取得時にエラーが発生しました。");
+            while ($row = $stmt->fetch()) {
+                $stock[] =$row;
+            }
+            for($i = 0; $i < count($monthlyGoods); $i++){
+                $flag = true;
+                for($j = 0; $j < count($stock); $j++){
+                    if($monthlyGoods[$i]['monthly_goods_id']==$stock[$j]['monthly_goods_id']){
+                      $flag = false;
+                      break;
+                    }
+                }
+                if($flag) $returnList[]=$monthlyGoods[$i];
+            }
+            return $returnList;
+        }
+        catch(Exception $e){
+            throw $e;
+        }
+    }
+    else return $goodsCount;
 }
 
 //在庫リストを登録する関数
@@ -497,10 +510,17 @@ function getOrderListBeforeFixed($monthlyId)
 function deletingEmptystockList(){
     try{
         $pdo  = connectDb('coop');
-        $sql  = "DELETE FROM stock_list WHERE stock_quantity =0;";
-        $stmt = $pdo->prepare($sql);
-        $res  = $stmt->execute();
-        if(!$res) throw new Exception("関数deletingEmptystockListでDELETE文実行時にエラーが発生しました");
+        $sql = "SELECT COUNT(*) FROM stock_list;";
+        $stmt=$pdo->prepare($sql);
+        $res = $stmt->execute();
+        if(!$res) throw new Exception("関数deletingEmptystockListでstockCount取得時にエラーが発生しました。");
+        $stockCount = intval($stmt->fetchColumn());
+        if($stockCount !== 0){
+            $sql  = "DELETE FROM stock_list WHERE stock_quantity =0;";
+            $stmt = $pdo->prepare($sql);
+            $res  = $stmt->execute();
+            if(!$res) throw new Exception("関数deletingEmptystockListでDELETE文実行時にエラーが発生しました");
+        }
     }catch (Exception $e) {
         throw $e;
     }
@@ -517,29 +537,21 @@ function deleteFaultFlag(){
         throw $e;
     }
 }
-//CSVインポート失敗時に異常フラグが立っているリストを消す関数
+//異常フラグが立っている商品リストを消す関数
 function deleteFaultList(){
     try{
         $pdo  = connectDb('cooopshinren');
+        $sql = "SELECT COUNT(*) FROM stock_list;";
+        $stmt=$pdo->prepare($sql);
+        $res = $stmt->execute();
+        if(!$res) throw new Exception("関数deleteFaultListでstockCount取得時にエラーが発生しました。");
+        $stockCount = intval($stmt->fetchColumn());
+        if($stockCount !== 0){
         $sql  = "DELETE FROM monthly_goods WHERE fault_flag = 1;";
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute();
         if(!$res) throw new Exception("関数deleteFaultListでDELETE文実行時にエラーが発生しました。");
-    }catch(Exception $e){
-        throw $e;
     }
-}
-function test(){
-    try{ 
-        $pdo = connectDb('cooopshinren');
-        $sql = "SELECT category_id FROM category";
-        $stmt= $pdo->prepare($sql);
-        $res = $stmt->execute();
-        if(!$res) throw new Exception("関数csvFileCheckでcategory_id取得時にエラーが発生しました。");
-        while ($row = $stmt->fetch()) {
-            $categoryId[] =$row;
-        }
-        var_dump($categoryId);
     }catch(Exception $e){
         throw $e;
     }

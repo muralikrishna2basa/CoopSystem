@@ -64,7 +64,7 @@ $(function(){
             // }
             $('.tips-content').html(html);
         }, function(){
-            $('.tips-content').html('<h3 class="text-center">ここにヒントが表示されます。</h3>')
+            $('.tips-content').html('<h3 class="text-center">ここにヒントが表示されます。このメッセージはドラッグできます。</h3>')
         });
     $('.tips-btn').click(function(){
         if($('.tips-content').is(":hidden"))

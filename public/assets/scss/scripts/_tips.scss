@@ -2,20 +2,20 @@
 .tips-trigger{
     z-index: 1;
     position: relative;
-    &:after{
-        content: '';
-        background-image: url(../imgs/hint.png);
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-position: center center;
-        width: 10px;
-        height: 10px;
-        position: absolute;
-        right: 1px;
-        bottom: 1px;
-        z-index: 2;
-        opacity: 0.7;
-    }
+    // &:after{
+    //     content: '';
+    //     background-image: url(../imgs/hint.png);
+    //     background-repeat: no-repeat;
+    //     background-size: 100%;
+    //     background-position: center center;
+    //     width: 16px;
+    //     height: 16px;
+    //     position: absolute;
+    //     right: 1px;
+    //     bottom: 1px;
+    //     z-index: 2;
+    //     opacity: 0.3;
+    // }
 }
 .tips-target{
     display: none;
@@ -24,10 +24,10 @@
 
 @keyframes tips{
     0%{
-        @include setPrefix(transform, translateY(20px));
+        @include setPrefix(transform, scale(1.0));
     }
     100%{
-        @include setPrefix(transform, translateY(0px));
+        @include setPrefix(transform, scale(1.2));
     }
 }
 
@@ -36,22 +36,23 @@ $btn: 24px;
 .tips-btn{
     width: $btn;
     height: $btn;
-    @include setPrefix(border-radius, 50%);
-//    z-index: 11;
+//    @include setPrefix(border-radius, 50%);
+    z-index: 2;
     overflow: hidden;
-    background-color: rgba($yellow, 0.7);
-    background-image: url(../imgs/tips.png);
+//    background-color: rgba($yellow, 0.7);
+    background-image: url(../imgs/hint_1.png);
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 75%;
-    border: 1px solid darken($yellow, 10%);
+    background-size: 100%;
+//    border: 1px solid darken($yellow, 10%);
     position: absolute;
     right: 20px;
     bottom: 40px;
     cursor: pointer;
     &:hover{
         transition: $timer;
-        opacity: 0.7;
+        animation: tips 0.6s forwards;
+//        opacity: 0.7;
     }
 }
 .tips-content{
@@ -61,8 +62,9 @@ $btn: 24px;
     @include setPrefix(border-radius, 10px);
     z-index: 10;
     width: 40%;
-    min-height: 100px;
-    max-height: 300px;
+    height: 125px;
+//    min-height: 100px;
+//    max-height: 300px;
 //    height: 30%;
     background: rgba($black, 0.5);
     color: $white;

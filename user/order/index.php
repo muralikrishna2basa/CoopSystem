@@ -37,7 +37,9 @@ try {
     {
         case 0:
         case 1:
-            $orderBtn   = "<button type=\"submit\" name=\"order\" value=\"0\" class=\"btn btn-red\">いいえ、今月は注文しません</button>";
+            $orderBtn   = "<button type=\"submit\" name=\"order\" value=\"0\" class=\"tips-trigger btn btn-red\">
+            <span>いいえ、今月は注文しません</span>
+            <span class=\"tips-target\">今月注文されない方はこちらを押してください</span></button>";
             $orderState = "<p class=\"label bg-yellow\">今月の注文はしていません</p>";
             break;
         case 2:
@@ -204,9 +206,9 @@ try {
         <?php errorMessages($errors) ?>
 
     </div>
-     <p class="tips-btn"></p>
-    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
+   
 </div>
+<?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

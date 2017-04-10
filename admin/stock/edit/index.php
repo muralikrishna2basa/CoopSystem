@@ -124,8 +124,7 @@ try {
         <?php errorMessages($errors) ?>
 
     </div>
-    <p class="tips-btn"></p>
-    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

@@ -60,6 +60,7 @@ $(function(){
             // if(html === void 0)
             // {
             var html = $(this).children('.tips-target').html();
+            if(html === void 0) html = $(this).next('.tips-target').html();
 
             // }
             $('.tips-content').html(html);

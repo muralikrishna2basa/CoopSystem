@@ -94,6 +94,7 @@ try {
         <?php }else{ ?>
         <p>対象が存在しないようです。</p>
         <?php } ?>
+        <?php errorMessages($errors) ?>
     </div>
 </div>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

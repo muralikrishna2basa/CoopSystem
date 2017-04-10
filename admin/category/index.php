@@ -75,7 +75,8 @@ if(count($_POST) > 0)
                         </td>
                         <td>
                             <p class="form-group">
-                                <input type="color" name="color[]" sample-target="#sample_<?php echo $category['category_id'] ?>" value="<?php echo $category['color'] ?>">
+                                <input type="color" name="color[]" class="tips-trigger" sample-target="#sample_<?php echo $category['category_id'] ?>" value="<?php echo $category['color'] ?>">
+                                <span class="tips-target">クリックして色を選択してください。</span>
                             </p>
                         </td>
                         <td class="text-center">
@@ -88,12 +89,20 @@ if(count($_POST) > 0)
             </table>
             <p class="text-right">
                 <div class="btn-group text-right">
-                    <button class="btn btn-yellow modal-btn" modal-target="#modal-category">カテゴリ追加</button>
-                    <button type="submit" name="update" class="btn btn-blue">更新する</button>
+                    <button class="btn btn-yellow modal-btn tips-trigger" modal-target="#modal-category">
+                        <span>カテゴリ追加</span>
+                        <span class="tips-target">新しくカテゴリを追加します。</span>
+                    </button>
+                    <button type="submit" name="update" class="btn btn-blue tips-trigger">
+                        <span>更新する</span>
+                        <span class="tips-target">カテゴリを更新します。カテゴリを削除することはできません。</span>
+                    </button>
                 </div>
             </p>
         </form>
+        <?php errorMessages($errors) ?>
     </div>
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 
 

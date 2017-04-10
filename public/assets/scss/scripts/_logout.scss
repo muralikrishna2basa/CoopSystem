@@ -7,13 +7,15 @@
 .logout-content{
     position: absolute;
 //    background: rgba(255,255,255,0.7);
-    left: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
     bottom: -50px;
     box-sizing: border-box;
     padding: 5px 0;
     display: none;
     @include setPrefix(border-radius, 2px);
-    width: 150px;
+    width: 175px;
     font-size: 0.8em;
     text-align: center;
     a{
@@ -34,7 +36,7 @@
     border: 1px solid $line-color;
     &:before, &:after{
         bottom: 100%;
-        left: 15%;
+        left: 20%;
         border: solid transparent;
         content: " ";
         height: 0;

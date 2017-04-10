@@ -1,0 +1,27 @@
+@keyframes load{
+    0%{
+        transform: rotate(0deg); opacity: 0.2;
+    }
+    50%{
+        transform: rotate(180deg); opacity: 1.0;
+    }
+    100%{
+        transform: rotate(360deg); opacity: 0.2;
+    }
+}
+
+#loader{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 15px solid #6BBED5;
+    border-right-color: transparent;
+    animation: load 0.6s linear infinite;
+    margin: auto;
+    top: 200px;
+    right: 0;
+    left: 0;
+    display: none;
+}
+

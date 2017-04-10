@@ -1,4 +1,5 @@
 CNT = 0;
+
 function windowSizing()
 {
     var top = $("header").outerHeight();
@@ -75,7 +76,20 @@ function setPrice(selector, sign)
         $('#price_total').html(separate(price));
     }
 }
+
+// load end
+$(document).ready(function(){
+    $("#loader").fadeOut(function(){
+        $(this).remove();
+        $("body .flex").animate({opacity: "1"},500);
+        $("button").css({visibility: "visible"});
+    });
+});
+
+
 $(function(){
+
+
     //sizing
     windowSizing();
     $(window).resize(function(){ windowSizing() });
@@ -156,14 +170,10 @@ $(function(){
     });
 
     // forms count
-//    $("input").on('change', 'input[type="hidden"]', function(){ CNT++; console.log('hidden'+CNT) })
-//    $("input").change(function(){ CNT++; console.log(CNT) })
     $("form").change(function(){ CNT++; console.log(CNT) })
 
-
+    // plus minus button
     $(".ordering-plus").click(function(e){  e.preventDefault(); setPrice($(this), 1) });
     $(".ordering-minus").click(function(e){ e.preventDefault(); setPrice($(this), -1) });
-
-
 })
 

@@ -2,7 +2,7 @@
 function getPagenation($lists, $pageNumber = 1, $num = 50)
 {
     try {
-        $page    = $pageNumber * $num + 1;
+        $page    = ($pageNumber-1) * $num + 1;
         $maxPage = $page + $num;
         if($maxPage > count($lists))
         {

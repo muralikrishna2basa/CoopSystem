@@ -89,13 +89,19 @@ try {
         <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">
-            <p class="text-right"><button type="submit" class="btn btn-green" name="export" value="1">リストを出力する</button></p>
+            <p class="text-right">
+                <button type="submit" class="btn btn-green tips-trigger" name="export" value="1">
+                    <span>リストを出力する</span>
+                    <span class="tips-target">リストをCSV形式形式で出力します。</span>
+                </button>
+            </p>
         </form>
         <?php }else{ ?>
         <p>対象が存在しないようです。</p>
         <?php } ?>
         <?php errorMessages($errors) ?>
     </div>
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>

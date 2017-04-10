@@ -22,6 +22,15 @@ if(count($_POST) > 0)
 //        echo $e->getMessage();
     }
 }
+try {
+    $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $num       = 50;
+    $pages     = getPagenation($lists, $nowPage);
+    $page      = $pages['page'];
+    $maxPage   = $pages['maxPage'];
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,38 +59,35 @@ if(count($_POST) > 0)
                     <tr>
                         <th class="text-center">カテゴリ名</th>
                         <th                    >商品名</th>
-                        <th class="text-center">必要数</th>
                         <th class="text-right" >単価</th>
                         <th class="text-center">在庫数</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($lists as $list){ ?>
+                    <?php //foreach($lists as $list){ ?>
+                    <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                     <tr>
                         <td class="text-center">
-                            <input type="hidden" name="monthly_goods_id[]" value="<?php echo $list['monthly_goods_id'] ?>">
-                            <p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></p>
+                            <input type="hidden" name="monthly_goods_id[]" value="<?php echo $lists[$i]['monthly_goods_id'] ?>">
+                            <p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p>
                         </td>
                         <td>
-                            <p><?php echo $list['goods_name'] ?></p>
-                        </td>
-                        <td class="text-center">
-                            <p><?php //echo $list['required_quantity'] ?>個</p>
+                            <p><?php echo $lists[$i]['goods_name'] ?></p>
                         </td>
                         <td class="text-right">
-                            <p><?php echo number_format($list['unit_price']) ?>円</p>
+                            <p><?php echo number_format($lists[$i]['unit_price']) ?>円</p>
                         </td>
                         <td class="text-center">
                             <p
-                                data-number ="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"
-                                data-display="display_number_<?php echo $list['monthly_goods_id'] ?>"
+                                data-number ="stock_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                                data-display="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                             >
                                 <button class="ordering-minus">&minus;</button>
-                                <span id="display_number_<?php echo $list['monthly_goods_id'] ?>"><?php echo $list['stock_quantity'] ?></span>個
+                                <span id="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo $lists[$i]['stock_quantity'] ?></span>個
                                 <button class="ordering-plus">+</button>
                             </p>
-                            <input type="hidden" id="initial_stock_quantity_<?php echo $list['monthly_goods_id'] ?>" name="initial_stock_quantity[]" value="<?php echo $list['stock_quantity'] ?>">
-                            <input type="hidden" id="stock_quantity_<?php echo $list['monthly_goods_id'] ?>"         name="stock_quantity[]"         value="<?php echo $list['stock_quantity'] ?>">
+                            <input type="hidden" id="initial_stock_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>" name="initial_stock_quantity[]" value="<?php echo $lists[$i]['stock_quantity'] ?>">
+                            <input type="hidden" id="stock_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"         name="stock_quantity[]"         value="<?php echo $lists[$i]['stock_quantity'] ?>">
 
                         </td>
                     </tr>

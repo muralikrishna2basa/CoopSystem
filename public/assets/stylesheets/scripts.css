@@ -168,12 +168,14 @@
 /* line 5, ../scss/scripts/_tips.scss */
 .tips .tips-trigger {
   cursor: help;
+  z-index: 1;
 }
-/* line 8, ../scss/scripts/_tips.scss */
+/* line 9, ../scss/scripts/_tips.scss */
 .tips .tips-target {
   display: none;
+  z-index: 0;
 }
-/* line 11, ../scss/scripts/_tips.scss */
+/* line 13, ../scss/scripts/_tips.scss */
 .tips .tips-content {
   padding: 10px 20px;
   box-sizing: border-box;
@@ -190,9 +192,9 @@
   color: #fff;
   border: 1px solid #4d4d4d;
   font-size: 0.9em;
-  top: 40px;
+  top: 60px;
   font-size: 0.8em;
-  animation: tips 0.6s forwards;
+  left: 0;
 }
 
 @keyframes tips {
@@ -222,7 +224,7 @@
 .logout-content {
   position: absolute;
   right: 5px;
-  top: 50px;
+  top: 55px;
   box-sizing: border-box;
   padding: 5px 0;
   display: none;
@@ -235,29 +237,23 @@
   font-size: 0.8em;
   text-align: center;
 }
-
-/* line 20, ../scss/scripts/_logout.scss */
+/* line 19, ../scss/scripts/_logout.scss */
 .logout-content a {
   display: block;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* line 25, ../scss/scripts/_logout.scss */
-.logout-content a:hover {
-  background: gainsboro;
-}
-
-/* line 29, ../scss/scripts/_logout.scss */
+/* line 31, ../scss/scripts/_logout.scss */
 .arrow-box {
   position: absolute;
   background: #fff;
   border: 1px solid #ccc;
 }
-/* line 33, ../scss/scripts/_logout.scss */
+/* line 35, ../scss/scripts/_logout.scss */
 .arrow-box:before, .arrow-box:after {
   bottom: 100%;
-  left: 80%;
+  left: 85%;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -265,14 +261,14 @@
   position: absolute;
   pointer-events: none;
 }
-/* line 43, ../scss/scripts/_logout.scss */
+/* line 45, ../scss/scripts/_logout.scss */
 .arrow-box:before {
   border-color: rgba(153, 153, 153, 0);
   border-bottom-color: #ccc;
   border-width: 6px;
   margin-left: -6px;
 }
-/* line 49, ../scss/scripts/_logout.scss */
+/* line 51, ../scss/scripts/_logout.scss */
 .arrow-box:after {
   border-color: rgba(255, 255, 255, 0);
   border-bottom-color: #fff;

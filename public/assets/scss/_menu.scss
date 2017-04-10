@@ -15,7 +15,7 @@
                 box-sizing: border-box;
                 padding: 10px 0;
                 &:hover{
-                    background: lighten($blue, 50%);
+                    background: darken($bg-base-color, 16%);
 //                    color: $white;
                     transition: $timer;
                 }

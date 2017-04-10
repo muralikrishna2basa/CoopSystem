@@ -5,8 +5,9 @@ include     ($PATH.'/public/assets/php/lib/common/sessionCheck.php');
 require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 
-$errors  = [];
-$lists   = [];
+$errors     = [];
+$lists      = [];
+$categories = [];
 /**
  * 月別IDのチェック処理
  * idがセットされており、かつ月別IDが存在し、かつ確定されていないときのみ処理を通す
@@ -50,12 +51,11 @@ if(count($_POST) > 0){
 }
 
 try {
-    $tmp       = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $num       = 50;
-    $pages     = getPagenation($lists, $tmp);
+    $pages     = getPagenation($lists, $nowPage);
     $page      = $pages['page'];
     $maxPage   = $pages['maxPage'];
-
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
@@ -79,6 +79,7 @@ try {
     </div>
     <div class="col-10 container scroll">
         <h2>生協商品リストを修正する</h2>
+        <?php if(count($lists) > 0){ ?>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>
@@ -133,28 +134,27 @@ try {
                             <button type="submit" name="delete" value="<?php echo $lists[$i]['monthly_goods_id'] ?>" class="btn btn-red"  onclick="return confirm('データを削除してよろしいですか？');">削除する</button>
                             </p>
                         </td>
-
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
             <?php if(count($lists) > 0){ ?>
+            <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
             <p class="text-right">
                 <button type="submit" name="update" class="btn btn-blue">更新する</button>
                 <button type="submit" name="deleteAll" class="btn btn-red" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">月のリストを全て削除する</button>
             </p>
             <?php } ?>
         </form>
-        <div class="paging">
-            <?php for($i = 1; $i <= floor(count($lists) / $num); $i++){ ?>
-            <a href="./?id=<?php echo $_GET['id'] ?>&page=<?php echo $i ?>" class="page"><?php echo $i ?></a>
-            <?php } ?>
-        </div>
+        <?php }else{ ?>
+        <p>対象が存在しないようです。</p>
+        <?php } ?>
+
+        <?php //setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
 
         <?php errorMessages($errors) ?>
     </div>
 </div>
-
 
 <div id="modal-category" class="modal-hide">
     <div class="modal-header bg-blue">

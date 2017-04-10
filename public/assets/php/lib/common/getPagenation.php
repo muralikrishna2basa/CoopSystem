@@ -14,4 +14,18 @@ function getPagenation($lists, $pageNumber = 1, $num = 50)
     }
     return ['page'=>$page, 'maxPage'=>$maxPage];
 }
+
+function setPages($url, $max, $now = 1){
+    if($max == 1) return;
+    echo "<div class=\"paging btn-group\">\n";
+    for($i = 1; $i <= $max; $i++){
+        if($now === $i){
+            echo "   <a href=\"{$url}&page={$i}\" class=\"page btn btn-yellow page-selected\ id=\"page-{$i}\">{$i}</a>\n";
+        }else{
+            echo "   <a href=\"{$url}&page={$i}\" class=\"page btn btn-yellow\" id=\"page-{$i}\">{$i}</a>\n";
+        }
+    }
+    echo "</div>\n";
+
+}
 ?>

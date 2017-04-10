@@ -112,7 +112,10 @@ if(count($_POST)>0){
         </table>
         <p class="text-right form-group">
            <?php if($fixed !== 1){ ?>
-            <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
+            <button type="submit" name="order" value="1" class="tips-trigger btn btn-blue">
+            <span>注文します</span>
+            <span class="tips-target">現在のページで選択した商品を発注します</span>
+            </button>
             <?php }else{ ?>
             <h2 class="text-red">今月の注文は確定されたため締め切られました。</h2>
             <?php } ?>
@@ -141,6 +144,7 @@ if(count($_POST)>0){
         <?php errorMessages($errors) ?>
 
     </div>
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

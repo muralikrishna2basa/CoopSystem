@@ -37,7 +37,9 @@ try {
     {
         case 0:
         case 1:
-            $orderBtn   = "<button type=\"submit\" name=\"order\" value=\"0\" class=\"btn btn-red\">いいえ、今月は注文しません</button>";
+            $orderBtn   = "<button type=\"submit\" name=\"order\" value=\"0\" class=\"tips-trigger btn btn-red\">
+            <span>いいえ、今月は注文しません</span>
+            <span class=\"tips-target\">今月注文されない方はこちらを押してください</span></button>";
             $orderState = "<p class=\"label bg-yellow\">今月の注文はしていません</p>";
             break;
         case 2:
@@ -47,6 +49,18 @@ try {
             $orderState = "<p class=\"label bg-green\">今月の注文をしました</p>";
             break;
     }
+    //priceTotalにＤＢ上にあるユーザーの注文金額の合計を表示
+    $sql = "SELECT SUM( unit_price * ordering_quantity ) 
+            FROM ordering_list
+            INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+            INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+            INNER JOIN category ON monthly_goods.category_id = category.category_id
+            INNER JOIN monthly ON ordering.monthly_id = monthly.monthly_id
+            WHERE ordering.orderer =?
+            AND monthly.monthly_id =(SELECT monthly_id FROM monthly WHERE public_flag=1 LIMIT 1)";
+    $stmt = $pdo->prepare($sql);
+    $res  = $stmt->execute([$_SESSION['USERID']]);
+    $priceTotal = intval($stmt->fetchColumn());
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
@@ -152,12 +166,15 @@ try {
                         </p>
                     </td>
                 </tr>
-                <?php $priceTotal += $total; $i++; } ?>
+                <?php } ?>
             </tbody>
         </table>
         <p class="text-right form-group btn-group">
             <?php if($fixed !== 1){ ?>
-            <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
+            <button type="submit" name="order" value="1" class="tips-trigger btn btn-blue">
+            <span>注文します</span>
+            <span class="tips-target">現在のページで選択した商品を発注します</span>
+            </button>
             <?php echo $orderBtn //今月は注文しませんボタンを表示 ?>
             <?php }else{ ?>
             <h2 class="text-red">今月の注文は確定されたため締め切られました。</h2>
@@ -189,6 +206,9 @@ try {
         <?php errorMessages($errors) ?>
 
     </div>
+   
+</div>
+<?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

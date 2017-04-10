@@ -18,8 +18,9 @@ try {
     $stmt = $pdo->prepare($sql);
     $res  = $stmt->execute(null);
     if(!$res) throw new Exception("[order]:DB接続時にエラーが発生しました。");
-    $date  = $stmt->fetch()['date'];
-    $fixed = intval($stmt->fetch()['fixed_flag']);
+    $tmp = $stmt->fetch();
+    $date  = $tmp['date'];
+    $fixed = intval($tmp['fixed_flag']);
 
     // 表示用リスト作成
     $lists = returnCurrentMonthProductList($_SESSION['USERID']);
@@ -61,15 +62,15 @@ if(count($_POST) > 0){
 }
 
 try {
-    $tmp       = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $num       = 50;
-    $pages     = getPagenation($lists, $tmp);
+    $pages     = getPagenation($lists, $nowPage);
     $page      = $pages['page'];
     $maxPage   = $pages['maxPage'];
-
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -123,15 +124,22 @@ try {
                         </p>
                     </td>
                     <td class="text-center">
+
                         <p
                             data-price  ="unit_price_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                             data-total  ="total_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                             data-number ="ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                             data-display="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                         >
+                            <?php if($fixed !== 1){ ?>
                             <button class="ordering-minus">&minus;</button>
+                            <?php } ?>
+
                             <span id="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo intval($lists[$i]['ordering_quantity']) ?></span>個
+
+                            <?php if($fixed !== 1){ ?>
                             <button class="ordering-plus">+</button>
+                            <?php } ?>
                         </p>
                         <input type="hidden" id="initial_ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>" name="initial_ordering_quantity[]" value="<?php echo $lists[$i]['ordering_quantity'] ?>">
                         <input type="hidden" id="ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"         name="ordering_quantity[]"         value="<?php echo $lists[$i]['ordering_quantity'] ?>">
@@ -156,6 +164,7 @@ try {
             <?php } ?>
         </p>
         </form>
+        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
 
         <div class="flex">
             <div class="col-7"></div>
@@ -175,12 +184,6 @@ try {
                 </table>
             </div>
 
-        </div>
-
-        <div class="paging">
-            <?php for($i = 1; $i <= floor(count($lists) / $num); $i++){ ?>
-            <a href="./?page=<?php echo $i ?>" class="page"><?php echo $i ?></a>
-            <?php } ?>
         </div>
 
         <?php errorMessages($errors) ?>

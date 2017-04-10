@@ -15,7 +15,6 @@ function windowSizing()
 
 function checkEdit()
 {
-    console.log('hidewww');
     if(CNT > 0) return confirm("データは更新されませんが別のページに移動してよろしいですか？");
     return true;
 }

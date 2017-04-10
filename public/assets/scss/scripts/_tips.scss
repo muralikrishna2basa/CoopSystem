@@ -1,12 +1,12 @@
-.tips{
-    position: relative;
-    perspective: 1000px;
-    z-index: 1;
+// .tips{
+//     position: relative;
+//     perspective: 1000px;
+//     z-index: 1;
 
 
-}
+// }
     .tips-trigger{
-        cursor: help;
+//        cursor: help;
         z-index: 1;
     }
     .tips-target{
@@ -38,7 +38,7 @@ $btn: 24px;
     background-size: 75%;
     border: 1px solid darken($yellow, 10%);
     position: absolute;
-    right: 5px;
+    right: 20px;
     bottom: 40px;
     cursor: pointer;
     &:hover{
@@ -53,9 +53,10 @@ $btn: 24px;
     @include setPrefix(border-radius, 10px);
     z-index: 10;
     width: 40%;
-    min-height: 50px;
-    height: 30%;
-    background: rgba($black, 0.4);
+    min-height: 100px;
+    max-height: 300px;
+//    height: 30%;
+    background: rgba($black, 0.5);
     color: $white;
     border: 1px solid darken($line-color, 40%);
     font-size: 0.9em;

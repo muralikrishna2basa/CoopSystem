@@ -119,20 +119,22 @@ try {
                             <p>
                                 <span class="label" id="label_<?php echo $lists[$i]['monthly_goods_id'] ?>" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></span>
                             </p>
-                            <p>
-                                <a  href        =""
-                                    class       ="modal-btn btn-sm"
-                                    modal-target="#modal-category"
-                                    data-target ="#category_id_<?php echo $lists[$i]['monthly_goods_id'] ?>"
-                                    label-target="#label_<?php echo $lists[$i]['monthly_goods_id'] ?>"
-                                >カテゴリを選択する</a>
-                                <input type="hidden" name="category_id[]" id="category_id_<?php echo $lists[$i]['monthly_goods_id'] ?>" value="<?php echo $lists[$i]['category_id'] ?>">
-                            </p>
+                            <a  href        =""
+                                class       ="modal-btn btn-sm tips-trigger"
+                                modal-target="#modal-category"
+                                data-target ="#category_id_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                                label-target="#label_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            >
+                                <span>カテゴリを選択する</span>
+                                <span class="tips-target">登録されているカテゴリから該当するものを選択してください。</span>
+                            </a>
+                            <input type="hidden" name="category_id[]" id="category_id_<?php echo $lists[$i]['monthly_goods_id'] ?>" value="<?php echo $lists[$i]['category_id'] ?>">
                         </td>
                         <td>
-                            <p>
-                            <button type="submit" name="delete" value="<?php echo $lists[$i]['monthly_goods_id'] ?>" class="btn btn-red"  onclick="return confirm('データを削除してよろしいですか？');">削除する</button>
-                            </p>
+                            <button type="submit" name="delete" value="<?php echo $lists[$i]['monthly_goods_id'] ?>" class="btn btn-red tips-trigger"  onclick="return confirm('データを削除してよろしいですか？');">
+                                <span>削除する</span>
+                                <span class="tips-target">選択した商品をリスト上から削除します。削除した商品は復元できないので注意してください。</span>
+                            </button>
                         </td>
                     </tr>
                     <?php } ?>
@@ -140,9 +142,15 @@ try {
             </table>
             <?php if(count($lists) > 0){ ?>
             <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
-            <p class="text-right">
-                <button type="submit" name="update" class="btn btn-blue">更新する</button>
-                <button type="submit" name="deleteAll" class="btn btn-red" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">月のリストを全て削除する</button>
+            <p class="text-right btn-group">
+                <button type="submit" name="update" class="btn btn-blue tips-trigger">
+                    <span>更新する</span>
+                    <span class="tips-target">一括で商品リストを更新します。</span>
+                </button>
+                <button type="submit" name="deleteAll" class="btn btn-red tips-trigger" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">
+                    <span>月のリストを全て削除する</span>
+                    <span class="tips-target">表示されているリストを一括で削除します。削除したデータは復元できませんのでご注意ください。</span>
+                </button>
             </p>
             <?php } ?>
         </form>
@@ -154,6 +162,8 @@ try {
 
         <?php errorMessages($errors) ?>
     </div>
+    <p class="tips-btn"></p>
+    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
 </div>
 
 <div id="modal-category" class="modal-hide">

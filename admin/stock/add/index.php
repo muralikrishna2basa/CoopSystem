@@ -103,7 +103,12 @@ try {
                 </tbody>
             </table>
             <?php setPages('./?', floor(count($lists) / $num), $nowPage) ?>
-            <p class="text-right"><button type="submit" class="btn btn-blue">在庫を登録する</button></p>
+            <p class="text-right">
+                <button type="submit" class="btn btn-blue tips-trigger">
+                    <span>在庫を登録する</span>
+                    <span class="tips-target">在庫数を一括で登録します。在庫はページ単位で登録してください。</span>
+                </button>
+            </p>
         </form>
         <?php }else{ ?>
         <p>商品が登録されていないようです。</p>
@@ -111,6 +116,8 @@ try {
         <?php errorMessages($errors) ?>
 
     </div>
+    <p class="tips-btn"></p>
+    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

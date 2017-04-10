@@ -94,7 +94,16 @@ try {
                     <?php } ?>
                 </tbody>
             </table>
-            <p class="text-right"><button type="submit" class="btn btn-blue">在庫を更新する</button></p>
+            <p class="text-right btn-group">
+                <button type="submit" name="btn" value="delete" class="btn btn-red tips-trigger">
+                    <span>在庫がないものを削除する</span>
+                    <span class="tips-target">在庫数が0のものを削除します。定期的に処理してください。</span>
+                </button>
+                <button type="submit" name="btn" value="edit"   class="btn btn-blue tips-trigger">
+                    <span>在庫を更新する</span>
+                    <span class="tips-target">在庫数を修正します。</span>
+                </button>
+            </p>
         </form>
         <?php }else{ ?>
         <p>在庫が登録されていないようです。</p>
@@ -103,6 +112,8 @@ try {
         <?php errorMessages($errors) ?>
 
     </div>
+    <p class="tips-btn"></p>
+    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
 </div>
 <script src="<?php echo $URL ?>/public/assets/js/users.js"></script>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>

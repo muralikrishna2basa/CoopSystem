@@ -107,6 +107,7 @@ try {
         <table class="table-hover border-bottom">
             <thead>
                 <tr>
+                    <th width="10%" class="text-center">No</th>
                     <th width="10%" class="text-center">カテゴリ</th>
                     <th width="30%"                    >商品名</th>
                     <th width="10%" class="text-center">必要数</th>
@@ -119,6 +120,7 @@ try {
                 <?php //foreach ($lists as $list){ ?>
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
+                    <td class="text-center"><?php echo $i ?></td>
                     <td class="text-center">
                         <p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>;">
                             <?php echo $lists[$i]['category_name'] ?>

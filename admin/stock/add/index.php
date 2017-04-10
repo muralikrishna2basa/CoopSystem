@@ -59,6 +59,7 @@ try {
             <table class="border-bottom table-hover">
                 <thead>
                     <tr>
+                        <th class="text-center">No</th>
                         <th class="text-center">カテゴリ名</th>
                         <th                    >商品名</th>
                         <th class="text-center">必要数</th>
@@ -71,6 +72,7 @@ try {
                     <?php //foreach($lists as $list){ ?>
                     <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                     <tr>
+                        <td class="text-center"><?php echo $i ?></td>
                         <td class="text-center">
                             <input type="hidden" name="monthly_goods_id[]" value="<?php echo $lists[$i]['monthly_goods_id'] ?>">
                             <p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p>

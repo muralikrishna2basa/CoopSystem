@@ -162,9 +162,7 @@ try {
 
         <?php errorMessages($errors) ?>
     </div>
-    <p class="tips-btn"></p>
-    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
-</div>
+ <?php include($PATH."/public/assets/php/partial/tips.php"); ?></div>
 
 <div id="modal-category" class="modal-hide">
     <div class="modal-header bg-blue">

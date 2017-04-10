@@ -39,7 +39,7 @@ try {
         case 1:
             $orderBtn   = "<button type=\"submit\" name=\"order\" value=\"0\" class=\"tips-trigger btn btn-red\">
             <span>いいえ、今月は注文しません</span>
-            <span class=\"tips-target\">今月注文されない方はこちらを押してください</span></button>";
+            <span class=\"tips-target\">今月注文されない方はこちらを押してください。</span></button>";
             $orderState = "<p class=\"label bg-yellow\">今月の注文はしていません</p>";
             break;
         case 2:
@@ -169,11 +169,13 @@ try {
                 <?php } ?>
             </tbody>
         </table>
+        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
+
         <p class="text-right form-group btn-group">
             <?php if($fixed !== 1){ ?>
             <button type="submit" name="order" value="1" class="tips-trigger btn btn-blue">
             <span>注文します</span>
-            <span class="tips-target">現在のページで選択した商品を発注します</span>
+            <span class="tips-target">現在のページで選択した商品を注文します。ページごとに注文してください。</span>
             </button>
             <?php echo $orderBtn //今月は注文しませんボタンを表示 ?>
             <?php }else{ ?>
@@ -181,7 +183,6 @@ try {
             <?php } ?>
         </p>
         </form>
-        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
 
         <div class="flex">
             <div class="col-7"></div>

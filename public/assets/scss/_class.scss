@@ -260,10 +260,11 @@
 
 .paging{
     position: relative;
-    left: 10px;
+    left: 5px;
     bottom: 7px;
     z-index: 1;
     letter-spacing: -1em;
+    padding: 5px 0;
     .page-selected{
         transition: $timer;
         color: $white;

@@ -114,7 +114,7 @@ if(count($_POST)>0){
            <?php if($fixed !== 1){ ?>
             <button type="submit" name="order" value="1" class="tips-trigger btn btn-blue">
             <span>注文します</span>
-            <span class="tips-target">現在のページで選択した商品を発注します</span>
+            <span class="tips-target">選択した商品を注文します。商品はページごとに注文してください。</span>
             </button>
             <?php }else{ ?>
             <h2 class="text-red">今月の注文は確定されたため締め切られました。</h2>

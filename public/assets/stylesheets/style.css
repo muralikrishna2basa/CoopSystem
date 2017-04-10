@@ -1045,17 +1045,18 @@ footer h6 {
 /* line 261, ../scss/_class.scss */
 .paging {
   position: relative;
-  left: 10px;
+  left: 5px;
   bottom: 7px;
   z-index: 1;
   letter-spacing: -1em;
+  padding: 5px 0;
 }
-/* line 267, ../scss/_class.scss */
+/* line 268, ../scss/_class.scss */
 .paging .page-selected {
   transition: 0.6s;
   color: #fff;
 }
-/* line 272, ../scss/_class.scss */
+/* line 273, ../scss/_class.scss */
 .paging .page {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -1072,11 +1073,11 @@ footer h6 {
   min-width: 15px;
   text-align: center;
 }
-/* line 274, ../scss/_class.scss */
+/* line 275, ../scss/_class.scss */
 .paging .page:link, .paging .page:visited {
   color: #e3b108;
 }
-/* line 288, ../scss/_class.scss */
+/* line 289, ../scss/_class.scss */
 .paging .page:hover, .paging .page-selected {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #f2bc09), color-stop(0, #f9d868));
   background: -webkit-linear-gradient(top, #f9d868 0%, #f2bc09 47%);

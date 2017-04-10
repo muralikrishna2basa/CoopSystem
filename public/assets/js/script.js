@@ -1,3 +1,4 @@
+CNT = 0;
 function windowSizing()
 {
     var top = $("header").outerHeight();
@@ -5,19 +6,18 @@ function windowSizing()
     var win = $(window).height();
     var siz = win - top - btm;
 
-//    console.log(win+' , '+top+' , '+btm+' , '+siz);
-//    $("body").css({paddingTop: top+'px', paddingBottom: btm+'px', minHeight: siz+'px'});
-//    $(".min-height").each(function(){ $(this).css({minHeight: siz+'px'}) });
-
     var trg  = $(".col-btn").attr("col-target");
     var btm  = $(window).height();
     var side = $(trg).innerWidth();
-//    console.log(side);
-//    $(".col-btn").css({top: (top)+"px", left: (side-35)+"px"});
     $(".col-btn").css({left: (side-35)+"px"});
 
 }
 
+function checkEdit()
+{
+    if(CNT > 0) return confirm("データは更新されませんが別のページに移動してよろしいですか？");
+    return true;
+}
 $(function(){
     //sizing
     windowSizing();
@@ -64,7 +64,7 @@ $(function(){
             // }
             $('.tips-content').html(html);
         }, function(){
-            $('.tips-content').html('<h3 class="text-center">ここにヒントが表示されます。</h3>')
+            $('.tips-content').html('<h3 class="text-center">ここにヒントが表示されます。このメッセージはドラッグできます。</h3>')
         });
     $('.tips-btn').click(function(){
         if($('.tips-content').is(":hidden"))
@@ -96,4 +96,9 @@ $(function(){
         $('.logout-content').show();
         return false;
     });
+
+    // forms count
+    $("form").change(function(){ CNT++; console.log(CNT) })
+
 })
+

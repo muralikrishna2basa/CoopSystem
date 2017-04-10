@@ -49,13 +49,17 @@ function setPrice(selector, sign)
         // 合計金額を再計算
         if(trgPrice !== void 0)
         {
-            var price    = getPrice($('#'+trgPrice).html());
-            $('#'+trgTotal).html(separate(price * num));
+            // var price    = getPrice($('#'+trgPrice).html());
+            var unit     = getPrice($('#'+trgPrice).html());
+            var price    = getPrice($('#price_total').html());
+            price += sign * unit;
+            $('#'+trgTotal).html(separate(unit * num));
+            $('#price_total').html(separate(price));
         }
-        $('#price_total').html('0');
-        $("form [id *= 'total_']").each(function(){
-            var total = getPrice($('#price_total').html());
-            var price = getPrice($(this).html());
-            $('#price_total').html(separate(total + price));
-        });
+//        $('#price_total').html('0');
+        // $("form [id *= 'total_']").each(function(){
+        //     var total = getPrice($('#price_total').html());
+        //     var price = getPrice($(this).html());
+        //     $('#price_total').html(separate(total + price));
+        // });
     }

@@ -130,9 +130,7 @@ if(count($_POST) > 0 && isset($_POST['btn']))
         </form>
         <?php errorMessages($errors) ?>
     </div>
-    <p class="tips-btn"></p>
-    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
-</div>
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?></div>
 <script type="text/javascript">
     $(function(){
         editBtn();

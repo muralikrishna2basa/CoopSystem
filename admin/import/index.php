@@ -167,9 +167,7 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
         <?php errorMessages($errors) ?>
     </div>
 
-    <p class="tips-btn"></p>
-    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
-
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <script type="text/javascript">
     function checkFile(){

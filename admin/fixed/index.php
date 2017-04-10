@@ -75,12 +75,19 @@ try{
         </table>
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">
-            <p class="text-right"><button type="submit" class="btn btn-green" name="submit" value="1">確定処理を実行する</button></p>
+            <p class="text-right">
+                <button type="submit" class="btn btn-green tips-trigger" name="submit" value="1">
+                    <span>確定処理を実行する</span>
+                    <span class="tips-target">確定します。確定後は商品の発注・編集を行うことはできなくなります。</span>
+                </button>
+            </p>
         </form>
         <?php }else{ ?>
         <p>確定する対象が存在しないようです。</p>
         <?php } ?>
+        <?php errorMessages($errors) ?>
     </div>
+    <?php include($PATH."/public/assets/php/partial/tips.php"); ?>
 </div>
 <?php include($PATH."/public/assets/php/partial/footer.php"); ?>
 </body>

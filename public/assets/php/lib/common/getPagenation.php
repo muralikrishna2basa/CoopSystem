@@ -16,6 +16,7 @@ function getPagenation($lists, $pageNumber = 1, $num = 50)
 }
 
 function setPages($url, $max, $now = 1){
+    $max += 1;
     if($max == 1) return;
     echo "<div class=\"paging btn-group\">\n";
     for($i = 1; $i <= $max; $i++){

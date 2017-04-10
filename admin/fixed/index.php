@@ -25,9 +25,18 @@ try{
     if(count($_POST) > 0)
     {
         fixOrder($_POST['monthly_id']);
-        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./";</script>';
+        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./?id=1";</script>';
     }
 }catch (Exception $e){
+    $errors[] = $e->getMessage();
+}
+try {
+    $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $num       = 50;
+    $pages     = getPagenation($lists, $nowPage);
+    $page      = $pages['page'];
+    $maxPage   = $pages['maxPage'];
+} catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
 ?>
@@ -51,6 +60,7 @@ try{
         <?php if(count($lists) > 0){ ?>
         <table class="table-hover border-bottom">
             <thead>
+                <th class="text-center">No</th>
                 <th class="text-center">カテゴリ名</th>
                 <th class="text-left">商品名</th>
                 <th class="text-left">購入者</th>
@@ -60,19 +70,23 @@ try{
                 <th class="text-right">合計金額</th>
             </thead>
             <tbody>
-                <?php foreach($lists as $list){ ?>
+                <?php for($i = $page; $i < ($maxPage); $i++){ ?>
+                <?php //foreach($lists as $list){ ?>
                 <tr>
-                    <td class="text-center"><p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></p></td>
-                    <td class="text-left"  ><?php echo $list['goods_name'] ?></td>
-                    <td class="text-left"><?php echo $list['user_name'] ?></td>
-                    <td class="text-center"><?php echo $list['required_quantity'] ?>個</td>
-                    <td class="text-right" ><?php echo number_format(intval($list['unit_price'])) ?>円</td>
-                    <td class="text-right"><?php echo $list['ordering_quantity'] ?>個</td>
-                    <td class="text-right" ><?php echo number_format(intval($list['total'])) ?>円</td>
+                    <td class="text-center"><?php echo $i ?></td>
+                    <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
+                    <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
+                    <td class="text-left"><?php echo $lists[$i]['user_name'] ?></td>
+                    <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>
+                    <td class="text-right" ><?php echo number_format(intval($lists[$i]['unit_price'])) ?>円</td>
+                    <td class="text-right"><?php echo $lists[$i]['ordering_quantity'] ?>個</td>
+                    <td class="text-right" ><?php echo number_format(intval($lists[$i]['total'])) ?>円</td>
                 </tr>
                 <?php } ?>
             </tbody>
         </table>
+        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
+
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">
             <p class="text-right">

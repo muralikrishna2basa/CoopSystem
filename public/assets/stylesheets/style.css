@@ -454,15 +454,6 @@ header .user-name {
 header .user-name .honorific {
   font-size: 0.8em;
 }
-/* line 33, ../scss/_header.scss */
-header .logout {
-  position: absolute;
-  right: 5px;
-  top: 45px;
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 5px 20px;
-}
 
 /* line 1, ../scss/_menu.scss */
 .menu {
@@ -491,8 +482,17 @@ header .logout {
   background: #cccccc;
   transition: 0.6s;
 }
+/* line 25, ../scss/_menu.scss */
+.menu .logout {
+  position: absolute;
+  right: 5px;
+  bottom: 45px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 20px;
+}
 
-/* line 26, ../scss/_menu.scss */
+/* line 34, ../scss/_menu.scss */
 .menu-btn {
   position: absolute;
   width: 30px;

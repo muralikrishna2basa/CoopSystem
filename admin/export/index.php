@@ -63,18 +63,20 @@ try {
         <?php if(count($lists) > 0){ ?>
         <table class="table-hover border-bottom">
             <thead>
-                <th>カテゴリ名</th>
+                <th class="text-center">No</th>
+                <th class="text-center">カテゴリ名</th>
                 <th>商品名</th>
-                <th>購入者</th>
-                <th>必要数</th>
-                <th>単価</th>
-                <th>購入数</th>
-                <th>合計金額</th>
+                <th class="text-center">購入者</th>
+                <th class="text-center">必要数</th>
+                <th class="text-right">単価</th>
+                <th class="text-center">購入数</th>
+                <th class="text-right">合計金額</th>
             </thead>
             <tbody>
                 <?php //foreach($lists as $list){ ?>
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
+                    <td class=text-center""><?php echo $i ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['user_name'] ?></td>
@@ -86,6 +88,7 @@ try {
                 <?php } ?>
             </tbody>
         </table>
+        <?php //var_dump(floor(count($lists) / $num)) ?>
         <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">

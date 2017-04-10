@@ -130,6 +130,13 @@ input[type="color"]{
     height: 30px;
     width: 60px;
 }
+
+input:disabled,
+button:disabled,
+select:disabled,
+textarea:disabled{
+    cursor: not-allowed !important;
+}
 pre, code{
     font-family: "Source Code Pro", sans-serif;
     font-size: 0.85em;

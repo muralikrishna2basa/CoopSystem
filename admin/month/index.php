@@ -108,20 +108,36 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                     <option>公開できる月が存在しません。</option>
                     <?php } ?>
                 </select>
-            <div class="btn-group">
-                <button type="submit" name="btn" value="publish" id="publish" class="btn btn-blue">リストを公開する</button>
-                <button type="submit" name="btn" value="edit" id="edit" class="btn btn-blue" >リストの編集をする</button>
-                <button type="submit" name="btn" value="export" id="export" class="btn btn-blue" >リストを出力する</button>
-                <button type="submit" name="btn" value="unfixed" id="unfixed" class="btn btn-red" >確定を解除する</button>
+            <div class="btn-group" style="margin-bottom: 10px">
+                <button type="submit" name="btn" value="publish" id="publish" class="btn btn-blue tips-trigger">
+                    <span>リストを公開する</span>
+                    <span class="tips-target">選択した月のリストを公開します。確定済みのリストは公開しても注文できない点にご留意ください。</span>
+                </button>
+                <button type="submit" name="btn" value="edit" id="edit" class="btn btn-blue tips-trigger">
+                    <span>リストの編集をする</span>
+                    <span class="tips-target">リストの編集を行います。確定前・公開前のリストのみ修正が行えます。</span>
+                </button>
+                <button type="submit" name="btn" value="export" id="export" class="btn btn-blue tips-trigger">
+                    <span>リストを出力する</span>
+                    <span class="tips-target">ユーザーの注文リストをCSV形式で出力できます。</span>
+                </button>
             </div>
-
+            <div class="btn-group">
+                <button type="submit" name="btn" value="unfixed" id="unfixed" class="btn btn-red tips-trigger">
+                    <span>確定を解除する</span>
+                    <span class="tips-target">確定を解除します。確定解除後はリストの編集が行えるようになります。</span>
+                </button>
+                <button type="submit" name="btn" value="delete" id="delete" class="btn btn-red tips-trigger">
+                    <span>在庫が0のものを削除する</span>
+                    <span class="tips-target">在庫が存在しない商品を削除します。一度削除したデータは復元できない点にご注意ください。</span>
+                </button>
+            </div>
             </p>
-
         </form>
-
         <?php errorMessages($errors) ?>
-
     </div>
+    <p class="tips-btn"></p>
+    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
 </div>
 <script type="text/javascript">
     $(function(){
@@ -131,26 +147,27 @@ if(count($_POST) > 0 && isset($_POST['btn']))
 
 function editBtn()
 {
-    $('.btn').each(function(){ $(this).show() });
+    $('.btn').each(function(){ $(this).prop('disabled', false) });
     var public = $('#month_id option:selected').attr('data-public');
     var fixed  = $('#month_id option:selected').attr('data-fixed');
     var cnt    = $('#month_id option:selected').attr('data-cnt');
 
     if(cnt == 0)
     {
-        $('#publish').hide();
-        $('#edit').hide();
-        $('#export').hide();
-        $('#unfixed').hide();
+        $('#publish').prop('disabled', true);
+        $('#edit').prop('disabled', true);
+        $('#export').prop('disabled', true);
+        $('#unfixed').prop('disabled', true);
+        $('#unfixed').prop('disabled', true);
     }
     if(public == 1)
     {
-        $('#publish').hide();
-        $('#edit').hide();
+        $('#publish').prop('disabled', true);
+        $('#edit').prop('disabled', true);
     }
     if(fixed == 1)
     {
-        $('#edit').hide();
+        $('#edit').prop('disabled', true);
     }
 }
 </script>

@@ -166,17 +166,19 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
     <div class="col-10 container scroll">
         <h2>生協商品リストを取り込む</h2>
         <form method="post" enctype="multipart/form-data">
-            <select name="month">
-                <?php foreach ($lists as $val){ ?>
-                <option value="<?php echo date('Ymd', $val['date']); ?>"
-                 <?php if($compareDate === date('Ym', $val['date'])) echo 'selected' ?>>
-                 <?php echo date('Y年n月分', $val['date']) ?>
-                 <?php echo " / {$val['cnt']}件" ?>
-                 </option>
-                <?php } ?>
-            </select>
             <span class="tips">
-                <button type="submit" name='submit_month' class="btn btn-green tips-trigger"><?php echo $displayMonth ?></button>
+                <span class=" tips-trigger">
+                    <select name="month">
+                        <?php foreach ($lists as $val){ ?>
+                        <option value="<?php echo date('Ymd', $val['date']); ?>"
+                         <?php if($compareDate === date('Ym', $val['date'])) echo 'selected' ?>>
+                         <?php echo date('Y年n月分', $val['date']) ?>
+                         <?php echo " / {$val['cnt']}件" ?>
+                         </option>
+                        <?php } ?>
+                    </select>
+                    <button type="submit" name='submit_month' class="btn btn-green"><?php echo $displayMonth ?></button>
+                </span>
                 <div class="tips-target">
                     <p>公開したい月を選択してクリックしてください。</p>
                     <p>既に選択した月のリストが存在している場合、リストに追加されます。</p>
@@ -185,10 +187,8 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
 
         <?php if(isset($_POST['submit_month'])){ ?>
             <div class="tips">
-                <span>
-                    <input type="file"    name="csv" id="csv">
-                </span>
                 <span class="tips-trigger">
+                    <input type="file"    name="csv" id="csv">
                     <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
                     <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
                 </span>
@@ -202,6 +202,10 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
         </form>
         <?php errorMessages($errors) ?>
     </div>
+
+    <p class="tips-btn"></p>
+    <div class="tips-content"><h3 class="text-center">ここにヒントが表示されます。</h3></div>
+
 </div>
 <script type="text/javascript">
     function checkFile(){

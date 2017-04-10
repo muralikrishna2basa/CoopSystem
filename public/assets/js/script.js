@@ -56,12 +56,26 @@ $(function(){
     //Tips
     $(".tips-trigger").hover(
         function(){
-            var html = $(this).nextAll('.tips-target').html();
-            $(this).parent().append('<div class="tips-content">'+html+'</div>');
-            $(".tips-content").css({left: $(this).scrollLeft()+20+"px"}).hide().fadeIn();
-            $(this).parent().css({zIndex: 10});
-        }, function(){ $(this).parent().css({zIndex: ''}); $(".tips-content").fadeOut(100, function(){ $(this).remove() }); }
-    );
+            // var html = $(this).nextAll('.tips-target').html();
+            // if(html === void 0)
+            // {
+            var html = $(this).children('.tips-target').html();
+
+            // }
+            $('.tips-content').html(html);
+        }, function(){
+            $('.tips-content').html('<h3 class="text-center">ここにヒントが表示されます。</h3>')
+        });
+    $('.tips-btn').click(function(){
+        if($('.tips-content').is(":hidden"))
+        {
+//            console.log('hide');
+            $('.tips-content').fadeIn();
+        }else{
+//            console.log('show');
+            $('.tips-content').fadeOut();
+        }
+    })
 
     //col-btn
     $(".col-btn").click(function(){

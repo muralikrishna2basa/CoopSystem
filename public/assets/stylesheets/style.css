@@ -187,13 +187,21 @@ input[type="color"] {
   width: 60px;
 }
 
-/* line 133, ../scss/_base.scss */
+/* line 134, ../scss/_base.scss */
+input:disabled,
+button:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed !important;
+}
+
+/* line 140, ../scss/_base.scss */
 pre, code {
   font-family: "Source Code Pro", sans-serif;
   font-size: 0.85em;
 }
 
-/* line 137, ../scss/_base.scss */
+/* line 144, ../scss/_base.scss */
 pre {
   border: 1px solid #ccc;
   background: #ededed;
@@ -206,14 +214,14 @@ pre {
   z-index: 0;
 }
 
-/* line 144, ../scss/_base.scss */
+/* line 151, ../scss/_base.scss */
 code {
   position: relative;
   white-space: pre-wrap;
   word-break: break-all;
   z-index: 0;
 }
-/* line 149, ../scss/_base.scss */
+/* line 156, ../scss/_base.scss */
 code:before {
   white-space: pre-wrap;
   word-break: normal;

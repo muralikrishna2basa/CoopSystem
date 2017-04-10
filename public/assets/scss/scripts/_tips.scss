@@ -2,6 +2,9 @@
     position: relative;
     perspective: 1000px;
     z-index: 1;
+
+
+}
     .tips-trigger{
         cursor: help;
         z-index: 1;
@@ -10,24 +13,6 @@
         display: none;
         z-index: 0;
     }
-    .tips-content{
-        padding: 10px 20px;
-        box-sizing: border-box;
-        position: absolute;
-        @include setPrefix(border-radius, 10px);
-        z-index: 4;
-        width: 400px;
-        min-height: 100px;
-        background: rgba($black, 0.7);
-        color: $white;
-        border: 1px solid darken($line-color, 50%);
-        font-size: 0.9em;
-        top: 60px;
-        font-size: 0.8em;
-        left: 0;
-//        animation: tips $timer forwards;
-    }
-}
 
 @keyframes tips{
     0%{
@@ -37,3 +22,47 @@
         @include setPrefix(transform, translateY(0px));
     }
 }
+
+
+$btn: 24px;
+.tips-btn{
+    width: $btn;
+    height: $btn;
+    @include setPrefix(border-radius, 50%);
+//    z-index: 11;
+    overflow: hidden;
+    background-color: rgba($yellow, 0.7);
+    background-image: url(../imgs/tips.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 75%;
+    border: 1px solid darken($yellow, 10%);
+    position: absolute;
+    right: 5px;
+    bottom: 40px;
+    cursor: pointer;
+    &:hover{
+        transition: $timer;
+        opacity: 0.7;
+    }
+}
+.tips-content{
+    padding: 10px 20px;
+    box-sizing: border-box;
+    position: absolute;
+    @include setPrefix(border-radius, 10px);
+    z-index: 10;
+    width: 40%;
+    min-height: 50px;
+    height: 30%;
+    background: rgba($black, 0.4);
+    color: $white;
+    border: 1px solid darken($line-color, 40%);
+    font-size: 0.9em;
+    top: auto;
+    bottom: (50 + $btn);
+    font-size: 0.8em;
+    right: (10 + $btn);
+    display: none;
+}
+

@@ -50,13 +50,13 @@ function testAdministratorReturnStockList(){
     * @test
     */
 function testProductListOneDeleting(){
-    productListOneDeleting(67);
+    //productListOneDeleting(67);
 }
 /**
     * @test
     */
 function testProductListAllDeleting(){
-    productListAllDeleting(26);
+    //productListAllDeleting(26);
 }
 /**
     * @test

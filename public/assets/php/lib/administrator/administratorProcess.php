@@ -432,7 +432,6 @@ function fixOrder($monthlyId ){
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute(array($monthlyId));
         if(!$res) throw new Exception("関数fixOrderでUPDATE文実行時にエラーが発生しました。");
-        deletingEmptystockList();
     }catch(Exception $e){
        throw $e;
     }

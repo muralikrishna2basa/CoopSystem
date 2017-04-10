@@ -58,7 +58,7 @@ if(isset($_POST) && count($_POST) > 0){
             // セッション変数にユーザー情報を格納する
             $_SESSION['USERID']    = intval($user['userid']);
             $_SESSION['USER_NAME'] = $user['userName'];
-            header('location: ../user/order');
+            header('location: ../user/order/?page=1');
 
         } catch (Exception $e) {
             $errors[] = $e->Getmessage();

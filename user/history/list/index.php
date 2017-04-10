@@ -35,6 +35,7 @@ try {
 <head>
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>

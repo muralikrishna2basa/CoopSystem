@@ -172,7 +172,7 @@ try {
                 <?php } ?>
             </tbody>
         </table>
-        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
+        <?php setPages('./?', floor(count($lists) / $num), $nowPage) ?>
 
         <p class="text-right form-group btn-group">
             <?php if($fixed !== 1){ ?>

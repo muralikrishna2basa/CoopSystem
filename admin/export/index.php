@@ -32,6 +32,15 @@ try{
 }catch (Exception $e){
     $errors[] = $e->getMessage();
 }
+try {
+    $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
+    $num       = 50;
+    $pages     = getPagenation($lists, $nowPage);
+    $page      = $pages['page'];
+    $maxPage   = $pages['maxPage'];
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +85,7 @@ try{
                 <?php } ?>
             </tbody>
         </table>
+        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">
             <p class="text-right"><button type="submit" class="btn btn-green" name="export" value="1">リストを出力する</button></p>

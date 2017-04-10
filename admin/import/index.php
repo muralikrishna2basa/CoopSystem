@@ -48,28 +48,6 @@ try {
 $compareDate = date('Ym');
 if(isset($_POST['month'])) $compareDate = date('Ym', strtotime($_POST['month']));
 
-/*
-if(count($_POST) > 0 && isset($_POST['month']))
-{
-    try {
-        // monthlyにデータを作成して、月別IDを取得する
-        $monthlyId    = monthlyIdGeneration($_POST['month']);
-        // [取込ボタン]月別IDが既に確定済みであれば処理中止
-//        $sql  = "SELECT fixed_flag FROM monthly WHERE date=? LIMIT 1;";
-        $sql  = "SELECT (fixed_flag + public_flag) FROM monthly WHERE monthly_id=?;";
-        $stmt = $pdo->prepare($sql);
-        $res  = $stmt->execute([$monthlyId,]);
-//        var_dump($stmt->fetch());
-        if(!$res) throw new Exception("monthlyDB接続時にエラーが発生しました。");
-        if(intval($stmt->fetchColumn()) > 0) $csvFlag = false;
-        $displayMonth = date('Y年n月', strtotime($_POST['month']))."が選択されています";
-    } catch (Exception $e) {
-        $errors[] = $e->getMessage();
-//        exit();
-    }
-}
-*/
-
 if(count($_POST) > 0 && isset($_POST['month']))
         $displayMonth = date('Y年n月', strtotime($_POST['month']))."が選択されています";
 
@@ -83,13 +61,6 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
 
         // monthly_idの取得（既に存在していた場合DBのから取得）
         $monthlyId = monthlyIdGeneration($_POST['month']);
-       // var_dump($monthlyId);
-//        exit();
-        // $sql  = "SELECT monthly_id FROM monthly WHERE date=?;";
-        // $stmt = $pdo->prepare($sql);
-        // $res  = $stmt->execute([$_POST['month'], ]);
-        // if(!$res) throw new Exception("monthlyDB接続時にエラーが発生しました。");
-        // if(mb_strlen($monthlyId) == 0) $monthlyId = $stmt->fetchColumn();
 
         $sql  = "SELECT (fixed_flag + public_flag) FROM monthly WHERE monthly_id=?;";
         $stmt = $pdo->prepare($sql);
@@ -166,38 +137,31 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
     <div class="col-10 container scroll">
         <h2>生協商品リストを取り込む</h2>
         <form method="post" enctype="multipart/form-data">
-            <span class="tips">
-                <span class=" tips-trigger">
-                    <select name="month">
-                        <?php foreach ($lists as $val){ ?>
-                        <option value="<?php echo date('Ymd', $val['date']); ?>"
-                         <?php if($compareDate === date('Ym', $val['date'])) echo 'selected' ?>>
-                         <?php echo date('Y年n月分', $val['date']) ?>
-                         <?php echo " / {$val['cnt']}件" ?>
-                         </option>
-                        <?php } ?>
-                    </select>
-                    <button type="submit" name='submit_month' class="btn btn-green"><?php echo $displayMonth ?></button>
-                </span>
-                <div class="tips-target">
-                    <p>公開したい月を選択してクリックしてください。</p>
-                    <p>既に選択した月のリストが存在している場合、リストに追加されます。</p>
-                </div>
-            </span>
+            <p>
+                <select name="month">
+                    <?php foreach ($lists as $val){ ?>
+                    <option value="<?php echo date('Ymd', $val['date']); ?>"
+                     <?php if($compareDate === date('Ym', $val['date'])) echo 'selected' ?>>
+                     <?php echo date('Y年n月分', $val['date']) ?>
+                     <?php echo " / {$val['cnt']}件" ?>
+                     </option>
+                    <?php } ?>
+                </select>
+                <button type="submit" name='submit_month' class="btn btn-green tips-trigger">
+                    <span><?php echo $displayMonth ?></span>
+                    <span class="tips-target">公開したい月を選択してクリックしてください。既に選択した月のリストが存在している場合、リストに追加されます。</span>
+                </button>
+            </p>
+
+
 
         <?php if(isset($_POST['submit_month'])){ ?>
-            <div class="tips">
-                <span class="tips-trigger">
-                    <input type="file"    name="csv" id="csv">
-                    <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
-                    <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
-                </span>
-
-                <div class="tips-target">
-                    <p>ファイルを選択して取り込んでください。</p>
-                    <p>CSV形式以外は対応しておりません。</p>
-                </div>
-            </div>
+            <input type="file"    name="csv" id="csv">
+            <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
+            <button type="submit" name="submit_csv" class="btn btn-blue tips-trigger" onclick="return checkFile();">
+                <span>商品リストを取り込む</span>
+                <span class="tips-target">ファイルを選択して取り込んでください。CSV形式以外は対応しておりません。</span>
+            </button>
         <?php } ?>
         </form>
         <?php errorMessages($errors) ?>

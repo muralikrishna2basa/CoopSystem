@@ -159,12 +159,28 @@
   transform: rotateZ(90deg);
 }
 
-/* line 8, ../scss/scripts/_tips.scss */
+/* line 2, ../scss/scripts/_tips.scss */
 .tips-trigger {
   z-index: 1;
+  position: relative;
+}
+/* line 5, ../scss/scripts/_tips.scss */
+.tips-trigger:after {
+  content: '';
+  background-image: url(../imgs/hint.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center center;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  z-index: 2;
+  opacity: 0.7;
 }
 
-/* line 12, ../scss/scripts/_tips.scss */
+/* line 20, ../scss/scripts/_tips.scss */
 .tips-target {
   display: none;
   z-index: 0;
@@ -186,7 +202,7 @@
     -o-transform: translateY(0px);
   }
 }
-/* line 28, ../scss/scripts/_tips.scss */
+/* line 36, ../scss/scripts/_tips.scss */
 .tips-btn {
   width: 24px;
   height: 24px;
@@ -207,13 +223,13 @@
   bottom: 40px;
   cursor: pointer;
 }
-/* line 44, ../scss/scripts/_tips.scss */
+/* line 52, ../scss/scripts/_tips.scss */
 .tips-btn:hover {
   transition: 0.6s;
   opacity: 0.7;
 }
 
-/* line 49, ../scss/scripts/_tips.scss */
+/* line 57, ../scss/scripts/_tips.scss */
 .tips-content {
   padding: 10px 20px;
   box-sizing: border-box;

@@ -145,7 +145,7 @@ try {
             <p class="text-right btn-group">
                 <button type="submit" name="update" class="btn btn-blue tips-trigger">
                     <span>更新する</span>
-                    <span class="tips-target">一括で商品リストを更新します。</span>
+                    <span class="tips-target">一括で商品リストを更新します。更新はページ単位で行ってください。</span>
                 </button>
                 <button type="submit" name="deleteAll" class="btn btn-red tips-trigger" onclick="return confirm('表示されている全てのデータが削除されますが本当によろしいですか？');">
                     <span>月のリストを全て削除する</span>

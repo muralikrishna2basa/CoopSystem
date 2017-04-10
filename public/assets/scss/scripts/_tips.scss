@@ -1,18 +1,26 @@
-// .tips{
-//     position: relative;
-//     perspective: 1000px;
-//     z-index: 1;
 
-
-// }
-    .tips-trigger{
-//        cursor: help;
-        z-index: 1;
+.tips-trigger{
+    z-index: 1;
+    position: relative;
+    &:after{
+        content: '';
+        background-image: url(../imgs/hint.png);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: center center;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        right: 1px;
+        bottom: 1px;
+        z-index: 2;
+        opacity: 0.7;
     }
-    .tips-target{
-        display: none;
-        z-index: 0;
-    }
+}
+.tips-target{
+    display: none;
+    z-index: 0;
+}
 
 @keyframes tips{
     0%{

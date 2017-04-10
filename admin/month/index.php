@@ -121,15 +121,9 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                     <span>リストを出力する</span>
                     <span class="tips-target">ユーザーの注文リストをCSV形式で出力できます。</span>
                 </button>
-            </div>
-            <div class="btn-group">
                 <button type="submit" name="btn" value="unfixed" id="unfixed" class="btn btn-red tips-trigger">
                     <span>確定を解除する</span>
                     <span class="tips-target">確定を解除します。確定解除後はリストの編集が行えるようになります。</span>
-                </button>
-                <button type="submit" name="btn" value="delete" id="delete" class="btn btn-red tips-trigger">
-                    <span>在庫が0のものを削除する</span>
-                    <span class="tips-target">在庫が存在しない商品を削除します。一度削除したデータは復元できない点にご注意ください。</span>
                 </button>
             </div>
             </p>
@@ -157,7 +151,6 @@ function editBtn()
         $('#publish').prop('disabled', true);
         $('#edit').prop('disabled', true);
         $('#export').prop('disabled', true);
-        $('#unfixed').prop('disabled', true);
         $('#unfixed').prop('disabled', true);
     }
     if(public == 1)

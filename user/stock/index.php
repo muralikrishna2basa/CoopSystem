@@ -7,9 +7,17 @@ $errors     = [];
 $lists      = [];
 $i          = 0;
 $priceTotal = 0;
-
+$fixed      = 0;
 try {
     $lists = returnStockList($_SESSION['USERID']);
+    $pdo        = connectDb('coop');
+    $sql  = "SELECT * FROM monthly WHERE public_flag=1;";
+    $stmt = $pdo->prepare($sql);
+    $res  = $stmt->execute(null);
+    if(!$res) throw new Exception("[order]:DB接続時にエラーが発生しました。");
+    $tmp = $stmt->fetch();
+    $date  = $tmp['date'];
+    $fixed = intval($tmp['fixed_flag']);
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
@@ -103,7 +111,11 @@ if(count($_POST)>0){
             </tbody>
         </table>
         <p class="text-right form-group">
-            <button type="submit" class="btn btn-blue">注文します</button>
+           <?php if($fixed !== 1){ ?>
+            <button type="submit" name="order" value="1" class="btn btn-blue">注文します</button>
+            <?php }else{ ?>
+            <h2 class="text-red">今月の注文は確定されたため締め切られました。</h2>
+            <?php } ?>
         </p>
         </form>
 

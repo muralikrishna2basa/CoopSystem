@@ -480,7 +480,7 @@ header .logout {
 }
 /* line 17, ../scss/_menu.scss */
 .menu ul li a:hover {
-  background: #d4dff2;
+  background: #cccccc;
   transition: 0.6s;
 }
 
@@ -673,18 +673,17 @@ footer h6 {
 
 /* line 101, ../scss/_class.scss */
 .btn-blue {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, #fff));
-  background: -webkit-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -moz-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -o-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -ms-linear-gradient(top, #fff 0%, #eee 47%);
-  background: linear-gradient(to bottom, #fff 0%, #eee 47%);
-  color: #3362ae;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
+  background: -webkit-linear-gradient(top, white 0%, #eee 47%);
+  background: -moz-linear-gradient(top, white 0%, #eee 47%);
+  background: -o-linear-gradient(top, white 0%, #eee 47%);
+  background: -ms-linear-gradient(top, white 0%, #eee 47%);
+  background: linear-gradient(to bottom, white 0%, #eee 47%);
+  color: #2d579a;
   border: 1px solid #ccc;
 }
-/* line 19, ../scss/mixin/_btnColor.scss */
+/* line 6, ../scss/mixin/_btnColor.scss */
 .btn-blue:hover {
-  transition: 0.6s;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #2d579a), color-stop(0, #5d89d0));
   background: -webkit-linear-gradient(top, #5d89d0 0%, #2d579a 47%);
   background: -moz-linear-gradient(top, #5d89d0 0%, #2d579a 47%);
@@ -695,18 +694,17 @@ footer h6 {
 
 /* line 104, ../scss/_class.scss */
 .btn-red {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, #fff));
-  background: -webkit-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -moz-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -o-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -ms-linear-gradient(top, #fff 0%, #eee 47%);
-  background: linear-gradient(to bottom, #fff 0%, #eee 47%);
-  color: #c9243a;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
+  background: -webkit-linear-gradient(top, white 0%, #eee 47%);
+  background: -moz-linear-gradient(top, white 0%, #eee 47%);
+  background: -o-linear-gradient(top, white 0%, #eee 47%);
+  background: -ms-linear-gradient(top, white 0%, #eee 47%);
+  background: linear-gradient(to bottom, white 0%, #eee 47%);
+  color: #b32034;
   border: 1px solid #ccc;
 }
-/* line 19, ../scss/mixin/_btnColor.scss */
+/* line 6, ../scss/mixin/_btnColor.scss */
 .btn-red:hover {
-  transition: 0.6s;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #b32034), color-stop(0, #e1586b));
   background: -webkit-linear-gradient(top, #e1586b 0%, #b32034 47%);
   background: -moz-linear-gradient(top, #e1586b 0%, #b32034 47%);
@@ -717,18 +715,17 @@ footer h6 {
 
 /* line 107, ../scss/_class.scss */
 .btn-yellow {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, #fff));
-  background: -webkit-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -moz-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -o-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -ms-linear-gradient(top, #fff 0%, #eee 47%);
-  background: linear-gradient(to bottom, #fff 0%, #eee 47%);
-  color: #f7c41e;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
+  background: -webkit-linear-gradient(top, white 0%, #eee 47%);
+  background: -moz-linear-gradient(top, white 0%, #eee 47%);
+  background: -o-linear-gradient(top, white 0%, #eee 47%);
+  background: -ms-linear-gradient(top, white 0%, #eee 47%);
+  background: linear-gradient(to bottom, white 0%, #eee 47%);
+  color: #f2bc09;
   border: 1px solid #ccc;
 }
-/* line 19, ../scss/mixin/_btnColor.scss */
+/* line 6, ../scss/mixin/_btnColor.scss */
 .btn-yellow:hover {
-  transition: 0.6s;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #f2bc09), color-stop(0, #f9d868));
   background: -webkit-linear-gradient(top, #f9d868 0%, #f2bc09 47%);
   background: -moz-linear-gradient(top, #f9d868 0%, #f2bc09 47%);
@@ -739,18 +736,17 @@ footer h6 {
 
 /* line 110, ../scss/_class.scss */
 .btn-green {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, #fff));
-  background: -webkit-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -moz-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -o-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -ms-linear-gradient(top, #fff 0%, #eee 47%);
-  background: linear-gradient(to bottom, #fff 0%, #eee 47%);
-  color: #a5c721;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
+  background: -webkit-linear-gradient(top, white 0%, #eee 47%);
+  background: -moz-linear-gradient(top, white 0%, #eee 47%);
+  background: -o-linear-gradient(top, white 0%, #eee 47%);
+  background: -ms-linear-gradient(top, white 0%, #eee 47%);
+  background: linear-gradient(to bottom, white 0%, #eee 47%);
+  color: #93b11d;
   border: 1px solid #ccc;
 }
-/* line 19, ../scss/mixin/_btnColor.scss */
+/* line 6, ../scss/mixin/_btnColor.scss */
 .btn-green:hover {
-  transition: 0.6s;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #93b11d), color-stop(0, #c5e351));
   background: -webkit-linear-gradient(top, #c5e351 0%, #93b11d 47%);
   background: -moz-linear-gradient(top, #c5e351 0%, #93b11d 47%);
@@ -761,18 +757,17 @@ footer h6 {
 
 /* line 113, ../scss/_class.scss */
 .btn-purple {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, #fff));
-  background: -webkit-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -moz-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -o-linear-gradient(top, #fff 0%, #eee 47%);
-  background: -ms-linear-gradient(top, #fff 0%, #eee 47%);
-  background: linear-gradient(to bottom, #fff 0%, #eee 47%);
-  color: #77429c;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
+  background: -webkit-linear-gradient(top, white 0%, #eee 47%);
+  background: -moz-linear-gradient(top, white 0%, #eee 47%);
+  background: -o-linear-gradient(top, white 0%, #eee 47%);
+  background: -ms-linear-gradient(top, white 0%, #eee 47%);
+  background: linear-gradient(to bottom, white 0%, #eee 47%);
+  color: #693a8a;
   border: 1px solid #ccc;
 }
-/* line 19, ../scss/mixin/_btnColor.scss */
+/* line 6, ../scss/mixin/_btnColor.scss */
 .btn-purple:hover {
-  transition: 0.6s;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #693a8a), color-stop(0, #9d6ac0));
   background: -webkit-linear-gradient(top, #9d6ac0 0%, #693a8a 47%);
   background: -moz-linear-gradient(top, #9d6ac0 0%, #693a8a 47%);
@@ -939,18 +934,18 @@ footer h6 {
 
 /* line 3, ../scss/mixin/_formColor.scss */
 .warning label {
-  color: #c19607;
+  color: #e3b108;
 }
 /* line 6, ../scss/mixin/_formColor.scss */
 .warning input,
 .warning select,
 .warning textarea {
   border: 1px solid #f2bc09;
-  color: #c19607;
+  color: #e3b108;
 }
 /* line 13, ../scss/mixin/_formColor.scss */
 .warning .msg {
-  color: #c19607;
+  color: #e3b108;
 }
 
 /* line 3, ../scss/mixin/_formColor.scss */
@@ -1041,33 +1036,46 @@ footer h6 {
 
 /* line 261, ../scss/_class.scss */
 .paging {
-  position: absolute;
+  position: relative;
   left: 10px;
   bottom: 7px;
   z-index: 1;
   letter-spacing: -1em;
 }
 /* line 267, ../scss/_class.scss */
+.paging .page-selected {
+  transition: 0.6s;
+  color: #fff;
+}
+/* line 272, ../scss/_class.scss */
 .paging .page {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
+  background: -webkit-linear-gradient(top, white 0%, #eee 47%);
+  background: -moz-linear-gradient(top, white 0%, #eee 47%);
+  background: -o-linear-gradient(top, white 0%, #eee 47%);
+  background: -ms-linear-gradient(top, white 0%, #eee 47%);
+  background: linear-gradient(to bottom, white 0%, #eee 47%);
   letter-spacing: 0;
   margin: 0;
-  border-bottom: 1px solid #fff;
   font-size: 0.75em;
   font-weight: bold;
-  padding: 2px 3px;
+  padding: 2px 6px;
   display: inline-block;
   min-width: 15px;
   text-align: center;
 }
-/* line 268, ../scss/_class.scss */
+/* line 274, ../scss/_class.scss */
 .paging .page:link, .paging .page:visited {
-  color: #fff;
+  color: #e3b108;
 }
-/* line 271, ../scss/_class.scss */
-.paging .page:hover {
-  color: #e1586b;
-}
-/* line 287, ../scss/_class.scss */
-.paging .page:hover {
-  background: #6f6f6f;
+/* line 288, ../scss/_class.scss */
+.paging .page:hover, .paging .page-selected {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #f2bc09), color-stop(0, #f9d868));
+  background: -webkit-linear-gradient(top, #f9d868 0%, #f2bc09 47%);
+  background: -moz-linear-gradient(top, #f9d868 0%, #f2bc09 47%);
+  background: -o-linear-gradient(top, #f9d868 0%, #f2bc09 47%);
+  background: -ms-linear-gradient(top, #f9d868 0%, #f2bc09 47%);
+  background: linear-gradient(to bottom, #f9d868 0%, #f2bc09 47%);
+  transition: 0;
+  color: #fff !important;
 }

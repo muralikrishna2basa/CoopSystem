@@ -8,7 +8,7 @@
     position: absolute;
 //    background: rgba(255,255,255,0.7);
     right: 5px;
-    top: 50px;
+    top: 55px;
     box-sizing: border-box;
     padding: 5px 0;
     display: none;
@@ -16,15 +16,17 @@
     width: 150px;
     font-size: 0.8em;
     text-align: center;
+    a{
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
-.logout-content a{
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-}
-.logout-content a:hover{
-    background: darken($bg-base-color, 10%);
-}
+// .logout-content a:hover{
+//     transition: $timer;
+// //    border-bottom: 1px solid $line-color;
+// //    background: darken($bg-base-color, 10%);
+// }
 
 .arrow-box {
     position: absolute;
@@ -32,7 +34,7 @@
     border: 1px solid $line-color;
     &:before, &:after{
         bottom: 100%;
-        left: 80%;
+        left: 85%;
         border: solid transparent;
         content: " ";
         height: 0;

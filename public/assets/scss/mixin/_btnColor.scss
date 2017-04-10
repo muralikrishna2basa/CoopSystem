@@ -1,32 +1,9 @@
 @mixin btnColor($color, $light)
 {
-//    background: #{$light};
-    $dark: darken($color, 5%);
-    $light: lighten($color, 20%);
-
-
-
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0.00, #fff));
-background: -webkit-linear-gradient(top, #fff 0%, #eee 47%);
-background: -moz-linear-gradient(top, #fff 0%, #eee 47%);
-background: -o-linear-gradient(top, #fff 0%, #eee 47%);
-background: -ms-linear-gradient(top, #fff 0%, #eee 47%);
-background: linear-gradient(to bottom, #fff 0%, #eee 47%);
-
-
-    color: lighten($color, 5%);
+    @include gradBtn(#eee);
+    color: $color;
     border: 1px solid $line-color;
     &:hover{
-        transition: $timer;
-
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, $color), color-stop(0.00, $light));
-            background: -webkit-linear-gradient(top, $light 0%, $color 47%);
-            background: -moz-linear-gradient(top, $light 0%, $color 47%);
-            background: -o-linear-gradient(top, $light 0%, $color 47%);
-            background: -ms-linear-gradient(top, $light 0%, $color 47%);
-            background: linear-gradient(to bottom, $light 0%, $color 47%);
-
+        @include gradBtn($color);
     }
-
-
 }

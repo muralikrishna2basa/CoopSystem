@@ -5,6 +5,7 @@ $timer: 0.6s;
 @import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
 
 @import "./mixin/_setPrefix.scss";
+@import "./mixin/_gradBtn.scss";
 
 @import "_colors.scss";
 
@@ -17,3 +18,4 @@ $timer: 0.6s;
 @import "_menu.scss";
 @import "_footer.scss";
 @import "_class.scss";
+

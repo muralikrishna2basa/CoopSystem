@@ -185,11 +185,14 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
 
         <?php if(isset($_POST['submit_month'])){ ?>
             <div class="tips">
-                <div class="tips-trigger">
+                <span>
                     <input type="file"    name="csv" id="csv">
+                </span>
+                <span class="tips-trigger">
                     <input type="hidden"  name="monthlyId" value="<?php echo $monthlyId ?>">
                     <button type="submit" name="submit_csv" class="btn btn-blue" onclick="return checkFile();" >商品リストを取り込む</button>
-                </div>
+                </span>
+
                 <div class="tips-target">
                     <p>ファイルを選択して取り込んでください。</p>
                     <p>CSV形式以外は対応しておりません。</p>

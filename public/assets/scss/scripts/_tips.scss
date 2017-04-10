@@ -4,9 +4,11 @@
     z-index: 1;
     .tips-trigger{
         cursor: help;
+        z-index: 1;
     }
     .tips-target{
         display: none;
+        z-index: 0;
     }
     .tips-content{
         padding: 10px 20px;
@@ -20,9 +22,10 @@
         color: $white;
         border: 1px solid darken($line-color, 50%);
         font-size: 0.9em;
-        top: 40px;
+        top: 60px;
         font-size: 0.8em;
-        animation: tips $timer forwards;
+        left: 0;
+//        animation: tips $timer forwards;
     }
 }
 

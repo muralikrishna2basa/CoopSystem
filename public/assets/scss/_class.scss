@@ -259,33 +259,35 @@
 }
 
 .paging{
-    position: absolute;
+    position: relative;
     left: 10px;
     bottom: 7px;
     z-index: 1;
     letter-spacing: -1em;
+    .page-selected{
+        transition: $timer;
+        color: $white;
+    }
+
     .page{
+        @include gradBtn(#eee);
         &:link, &:visited{
-            color: $white;
+            color: $text-yellow;
         }
-        &:hover{
-            color: lighten($red, 20%);
-        }
+
         letter-spacing: 0;
         margin: 0;
-        border-bottom: 1px solid $white;
-//        border-left: 1px solid $white;
-//        &:first-child{border-left: none}
-//        border-top: 1px solid $white;
         font-size: 0.75em;
         font-weight: bold;
-        padding: 2px 3px;
+        padding: 2px 6px;
         display: inline-block;
         min-width: 15px;
         text-align: center;
-//        box-sizing: border-box;
-        &:hover{
-            background: lighten($black, 30%);
-        }
+    }
+
+    .page:hover, .page-selected{
+        @include gradBtn($yellow);
+        transition: 0;
+        color: $white !important;
     }
 }

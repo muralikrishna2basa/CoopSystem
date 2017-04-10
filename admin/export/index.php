@@ -72,15 +72,16 @@ try {
                 <th>合計金額</th>
             </thead>
             <tbody>
-                <?php foreach($lists as $list){ ?>
+                <?php //foreach($lists as $list){ ?>
+                <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
-                    <td class="text-center"><p class="label" style="background: <?php echo $list['color'] ?>; color: <?php echo getFontColor($list['color']) ?>"><?php echo $list['category_name'] ?></p></td>
-                    <td class="text-left"  ><?php echo $list['goods_name'] ?></td>
-                    <td class="text-center"><?php echo $list['user_name'] ?></td>
-                    <td class="text-center"><?php echo $list['required_quantity'] ?>個</td>
-                    <td class="text-right" ><?php echo number_format(intval($list['unit_price'])) ?>円</td>
-                    <td class="text-center"><?php echo $list['ordering_quantity'] ?>個</td>
-                    <td class="text-right" ><?php echo number_format(intval($list['total'])) ?>円</td>
+                    <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
+                    <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
+                    <td class="text-center"><?php echo $lists[$i]['user_name'] ?></td>
+                    <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>
+                    <td class="text-right" ><?php echo number_format(intval($lists[$i]['unit_price'])) ?>円</td>
+                    <td class="text-center"><?php echo $lists[$i]['ordering_quantity'] ?>個</td>
+                    <td class="text-right" ><?php echo number_format(intval($lists[$i]['total'])) ?>円</td>
                 </tr>
                 <?php } ?>
             </tbody>

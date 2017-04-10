@@ -13,7 +13,10 @@
             <li><a href="<?php echo $URL ?>/admin/order">注文リストを修正する</a></li>
 -->
             <li><a href="<?php echo $URL ?>/admin/category" onclick="return checkEdit();">カテゴリを編集する</a></li>
-            <li><a href="<?php echo $URL ?>/public/assets/php/partial/logout.php" onclick="return checkEdit();">ログアウトする</a></li>
+            <li><a href="" onclick="return checkEdit();" class="logout-menu">ログアウトする</a></li>
+            <div class="logout-content arrow-box">
+                <a href="<?php echo $URL ?>/public/assets/php/partial/logout.php" onclick="return checkEdit();">ログアウト</a>
+            </div>
         </ul>
     </nav>
 </div>

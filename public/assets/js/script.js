@@ -18,6 +18,63 @@ function checkEdit()
     if(CNT > 0) return confirm("データは更新されませんが別のページに移動してよろしいですか？");
     return true;
 }
+
+function separate(num)
+{
+    return String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+}
+function getPrice(price)
+{
+    return price.replace(/,/g, '') * 1;
+}
+
+function setPrice(selector, sign)
+{
+    CNT++;
+    var trgPrice = selector.parent().attr('data-price');
+    var trgTotal = selector.parent().attr('data-total');
+    var trgNum   = selector.parent().attr('data-number');
+    var trgDisp  = selector.parent().attr('data-display');
+    var trgStock = selector.parent().attr('data-stock');
+    var num      = document.getElementById(trgNum).defaultValue * 1;
+    if(num + sign < 0) return;
+    var log =
+        'trgPrice:'+trgPrice+"\n"+
+        'trgTotal:'+trgTotal+"\n"+
+        'trgNum  :'+trgNum+"\n"+
+        'trgDisp :'+trgDisp
+    ;
+//    console.log(log);
+        // 在庫数の計算
+    if(trgStock !== void 0)
+    {
+        var stock        = $('#'+trgStock).html() * 1;
+        if(stock - sign < 0)
+        {
+            alert('これ以上在庫がありません。');
+            return false;
+        }
+        $('#'+trgStock).html(stock - sign);
+    }
+
+    // 現在の発注個数を取得してカウントアップ hidden要素に値をセット
+    num += sign;
+    document.getElementById(trgNum).defaultValue = num;
+
+    // 表示される個数を再計算
+    $('#'+trgDisp).html(num);
+
+    // 合計金額を再計算
+    if(trgPrice !== void 0)
+    {
+        // var price    = getPrice($('#'+trgPrice).html());
+        var unit     = getPrice($('#'+trgPrice).html());
+        var price    = getPrice($('#price_total').html());
+        price += sign * unit;
+        $('#'+trgTotal).html(separate(unit * num));
+        $('#price_total').html(separate(price));
+    }
+}
 $(function(){
     //sizing
     windowSizing();
@@ -99,7 +156,14 @@ $(function(){
     });
 
     // forms count
+//    $("input").on('change', 'input[type="hidden"]', function(){ CNT++; console.log('hidden'+CNT) })
+//    $("input").change(function(){ CNT++; console.log(CNT) })
     $("form").change(function(){ CNT++; console.log(CNT) })
+
+
+    $(".ordering-plus").click(function(e){  e.preventDefault(); setPrice($(this), 1) });
+    $(".ordering-minus").click(function(e){ e.preventDefault(); setPrice($(this), -1) });
+
 
 })
 

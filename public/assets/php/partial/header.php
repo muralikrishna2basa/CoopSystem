@@ -11,10 +11,7 @@
     </div>
 
     <div class="user-name">
-        <p class="<?php if(mb_strlen($userName) > 0) echo 'logout-menu' ?>"><?php echo $userName; ?></p>
+        <p><?php echo $userName; ?></p>
     </div>
 
-    <div class="logout-content arrow-box">
-        <a href="<?php echo $URL ?>/public/assets/php/partial/logout.php">ログアウト</a>
-    </div>
 </header>

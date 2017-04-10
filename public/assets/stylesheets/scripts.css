@@ -263,8 +263,8 @@
 /* line 7, ../scss/scripts/_logout.scss */
 .logout-content {
   position: absolute;
-  right: 5px;
-  top: 55px;
+  left: 5px;
+  bottom: -50px;
   box-sizing: border-box;
   padding: 5px 0;
   display: none;
@@ -293,7 +293,7 @@
 /* line 35, ../scss/scripts/_logout.scss */
 .arrow-box:before, .arrow-box:after {
   bottom: 100%;
-  left: 85%;
+  left: 15%;
   border: solid transparent;
   content: " ";
   height: 0;

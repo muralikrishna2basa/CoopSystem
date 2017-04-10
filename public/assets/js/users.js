@@ -62,4 +62,4 @@ $(function(){
 //         //     var price = getPrice($(this).html());
 //         //     $('#price_total').html(separate(total + price));
 //         // });
-    }
+    });

@@ -7,8 +7,8 @@
 .logout-content{
     position: absolute;
 //    background: rgba(255,255,255,0.7);
-    right: 5px;
-    top: 55px;
+    left: 5px;
+    bottom: -50px;
     box-sizing: border-box;
     padding: 5px 0;
     display: none;
@@ -34,7 +34,7 @@
     border: 1px solid $line-color;
     &:before, &:after{
         bottom: 100%;
-        left: 85%;
+        left: 15%;
         border: solid transparent;
         content: " ";
         height: 0;

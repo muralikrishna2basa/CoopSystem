@@ -22,6 +22,14 @@
             }
         }
     }
+    .logout{
+        position: absolute;
+        right: 5px;
+        bottom: 45px;
+        background: $white;
+        border: 1px solid $line-color;
+        padding: 5px 20px;
+    }
 }
 .menu-btn{
     position: absolute;

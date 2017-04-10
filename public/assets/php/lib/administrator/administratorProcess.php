@@ -48,7 +48,8 @@ function monthSelectionAndOrderCreation($monthlyId)
 //在庫リストを仮作成する関数
 //
 function stockListTemporaryCreating(){
-    $returnList = [];
+    $returnList   = [];
+    $monthlyGoods = [];
     try{
         $pdo  = connectDb('coop');
         $sql  = "SELECT COUNT(*) FROM monthly_goods;";

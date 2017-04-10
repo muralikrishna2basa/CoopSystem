@@ -18,7 +18,7 @@ if(count($_POST) > 0)
     {
         try {
             isInventoryListNewly($_POST);
-            header('location: ./');
+            header("location: ./?page={$_GET['page']}");
         } catch (Exception $e) {
             $errors[] = $e->getMessage();
 //        echo $e->getMessage();
@@ -27,12 +27,11 @@ if(count($_POST) > 0)
     if($_POST['btn'] == "delete"){
         try{
             deletingEmptystockList();
-            header('location: ./');
+            header("location: ./?page={$_GET['page']}");
         }catch (Exception $e) {
           $errors [] = $e->getMessage();
         }
     }
-    
 }
 try {
     $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
@@ -51,6 +50,7 @@ try {
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 

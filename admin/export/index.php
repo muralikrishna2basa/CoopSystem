@@ -48,6 +48,7 @@ try {
 <head>
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
@@ -76,7 +77,7 @@ try {
                 <?php //foreach($lists as $list){ ?>
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
-                    <td class=text-center""><?php echo $i ?></td>
+                    <td class="text-center"><?php echo $i ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['user_name'] ?></td>

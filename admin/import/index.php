@@ -42,6 +42,10 @@ try {
     $errors[] = $e->getMessage();
 }
 
+// for ($i=1; $i < 100; $i++) {
+//     $errors[] = $i;
+// }
+
 
 // option=selectedの調整
 

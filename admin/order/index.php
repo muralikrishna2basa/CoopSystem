@@ -6,7 +6,11 @@ require_once($PATH.'/public/assets/php/convertCsvFileToArray.php');
 require_once($PATH."/public/assets/php/lib/administrator/administratorProcess.php");
 require_once($PATH.'/public/assets/php/auth.php');
 $errors = [];
-$lists = orderListDisplay();
+try {
+    $lists = orderListDisplay();
+} catch (Exception $e) {
+    $errors[] = $e->getMessage();
+}
 
 // TODO: stock_quantity の取得 teshima -> kawanishi 2017/04/03
 ?>
@@ -17,6 +21,7 @@ $lists = orderListDisplay();
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 

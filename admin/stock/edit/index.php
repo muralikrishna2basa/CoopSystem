@@ -14,13 +14,25 @@ try {
 }
 if(count($_POST) > 0)
 {
-    try {
-        isInventoryListNewly($_POST);
-        header('location: ./');
-    } catch (Exception $e) {
-        $errors[] = $e->getMessage();
+    if($_POST['btn'] == "edit")
+    {
+        try {
+            isInventoryListNewly($_POST);
+            header('location: ./');
+        } catch (Exception $e) {
+            $errors[] = $e->getMessage();
 //        echo $e->getMessage();
     }
+    }
+    if($_POST['btn'] == "delete"){
+        try{
+            deletingEmptystockList();
+            header('location: ./');
+        }catch (Exception $e) {
+          $errors [] = $e->getMessage();
+        }
+    }
+    
 }
 try {
     $nowPage   = (isset($_GET['page'])) ? $_GET['page'] : 1;
@@ -97,7 +109,7 @@ try {
             <p class="text-right btn-group">
                 <button type="submit" name="btn" value="delete" class="btn btn-red tips-trigger">
                     <span>在庫がないものを削除する</span>
-                    <span class="tips-target">在庫数が0のものを削除します。定期的に処理してください。</span>
+                    <span class="tips-target">在庫数が0のものを削除します。定期的に処理してください。このボタンを押す前に一度隣の更新ボタンを押してください。</span>
                 </button>
                 <button type="submit" name="btn" value="edit"   class="btn btn-blue tips-trigger">
                     <span>在庫を更新する</span>

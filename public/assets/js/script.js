@@ -6,15 +6,9 @@ function windowSizing()
     var win = $(window).height();
     var siz = win - top - btm;
 
-//    console.log(win+' , '+top+' , '+btm+' , '+siz);
-//    $("body").css({paddingTop: top+'px', paddingBottom: btm+'px', minHeight: siz+'px'});
-//    $(".min-height").each(function(){ $(this).css({minHeight: siz+'px'}) });
-
     var trg  = $(".col-btn").attr("col-target");
     var btm  = $(window).height();
     var side = $(trg).innerWidth();
-//    console.log(side);
-//    $(".col-btn").css({top: (top)+"px", left: (side-35)+"px"});
     $(".col-btn").css({left: (side-35)+"px"});
 
 }
@@ -23,7 +17,7 @@ function checkEdit()
 {
     console.log('hidewww');
     if(CNT > 0) return confirm("データは更新されませんが別のページに移動してよろしいですか？");
-    return false;
+    return true;
 }
 $(function(){
     //sizing

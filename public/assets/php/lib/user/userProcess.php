@@ -501,11 +501,11 @@ function stockListFromPlacedEditDelete($userId,$editOrderGoodsList)
         ];
         if($orderGoodsList['initial_ordering_quantity'][$i]==0){
             $error = doOrder($userId,$array);
-            if(mb_strlen($error) > 0) $errorMessage[] = $error;
+            if(!empty($error)) $errorMessage[] = $error;
         }
         else{
             $error = currentMonthListFromPlacedEdit($userId,$array);
-            if(mb_strlen($error) > 0) $errorMessage[] = $error;
+            if(!empty($error)) $errorMessage[] = $error;
         }
     }
     return $errorMessage;

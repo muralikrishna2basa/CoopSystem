@@ -62,7 +62,8 @@ function testProductListAllDeleting(){
     * @test
     */
 function aa(){
-test();
+    $l[]=stockListTemporaryCreating();
+var_dump($l);
 }
 }
 ?>

@@ -207,9 +207,9 @@ function productListCreation($csvArray,$monthlyId){
     } catch (Exception $e) {
         throw $e;
     }
-    for($i = 1; $i < count($csvArray)-1; $i++){
+    for($i = 1; $i < count($csvArray); $i++){
         try{
-            $sql = "INSERT INTO  coopsystemdb.monthly_goods
+            $sql = "INSERT INTO  monthly_goods
                     VALUES (NULL,?,?,?,?,?,?,1);"
             ;
             $param = [
@@ -223,8 +223,8 @@ function productListCreation($csvArray,$monthlyId){
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute($param);
             if(!$res) throw new Exception("関数productListCreationで商品名:[".$csvArray[$i][0]."]のINSERT文実行時にエラーが発生しました。");
-//            var_dump($param);
-//            var_dump($sql);
+            // var_dump($param);
+            // var_dump($sql);
         }
         catch(Exception $e){
             deleteFaultList();
@@ -268,8 +268,7 @@ function productListEdit($productList){
                     goods_name=?,
                     unit_price=?,
                     required_quantity=?,
-                    category_id=?,
-                    coop_product_id=?
+                    category_id=?
                     WHERE monthly_goods_id=?;"
             ;
             $stmt  = $pdo->prepare($sql);
@@ -278,10 +277,11 @@ function productListEdit($productList){
                 $productList['unit_price'][$i],
                 $productList['required_quantity'][$i],
                 $productList['category_id'][$i],
-                $productList['coopProductId'][$i],
                 $productList['monthly_goods_id'][$i]];
             $res = $stmt->execute($param);
-            if(!$res) throw new Exception("関数productListEditで".$i."回目のUPDATE文実行時にエラーが発生しました。");
+            var_dump($param);
+            var_dump($sql);
+            if(!$res) throw new Exception("関数productListEditで".$i."回目[商品名".$productList['goods_name'][$i]."]のUPDATE文実行時にエラーが発生しました。");
         }
         catch(Exception $e){
             throw $e;

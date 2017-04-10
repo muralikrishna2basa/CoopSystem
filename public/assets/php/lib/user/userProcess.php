@@ -115,7 +115,8 @@ function returnCurrentMonthProductList($userId){
 
     try{
         $sql = "SELECT monthly_goods_id,goods_name,unit_price,required_quantity,category_name,color
-                FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category WHERE public_flag=1 ORDER BY category.category_id;"
+                FROM monthly_goods NATURAL JOIN monthly NATURAL JOIN category 
+                WHERE public_flag=1 AND fixed_flag = 0 ORDER BY category.category_id;"
         ;
         $stmt=$pdo->prepare($sql);
         $res= $stmt->execute(null);

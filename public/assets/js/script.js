@@ -1,3 +1,4 @@
+CNT = 0;
 function windowSizing()
 {
     var top = $("header").outerHeight();
@@ -18,6 +19,12 @@ function windowSizing()
 
 }
 
+function checkEdit()
+{
+    console.log('hidewww');
+    if(CNT > 0) return confirm("データは更新されませんが別のページに移動してよろしいですか？");
+    return false;
+}
 $(function(){
     //sizing
     windowSizing();
@@ -96,4 +103,9 @@ $(function(){
         $('.logout-content').show();
         return false;
     });
+
+    // forms count
+    $("form").change(function(){ CNT++; console.log(CNT) })
+
 })
+

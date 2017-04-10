@@ -50,7 +50,7 @@ try {
             break;
     }
     //priceTotalにＤＢ上にあるユーザーの注文金額の合計を表示
-    $sql = "SELECT SUM( unit_price * ordering_quantity ) 
+    $sql = "SELECT SUM( unit_price * ordering_quantity )
             FROM ordering_list
             INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
             INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
@@ -69,7 +69,7 @@ if(count($_POST) > 0){
     try {
         if($_POST['order'] == 1) $errors = currentMonthListFromOrderWhenNewlyDetermineWhether($_SESSION['USERID'], $_POST);
         if($_POST['order'] == 0) noOrder($_SESSION['USERID']);
-        if(count($errors) === 0) header('location: ./index.php');
+        if(count($errors) === 0) header('location: ./?page='.$_GET['page']);
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
     }
@@ -92,6 +92,7 @@ try {
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
@@ -171,7 +172,7 @@ try {
                 <?php } ?>
             </tbody>
         </table>
-        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
+        <?php setPages('./?', floor(count($lists) / $num), $nowPage) ?>
 
         <p class="text-right form-group btn-group">
             <?php if($fixed !== 1){ ?>

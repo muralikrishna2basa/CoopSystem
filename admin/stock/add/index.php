@@ -17,7 +17,7 @@ if(count($_POST) > 0)
 {
     try {
         isInventoryListNewly($_POST);
-        header('location: ./');
+        header('location: ./?id='.$_GET['page']);
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
 //        echo $e->getMessage();
@@ -41,6 +41,7 @@ try {
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/users.css">
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 

@@ -25,7 +25,7 @@ try{
     if(count($_POST) > 0)
     {
         fixOrder($_POST['monthly_id']);
-        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./?id=1";</script>';
+        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./?id='.$_GET['page'].'";</script>';
     }
 }catch (Exception $e){
     $errors[] = $e->getMessage();
@@ -45,6 +45,7 @@ try {
 <head>
     <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
+    <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
 <body>
 <?php include($PATH."/public/assets/php/partial/header.php"); ?>
@@ -76,10 +77,10 @@ try {
                     <td class="text-center"><?php echo $i ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
-                    <td class="text-left"><?php echo $lists[$i]['user_name'] ?></td>
+                    <td class="text-left"  ><?php echo $lists[$i]['user_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>
                     <td class="text-right" ><?php echo number_format(intval($lists[$i]['unit_price'])) ?>円</td>
-                    <td class="text-right"><?php echo $lists[$i]['ordering_quantity'] ?>個</td>
+                    <td class="text-right" ><?php echo $lists[$i]['ordering_quantity'] ?>個</td>
                     <td class="text-right" ><?php echo number_format(intval($lists[$i]['total'])) ?>円</td>
                 </tr>
                 <?php } ?>

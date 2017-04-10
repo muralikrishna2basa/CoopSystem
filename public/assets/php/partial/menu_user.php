@@ -2,7 +2,7 @@
     <h2 class="text-center">メニュー</h2>
     <nav>
         <ul>
-            <li><a href="<?php echo $URL ?>/user/order?id=1" onclick="return checkEdit();">商品を注文する</a></li>
+            <li><a href="<?php echo $URL ?>/user/order?page=1" onclick="return checkEdit();">商品を注文する</a></li>
             <li><a href="<?php echo $URL ?>/user/stock" onclick="return checkEdit();">在庫から注文する</a></li>
             <li><a href="<?php echo $URL ?>/user/history" onclick="return checkEdit();">履歴を確認する</a></li>
             <li><a href="" class="logout-menu">ログアウトする</a></li>

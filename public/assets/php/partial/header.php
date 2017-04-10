@@ -5,6 +5,7 @@
 ?>
 
 
+<div id="loader"></div>
 <header>
     <div class="container">
         <a href="" class="logo"></a>

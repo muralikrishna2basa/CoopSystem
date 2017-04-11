@@ -493,7 +493,7 @@ function getOrderListBeforeFixed($monthlyId)
                  INNER JOIN ordering_list ON ordering.ordering_id           = ordering_list.ordering_id
                  INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
                  INNER JOIN category      ON monthly_goods.category_id      = category.category_id
-                 WHERE ordering.monthly_id = ? ORDER BY monthly_goods.category_id ASC, monthly_goods.monthly_goods_id ASC, ordering.orderer ASC;"
+                 WHERE ordering.monthly_id = ? ORDER BY ordering.orderer ASC, monthly_goods.category_id ASC, monthly_goods.monthly_goods_id ASC;"
         ;
         $stmt = $pdo->prepare($sql);
         $res  = $stmt->execute([$monthlyId, ]);

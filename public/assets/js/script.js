@@ -170,7 +170,7 @@ $(function(){
     });
 
     // forms count
-    $("form").change(function(){ CNT++; console.log(CNT) })
+    $("form").change(function(){ CNT++; })
 
     // plus minus button
     $(".ordering-plus").click(function(e){  e.preventDefault(); setPrice($(this), 1) });

@@ -1,5 +1,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>生協商品管理システム</title>
 <link rel="icon" href="<?php echo $URL ?>/public/assets/favicon.ico">
 <link href="<?php echo $URL ?>/public/assets/stylesheets/style.css" rel="stylesheet" />
 <link href="<?php echo $URL ?>/public/assets/stylesheets/scripts.css" rel="stylesheet" />

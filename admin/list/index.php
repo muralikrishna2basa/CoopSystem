@@ -23,7 +23,6 @@ try{
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>
@@ -54,7 +53,7 @@ try{
                     <td class="text-center"><?php echo $list['total_monthly_ordering_quantity'] ?>個</td>
                     <td class="text-right"><?php echo number_format(intval($list['total_monthly_amount'])) ?>円</td>
                     <td class="text-center">
-                        <a href="./detail/?page=1&list=0&id=<?php echo $list['monthly_id'] ?>">詳細を見る</a>
+                        <a href="./detail/?list=0&id=<?php echo $list['monthly_id'] ?>&page=1">詳細を見る</a>
                     </td>
                 </tr>
                 <?php } ?>

@@ -37,7 +37,6 @@ if(count($_POST) > 0)
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
     <script src="<?php echo $URL ?>/public/assets/js/loading.js"></script>
 </head>

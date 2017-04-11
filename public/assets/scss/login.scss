@@ -10,6 +10,7 @@ $timer: 0.6s;
 @import "_colors.scss";
 
 $blur: 8px;
+$radius: 3px;
 #body-bg{
 //    background-image: url(../imgs/bg/spring_2.jpg);
     background-repeat: no-repeat;
@@ -45,9 +46,9 @@ $blur: 8px;
         z-index: 10;
         position: relative;
         width: 60%;
-        max-width: 700px;
+        max-width: 600px;
         background: rgba($white, 0.3);
-        @include setPrefix(border-radius, 2px);
+        @include setPrefix(border-radius, $radius);
         margin: auto;
         margin-top: 60px;
         padding: 0;
@@ -134,11 +135,19 @@ $blur: 8px;
         #login{
             width: 100%;
             @include setPrefix(border-radius, 0);
+            @include setPrefix(border-bottom-right-radius, $radius);
+            @include setPrefix(border-bottom-left-radius, $radius);
             border: none;
-            border-top: 1px solid darken($line-color, 20%);
-            border-bottom: 1px solid darken($line-color, 20%);
-            padding: 15px 0;
-            margin: 20px 0;
+            border-top: 1px solid darken($line-color, 10%);
+///            border-bottom: 1px solid darken($line-color, 20%);
+            padding: 20px 0;
+            margin: 0;
+            margin-top: 30px;
+            background: rgba($white, 0.5);
+            &:hover{
+                background: rgba($white, 0.3);
+                color: $red;
+            }
         }
 
 

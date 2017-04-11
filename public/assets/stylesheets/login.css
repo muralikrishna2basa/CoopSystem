@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
 @import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
 @import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
-/* line 13, ../scss/login.scss */
+/* line 14, ../scss/login.scss */
 #body-bg {
   background-repeat: no-repeat;
   background-position: center center;
@@ -9,7 +9,7 @@
   overflow: hidden;
   z-index: 0;
 }
-/* line 20, ../scss/login.scss */
+/* line 21, ../scss/login.scss */
 #body-bg:after {
   content: "";
   background: inherit;
@@ -27,7 +27,7 @@
   right: -8px;
   bottom: -8px;
 }
-/* line 34, ../scss/login.scss */
+/* line 35, ../scss/login.scss */
 #body-bg:before {
   content: "";
   background-color: rgba(255, 255, 255, 0.2);
@@ -37,29 +37,29 @@
   z-index: 1;
   top: 0;
 }
-/* line 44, ../scss/login.scss */
+/* line 45, ../scss/login.scss */
 #body-bg #login-content {
   z-index: 10;
   position: relative;
   width: 60%;
-  max-width: 700px;
+  max-width: 600px;
   background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
   margin: auto;
   margin-top: 60px;
   padding: 0;
   box-shadow: 0 0 5px rgba(34, 34, 34, 0.4);
 }
-/* line 57, ../scss/login.scss */
+/* line 58, ../scss/login.scss */
 #body-bg #login-content section {
   width: 100%;
   padding-top: 20px;
 }
-/* line 60, ../scss/login.scss */
+/* line 61, ../scss/login.scss */
 #body-bg #login-content section .icon {
   width: 78px;
   height: 50px;
@@ -70,22 +70,22 @@
   background-size: 100%;
   vertical-align: middle;
 }
-/* line 70, ../scss/login.scss */
+/* line 71, ../scss/login.scss */
 #body-bg #login-content section h2 {
   margin: 0;
   margin-bottom: 20px;
   vertical-align: middle;
 }
-/* line 77, ../scss/login.scss */
+/* line 78, ../scss/login.scss */
 #body-bg #login-content .form-group {
   margin: 0;
 }
-/* line 81, ../scss/login.scss */
+/* line 82, ../scss/login.scss */
 #body-bg #login-content #name,
 #body-bg #login-content #pass {
   position: relative;
 }
-/* line 85, ../scss/login.scss */
+/* line 86, ../scss/login.scss */
 #body-bg #login-content #name input,
 #body-bg #login-content #pass input {
   background: rgba(255, 255, 255, 0.4);
@@ -101,18 +101,18 @@
   border-top: 1px solid #999999;
   border-bottom: 1px solid #999999;
 }
-/* line 96, ../scss/login.scss */
+/* line 97, ../scss/login.scss */
 #body-bg #login-content #name input:-webkit-autofill,
 #body-bg #login-content #pass input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   color: #fff;
 }
-/* line 101, ../scss/login.scss */
+/* line 102, ../scss/login.scss */
 #body-bg #login-content #name .msg,
 #body-bg #login-content #pass .msg {
   color: #b32034;
 }
-/* line 105, ../scss/login.scss */
+/* line 106, ../scss/login.scss */
 #body-bg #login-content #name:before,
 #body-bg #login-content #pass:before {
   content: "";
@@ -125,24 +125,24 @@
   height: 20px;
   width: 20px;
 }
-/* line 118, ../scss/login.scss */
+/* line 119, ../scss/login.scss */
 #body-bg #login-content #name:before {
   background-image: url(../imgs/user_1.png);
 }
-/* line 121, ../scss/login.scss */
+/* line 122, ../scss/login.scss */
 #body-bg #login-content #name input {
   border-top: 1px solid #999999;
   border-bottom: 1px solid #999999;
 }
-/* line 127, ../scss/login.scss */
+/* line 128, ../scss/login.scss */
 #body-bg #login-content #pass:before {
   background-image: url(../imgs/key_1.png);
 }
-/* line 130, ../scss/login.scss */
+/* line 131, ../scss/login.scss */
 #body-bg #login-content #pass input {
   border-bottom: 1px solid #999999;
 }
-/* line 134, ../scss/login.scss */
+/* line 135, ../scss/login.scss */
 #body-bg #login-content #login {
   width: 100%;
   border-radius: 0;
@@ -150,9 +150,25 @@
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
+  border-bottom-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-bottom-right-radius: 3px;
+  -ms-border-bottom-right-radius: 3px;
+  -o-border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-bottom-left-radius: 3px;
+  -ms-border-bottom-left-radius: 3px;
+  -o-border-bottom-left-radius: 3px;
   border: none;
-  border-top: 1px solid #999999;
-  border-bottom: 1px solid #999999;
-  padding: 15px 0;
-  margin: 20px 0;
+  border-top: 1px solid #b3b3b3;
+  padding: 20px 0;
+  margin: 0;
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.5);
+}
+/* line 147, ../scss/login.scss */
+#body-bg #login-content #login:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #b32034;
 }

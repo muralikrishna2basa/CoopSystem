@@ -125,7 +125,6 @@ if(count($_FILES) > 0 && is_uploaded_file($_FILES['csv']['tmp_name']) && isset($
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CoopSystem</title>
     <?php include($PATH."/public/assets/php/partial/head.php"); ?>
 </head>
 <body>

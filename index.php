@@ -1,7 +1,7 @@
 <?php
-include     ('../public/assets/php/partial/require_common.php');
+include     ('./public/assets/php/partial/require_common.php');
 
-require_once('../public/assets/php/auth.php');
+require_once($PATH.'/public/assets/php/auth.php');
 $msg    = ['loginid'=>'', 'password'=>''];
 $errors = [];
 //    var_dump($_POST);
@@ -12,7 +12,7 @@ if(isset($_POST) && count($_POST) > 0){
         echo 'success:goto admin';
         $_SESSION['USERID']    = -1;
         $_SESSION['USER_NAME'] = 'システム管理者';
-        header('location: ../admin/month');
+        header('location: ./admin/month');
         exit();
     }
     try {
@@ -58,7 +58,7 @@ if(isset($_POST) && count($_POST) > 0){
             // セッション変数にユーザー情報を格納する
             $_SESSION['USERID']    = intval($user['userid']);
             $_SESSION['USER_NAME'] = $user['userName'];
-            header('location: ../user/order/?page=1');
+            header('location: ./user/order/?page=1');
 
         } catch (Exception $e) {
             $errors[] = $e->Getmessage();
@@ -96,7 +96,7 @@ $(function(){
 </script>
 </head>
 <body id="body-bg">
-<?php include("../public/assets/php/partial/header.php"); ?>
+<?php include("{$PATH}/public/assets/php/partial/header.php"); ?>
 
 <div class="container flex" id="login-content">
     <section>
@@ -126,6 +126,6 @@ $(function(){
     <?php errorMessages($errors) ?>
 </div>
 
-<?php include("../public/assets/php/partial/footer.php"); ?>
+<?php include("{$PATH}/public/assets/php/partial/footer.php"); ?>
 </body>
 </html>

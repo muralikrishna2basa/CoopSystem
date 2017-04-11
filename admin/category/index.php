@@ -54,6 +54,7 @@ if(count($_POST) > 0)
         <h2>
             <span>カテゴリを編集する</span>
         </h2>
+        <p class="text-right">IEのかたは<a href="http://www.colordic.org/" target="_blank"><strong>こちら</strong></a>からカラーコードをコピーして貼り付けてください。</p>
         <form method="post">
             <table class="border-bottom table-hover">
                 <thead>

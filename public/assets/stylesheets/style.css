@@ -641,10 +641,10 @@ footer h6 {
 /* line 62, ../scss/_class.scss */
 .btn-group .btn {
   margin: 0;
-}
-/* line 65, ../scss/_class.scss */
-.btn-group .btn:not(:last-child):not(:first-child) {
   letter-spacing: 0;
+}
+/* line 66, ../scss/_class.scss */
+.btn-group .btn:not(:last-child):not(:first-child) {
   border-radius: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -652,7 +652,7 @@ footer h6 {
   -o-border-radius: 0;
   border-right: none;
 }
-/* line 71, ../scss/_class.scss */
+/* line 72, ../scss/_class.scss */
 .btn-group .btn:first-child {
   border-top-right-radius: 0;
   -webkit-border-top-right-radius: 0;
@@ -666,7 +666,7 @@ footer h6 {
   -o-border-bottom-right-radius: 0;
   border-right: none;
 }
-/* line 76, ../scss/_class.scss */
+/* line 77, ../scss/_class.scss */
 .btn-group .btn:last-child {
   border-top-left-radius: 0;
   -webkit-border-top-left-radius: 0;
@@ -680,7 +680,7 @@ footer h6 {
   -o-border-bottom-left-radius: 0;
   border-right: 1px solid #ccc;
 }
-/* line 81, ../scss/_class.scss */
+/* line 82, ../scss/_class.scss */
 .btn-group .btn:only-child {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -690,14 +690,14 @@ footer h6 {
   border: 1px solid #ccc !important;
 }
 
-/* line 86, ../scss/_class.scss */
+/* line 87, ../scss/_class.scss */
 .btn-sm {
   padding: 2px 5px;
   font-size: 0.75em;
   min-width: 20px;
 }
 
-/* line 91, ../scss/_class.scss */
+/* line 92, ../scss/_class.scss */
 .block {
   display: block;
   width: 100%;
@@ -705,12 +705,12 @@ footer h6 {
   text-align: center;
 }
 
-/* line 97, ../scss/_class.scss */
+/* line 98, ../scss/_class.scss */
 .inline {
   display: inline-block;
 }
 
-/* line 101, ../scss/_class.scss */
+/* line 102, ../scss/_class.scss */
 .btn-blue {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -731,7 +731,7 @@ footer h6 {
   background: linear-gradient(to bottom, #5d89d0 0%, #2d579a 47%);
 }
 
-/* line 104, ../scss/_class.scss */
+/* line 105, ../scss/_class.scss */
 .btn-red {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -752,7 +752,7 @@ footer h6 {
   background: linear-gradient(to bottom, #e1586b 0%, #b32034 47%);
 }
 
-/* line 107, ../scss/_class.scss */
+/* line 108, ../scss/_class.scss */
 .btn-yellow {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -773,7 +773,7 @@ footer h6 {
   background: linear-gradient(to bottom, #f9d868 0%, #f2bc09 47%);
 }
 
-/* line 110, ../scss/_class.scss */
+/* line 111, ../scss/_class.scss */
 .btn-green {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -794,7 +794,7 @@ footer h6 {
   background: linear-gradient(to bottom, #c5e351 0%, #93b11d 47%);
 }
 
-/* line 113, ../scss/_class.scss */
+/* line 114, ../scss/_class.scss */
 .btn-purple {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -815,7 +815,7 @@ footer h6 {
   background: linear-gradient(to bottom, #9d6ac0 0%, #693a8a 47%);
 }
 
-/* line 117, ../scss/_class.scss */
+/* line 118, ../scss/_class.scss */
 .bg-blue,
 .bg-red,
 .bg-yellow,
@@ -824,138 +824,138 @@ footer h6 {
   color: #fff;
 }
 
-/* line 126, ../scss/_class.scss */
+/* line 127, ../scss/_class.scss */
 .bg-blue {
   background: #2d579a !important;
 }
 
-/* line 129, ../scss/_class.scss */
+/* line 130, ../scss/_class.scss */
 .bg-red {
   background: #b32034 !important;
 }
 
-/* line 132, ../scss/_class.scss */
+/* line 133, ../scss/_class.scss */
 .bg-yellow {
   background: #f2bc09 !important;
 }
 
-/* line 135, ../scss/_class.scss */
+/* line 136, ../scss/_class.scss */
 .bg-green {
   background: #93b11d !important;
 }
 
-/* line 138, ../scss/_class.scss */
+/* line 139, ../scss/_class.scss */
 .bg-purple {
   background: #693a8a !important;
 }
 
-/* line 141, ../scss/_class.scss */
+/* line 142, ../scss/_class.scss */
 .bg-glay {
   background: #e3e3e3;
 }
 
-/* line 144, ../scss/_class.scss */
+/* line 145, ../scss/_class.scss */
 .bg-white {
   background: #fff;
 }
 
-/* line 147, ../scss/_class.scss */
+/* line 148, ../scss/_class.scss */
 .text-red {
   color: #c9243a;
 }
 
-/* line 151, ../scss/_class.scss */
+/* line 152, ../scss/_class.scss */
 .text-green {
   color: #819b19;
 }
 
-/* line 154, ../scss/_class.scss */
+/* line 155, ../scss/_class.scss */
 .text-blue {
   color: #3362ae;
 }
 
-/* line 157, ../scss/_class.scss */
+/* line 158, ../scss/_class.scss */
 .text-yellow {
   color: #d9a908;
 }
 
-/* line 160, ../scss/_class.scss */
+/* line 161, ../scss/_class.scss */
 .text-purple {
   color: #9158b9;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-1 {
   opacity: 0.1;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-2 {
   opacity: 0.2;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-3 {
   opacity: 0.3;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-4 {
   opacity: 0.4;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-5 {
   opacity: 0.5;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-6 {
   opacity: 0.6;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-7 {
   opacity: 0.7;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-8 {
   opacity: 0.8;
 }
 
-/* line 165, ../scss/_class.scss */
+/* line 166, ../scss/_class.scss */
 .opacity-9 {
   opacity: 0.9;
 }
 
-/* line 168, ../scss/_class.scss */
+/* line 169, ../scss/_class.scss */
 .form-group {
   box-sizing: border-box;
 }
-/* line 170, ../scss/_class.scss */
+/* line 171, ../scss/_class.scss */
 .form-group label, .form-group .msg {
   display: block;
   font-size: 0.8em;
 }
-/* line 174, ../scss/_class.scss */
+/* line 175, ../scss/_class.scss */
 .form-group input, .form-group select, .form-group textarea {
   width: 100%;
 }
 
-/* line 181, ../scss/_class.scss */
+/* line 182, ../scss/_class.scss */
 .form-trans input, .form-trans select, .form-trans textarea {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* line 190, ../scss/_class.scss */
+/* line 191, ../scss/_class.scss */
 .radio label,
 .checkbox label {
   display: block;
   cursor: pointer;
   vertical-align: middle;
 }
-/* line 194, ../scss/_class.scss */
+/* line 195, ../scss/_class.scss */
 .radio label input[type="checkbox"],
 .radio label input[type="radio"],
 .checkbox label input[type="checkbox"],
@@ -966,11 +966,11 @@ footer h6 {
   margin: 0;
 }
 
-/* line 206, ../scss/_class.scss */
+/* line 207, ../scss/_class.scss */
 .form-group-inline label {
   display: inline-block;
 }
-/* line 209, ../scss/_class.scss */
+/* line 210, ../scss/_class.scss */
 .form-group-inline input, .form-group-inline select, .form-group-inline textarea {
   width: auto;
 }
@@ -1023,17 +1023,17 @@ footer h6 {
   color: #881827;
 }
 
-/* line 225, ../scss/_class.scss */
+/* line 226, ../scss/_class.scss */
 .border-left {
   border-left: 1px solid #ccc;
 }
 
-/* line 229, ../scss/_class.scss */
+/* line 230, ../scss/_class.scss */
 .border-right {
   border-right: 1px solid #ccc;
 }
 
-/* line 233, ../scss/_class.scss */
+/* line 234, ../scss/_class.scss */
 .label {
   color: #fff;
   display: inline-block;
@@ -1049,7 +1049,7 @@ footer h6 {
   min-width: 50px;
 }
 
-/* line 245, ../scss/_class.scss */
+/* line 246, ../scss/_class.scss */
 .border-radius {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -1059,7 +1059,7 @@ footer h6 {
   -o-border-radius: 5px;
 }
 
-/* line 250, ../scss/_class.scss */
+/* line 251, ../scss/_class.scss */
 .has-error {
   border: 1px solid #d92d44;
   border-radius: 5px;
@@ -1070,14 +1070,14 @@ footer h6 {
   background: #f1aeb7;
 }
 
-/* line 256, ../scss/_class.scss */
+/* line 257, ../scss/_class.scss */
 .scroll {
   height: calc(100vh - 100px);
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* line 262, ../scss/_class.scss */
+/* line 263, ../scss/_class.scss */
 .paging {
   position: relative;
   left: 5px;
@@ -1086,12 +1086,12 @@ footer h6 {
   letter-spacing: -1em;
   padding: 5px 0;
 }
-/* line 269, ../scss/_class.scss */
+/* line 270, ../scss/_class.scss */
 .paging .page-selected {
   transition: 0.6s;
   color: #fff;
 }
-/* line 274, ../scss/_class.scss */
+/* line 275, ../scss/_class.scss */
 .paging .page {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -1108,11 +1108,11 @@ footer h6 {
   min-width: 15px;
   text-align: center;
 }
-/* line 276, ../scss/_class.scss */
+/* line 277, ../scss/_class.scss */
 .paging .page:link, .paging .page:visited {
   color: #e3b108;
 }
-/* line 290, ../scss/_class.scss */
+/* line 291, ../scss/_class.scss */
 .paging .page:hover, .paging .page-selected {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #f2bc09), color-stop(0, #f9d868));
   background: -webkit-linear-gradient(top, #f9d868 0%, #f2bc09 47%);

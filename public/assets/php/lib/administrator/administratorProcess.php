@@ -565,5 +565,83 @@ function deleteFaultList(){
         throw $e;
     }
 }
+//確定時商品ＩＤ（商品名）ごとに個数を集計する関数
+function orderAggregate($monthlyId)
+{
+  try{
+        $pdo  = connectDb('cooopshinren');
+        $sql = "SELECT  ordering_list.monthly_goods_id, category_name,color,goods_name,unit_price,
+                SUM(ordering_quantity) AS total_ordering_quantity ,(unit_price*SUM(ordering_quantity)) AS total_amount
+                FROM  ordering_list
+                INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+                INNER JOIN category ON monthly_goods.category_id = category.category_id
+                INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
+                WHERE ordering.monthly_id = ?
+                GROUP BY ordering_list.monthly_goods_id
+                ORDER BY ordering_list.monthly_goods_id ASC ,category.category_id;";
+        $stmt=$pdo->prepare($sql);
+        $res  = $stmt->execute([$monthlyId, ]);
+        if(!$res) throw new Exception("関数orderAggregateでSELECT実行時にエラーが発生しました。"); 
+         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $orderAggregate[] =$row;
+            }
+            return $orderAggregate;
+    }catch(Exception $e){
+        throw $e;
+    }
+}
+//月別の総数と送金額を表示する関数
+function monthlySum(){
+    try{
+
+        $totalMonthlyAmount = 0;
+        $pdo  = connectDb('cooopshinren');
+        $sql = "SELECT  ordering.monthly_id,date,
+                SUM(ordering_quantity) AS total_monthly_ordering_quantity
+                FROM  ordering_list
+                INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+                INNER JOIN category ON monthly_goods.category_id = category.category_id
+                INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
+                GROUP BY ordering.monthly_id
+                ORDER BY ordering_list.monthly_goods_id ASC ,category.category_id;";
+        $stmt=$pdo->prepare($sql);
+        $res  = $stmt->execute();
+        if(!$res) throw new Exception("関数monthlySumでSELECT実行時にエラーが発生しました。"); 
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $monthlySum[] =$row;
+            }
+            for($i=0;$i<count($monthlySum);$i++)
+            {
+                $amount = [];
+                $sumAmount=0;
+                $sql = "SELECT  (unit_price*SUM(ordering_quantity)) AS total_amount
+                FROM  ordering_list
+                INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+                INNER JOIN category ON monthly_goods.category_id = category.category_id
+                INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
+                WHERE ordering.monthly_id = ?
+                GROUP BY ordering_list.monthly_goods_id
+                ORDER BY ordering_list.monthly_goods_id ASC ,category.category_id;";
+                $stmt=$pdo->prepare($sql);
+                $res  = $stmt->execute([$monthlySum[$i]['monthly_id'], ]);
+                if(!$res) throw new Exception("関数monthlySumでSELECT実行時にエラーが発生しました。"); 
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
+                {
+                $amount[] =$row;
+                }
+                for($j=0;$j<count($amount);$j++){
+                 $sumAmount=$sumAmount+$amount[$j]['total_amount'];
+                }
+                $monthlySum[$i]['total_monthly_amount"'] =$sumAmount;
+
+            }
+        return $monthlySum;
+    }catch(Exception $e){
+         throw $e;
+    }
+}
 
     ?>

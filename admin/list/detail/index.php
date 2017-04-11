@@ -11,9 +11,9 @@ $monthlyId = '';
 $date      = '';
 try{
     $pdo  = connectDb('coop');
-    $sql  = "SELECT MIN(monthly_id) AS monthly_id, date FROM monthly WHERE fixed_flag = 0;";
+    $sql  = "SELECT monthly_id,date FROM monthly WHERE monthly_id = ?;";
     $stmt = $pdo->prepare($sql);
-    $res  = $stmt->execute(null);
+    $res  = $stmt->execute([$_GET['id']]);
     if(!$res) throw new Exception("monthly_id取得時にエラーが発生しました。");
 
     $row       = $stmt->fetch();
@@ -63,6 +63,7 @@ try {
         <h2><?php echo date('Y年n月', strtotime($date)) ?>分の詳細</h2>
         <form action="" method="get">
         <input type="hidden" name="page" value="1">
+        <input type="hidden" name="id" value=<?php echo $monthlyId ?>>
         <?php if($_GET['list']==0) {?>
             <input type="hidden" name="list" value="1">
             <button type="" class="btn btn-green tips-trigger" onclick="location.">
@@ -72,7 +73,7 @@ try {
         <?php } ?>
         <?php if($_GET['list']==1) {?>
             <input type="hidden" name="list" value="0">
-            <button type="" class="btn btn-green tips-trigger" name="submit" value="1">
+            <button type="" class="btn btn-green tips-trigger">
             <span>商品名でソート</span>
             <span class="tips-target">商品名でソートします。</span>
             </button>
@@ -105,7 +106,7 @@ try {
             <?php if($_GET['list']==0) {?>
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
-                    <td class="text-center"><?php echo $i ?></td>
+                    <td class="text-center"><?php echo $i+1 ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>
@@ -118,7 +119,7 @@ try {
                 <?php if($_GET['list']==1) {?>
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
-                    <td class="text-center"><?php echo $i ?></td>
+                    <td class="text-center"><?php echo $i+1 ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>
@@ -132,10 +133,10 @@ try {
             </tbody>
         </table>
         <?php if($_GET['list']==0) {?>
-        <?php setPages('./?list=0&', floor(count($lists) / $num), $nowPage) ?>
+        <?php setPages('./?list=0&id='.$monthlyId.'&', floor(count($lists) / $num), $nowPage) ?>
         <?php } ?>
         <?php if($_GET['list']==1) {?>
-        <?php setPages('./?list=1&', floor(count($lists) / $num), $nowPage) ?>
+        <?php setPages('./?list=1&id='.$monthlyId.'&', floor(count($lists) / $num), $nowPage) ?>
         <?php } ?>
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">

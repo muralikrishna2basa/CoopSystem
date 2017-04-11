@@ -121,7 +121,7 @@ try {
                 <?php //foreach ($lists as $list){ ?>
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <tr>
-                    <td class="text-center"><?php echo $i ?></td>
+                    <td class="text-center"><?php echo $i+1 ?></td>
                     <td class="text-center">
                         <p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>;">
                             <?php echo $lists[$i]['category_name'] ?>

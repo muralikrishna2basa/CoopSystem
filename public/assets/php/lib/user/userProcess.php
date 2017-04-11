@@ -318,7 +318,7 @@ function doOrder($userId,$orderGoodsList){
 function doOrderStock($userId,$newOrderGoodsList){
     $functionName = 'doOrderStock';
     $errorMessage = array();
-    $ordering_id = ''; // TODO: $renのリネーム kawanishi 2017/04/04
+    $ordering_id = ''; 
     try{
         $pdo  = connectDb('cooopshinren');
         $sql  = "SELECT ordering_id FROM ordering NATURAL JOIN monthly WHERE public_flag = 1 AND orderer =?;";

@@ -21,6 +21,7 @@ try{
     $date      = $row['date'];
 
     $lists = orderAggregate($monthlyId);
+    
 
     if(count($_POST) > 0)
     {
@@ -74,7 +75,7 @@ try {
                 <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                 <?php //foreach($lists as $list){ ?>
                 <tr>
-                    <td class="text-center"><?php echo $i ?></td>
+                    <td class="text-center"><?php echo $i+1 ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>

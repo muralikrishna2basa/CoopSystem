@@ -97,7 +97,7 @@ try {
                     <?php //foreach ($lists as $list){ ?>
                     <?php for($i = $page; $i < ($maxPage); $i++){ ?>
                     <tr>
-                        <td class="text-center"><?php echo $i ?></td>
+                        <td class="text-center"><?php echo $i+1 ?></td>
                         <td>
                             <input type="hidden" name="monthly_goods_id[]" value="<?php echo $lists[$i]['monthly_goods_id'] ?>">
                             <input type="hidden" name="monthly_id[]"       value="<?php echo $lists[$i]['monthly_id'] ?>">

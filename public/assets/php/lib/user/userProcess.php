@@ -179,6 +179,7 @@ function returnStockList($userId,$monthlyId = 0){
     $functionName = 'returnStockList';
     $order_flag   = []; 
     $stockList = [];
+    $currentMonthList = [];
     try{
         $pdo = connectDb('cooopshinren');
         $sql = "SELECT order_flag FROM ordering WHERE orderer= ?";
@@ -211,7 +212,7 @@ function returnStockList($userId,$monthlyId = 0){
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
                     INNER JOIN category ON monthly_goods.category_id = category.category_id
-                    WHERE stock_list.monthly_id =? ORDER BY category.category_id ASC ,coop_product_id ASC;"
+                    WHERE stock_list.monthly_id =?;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute(array($monthlyId)); // TODO: monthly_idの削除 kawanishi 2017/04/03
@@ -232,7 +233,7 @@ function returnStockList($userId,$monthlyId = 0){
         $stockList[$i][7]                   = 0;
     }
 
-    if($order_flag != 3) return $stockList; 
+    //if($order_flag != 3) return $stockList; 
 
     try{
         $sql = "SELECT
@@ -242,7 +243,7 @@ function returnStockList($userId,$monthlyId = 0){
                 INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
                 INNER JOIN category ON monthly_goods.category_id = category.category_id
                 INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
-                WHERE ordering.orderer = ?;"
+                WHERE ordering.orderer = ? AND fixed_flag = 0;"
 //                WHERE ordering.orderer = ? AND monthly.public_flag=1;"
         ;
         $stmt=$pdo->prepare($sql);
@@ -253,12 +254,12 @@ function returnStockList($userId,$monthlyId = 0){
             $currentMonthList[] =$row;
         }
 
-
         for ($i=0; $i < count($stockList); $i++) {
             for ($j=0; $j < count($currentMonthList); $j++) {
                 if($stockList[$i]['monthly_goods_id']==$currentMonthList[$j]['monthly_goods_id']){
                     $stockList[$i]['ordering_quantity'] = $currentMonthList[$j][1];
                     $stockList[$i][7]                   = $currentMonthList[$j][1];
+
                 }
            }
         }

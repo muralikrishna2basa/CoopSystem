@@ -571,6 +571,7 @@ function deleteFaultList(){
 function orderAggregate($monthlyId)
 {
   try{
+        $orderAggregate=[];
         $pdo  = connectDb('cooopshinren');
         $sql = "SELECT  ordering_list.monthly_goods_id, category_name,color,goods_name,unit_price,
                 SUM(ordering_quantity) AS total_ordering_quantity ,(unit_price*SUM(ordering_quantity)) AS total_amount,required_quantity
@@ -597,7 +598,7 @@ function orderAggregate($monthlyId)
 // @return [array] [月別ＩＤ(monthly_id),年月(date),総数(total_monthly_ordering_quantity),総金額(total_amount)]
 function monthlySum(){
     try{
-
+        $monthlySum=[];
         $totalMonthlyAmount = 0;
         $pdo  = connectDb('cooopshinren');
         $sql = "SELECT  ordering.monthly_id,date,

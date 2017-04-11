@@ -25,7 +25,7 @@ try{
     if(count($_POST) > 0)
     {
         fixOrder($_POST['monthly_id']);
-        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./?id='.$_GET['page'].'";</script>';
+        echo '<script type="text/javascript">alert("確定が完了しました。"); window.location.href ="./?page='.$_GET['page'].'";</script>';
     }
 }catch (Exception $e){
     $errors[] = $e->getMessage();
@@ -86,7 +86,7 @@ try {
                 <?php } ?>
             </tbody>
         </table>
-        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
+        <?php setPages('./?', floor(count($lists) / $num), $nowPage) ?>
 
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">

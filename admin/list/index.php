@@ -54,7 +54,7 @@ try{
                     <td class="text-center"><?php echo $list['total_monthly_ordering_quantity'] ?>個</td>
                     <td class="text-right"><?php echo number_format(intval($list['total_monthly_amount'])) ?>円</td>
                     <td class="text-center">
-                        <a href="./detail/?page=1">詳細を見る</a>
+                        <a href="./detail/?page=1&list=0">詳細を見る</a>
                     </td>
                 </tr>
                 <?php } ?>

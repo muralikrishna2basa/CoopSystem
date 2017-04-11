@@ -4,13 +4,13 @@ function getPagenation($lists, $pageNumber = 1, $num = 50)
     try {
         $tmp     = ($pageNumber-1);
         if($tmp < 0) $tmp = 0;
-        $page    = $tmp * $num + 1;
-        if($page <= 0) $page = 1;
+        $page    = $tmp * $num;
+        if($page <= 0) $page = 0;
         $maxPage = $page + $num;
 
         if($maxPage > count($lists))
         {
-            $page    = (floor(count($lists) / $num) * $num) + 1;
+            $page    = (floor(count($lists) / $num) * $num);
             $maxPage = count($lists);
         }
 

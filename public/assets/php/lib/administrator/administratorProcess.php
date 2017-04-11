@@ -566,13 +566,13 @@ function deleteFaultList(){
     }
 }
 //確定時商品ＩＤ（商品名）ごとに個数を集計する関数
-// @return [array] [月別商品ID（monthly_goods_id）,商品名（goods_name）,単価（unit_price）, カテゴリ名（category_name）,色（color）,発注数（ordering_quantity）, 個数の合計(total_ordering_quantity),金額の合計(total_amount)]
+// @return [array] [月別商品ID（monthly_goods_id）,商品名（goods_name）,単価（unit_price）, カテゴリ名（category_name）,色（color）,発注数（ordering_quantity）, 個数の合計(total_ordering_quantity),金額の合計(total_amount),必要数(required_quantity)]
 function orderAggregate($monthlyId)
 {
   try{
         $pdo  = connectDb('cooopshinren');
         $sql = "SELECT  ordering_list.monthly_goods_id, category_name,color,goods_name,unit_price,
-                SUM(ordering_quantity) AS total_ordering_quantity ,(unit_price*SUM(ordering_quantity)) AS total_amount
+                SUM(ordering_quantity) AS total_ordering_quantity ,(unit_price*SUM(ordering_quantity)) AS total_amount,required_quantity
                 FROM  ordering_list
                 INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
                 INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id

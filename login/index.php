@@ -72,39 +72,38 @@ if(isset($_POST) && count($_POST) > 0){
 <html>
 <head>
     <title>ログイン画面</title>
-    <?php include("../public/assets/php/partial/head.php"); ?>
+    <?php include("{$PATH}/public/assets/php/partial/head.php"); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/login.css">
 </head>
-<body>
+<body id="body-bg">
 <?php include("../public/assets/php/partial/header.php"); ?>
 
-<div class="container flex">
-    <div class="col-3"></div>
-    <div class="col-6">
-        <section class="container">
-            <h2>ログイン画面</h2>
-            <form method="post">
-                <p class="form-group <?php if(mb_strlen($msg['loginid']) > 0) echo 'danger' ?>">
-                    <label>UserName</label>
-                    <input type="text" name="loginid" placeholder="ユーザー名を入力してください" value="<?php if(isset($_POST['loginid'])) echo $_POST['loginid'] ?>">
-                    <span class="msg"><?php echo $msg['loginid']; ?></span>
-                </p>
+<div class="container flex" id="login-content">
+    <section>
+        <h2 class="text-center"><span class="icon"></span>ログイン</h2>
 
-                <p class="form-group <?php if(mb_strlen($msg['password']) > 0) echo 'danger' ?>">
-                    <label>Password</label>
-                    <input type="password" name="password" placeholder="パスワードを入力してください">
-                    <span class="msg"><?php echo $msg['password']; ?></span>
-                </p>
 
-                <p class="form-group text-right">
-                    <button type="submit" name="submit" class="btn btn-blue">ログイン</button>
-                </p>
-            </form>
-        </section>
-        <?php errorMessages($errors) ?>
-    </div>
 
-    <div class="col-3"></div>
 
+        <form method="post">
+            <p id="name" class="form-group <?php if(mb_strlen($msg['loginid']) > 0) echo 'danger' ?>">
+                <label>ユーザー名</label>
+                <input type="text" name="loginid" placeholder="ユーザー名を入力してください" value="<?php if(isset($_POST['loginid'])) echo $_POST['loginid'] ?>">
+                <span class="msg"><?php echo $msg['loginid']; ?></span>
+            </p>
+
+            <p id="pass" class="form-group <?php if(mb_strlen($msg['password']) > 0) echo 'danger' ?>">
+                <label>パスワード</label>
+                <input type="password" name="password" placeholder="パスワードを入力してください">
+                <span class="msg"><?php echo $msg['password']; ?></span>
+            </p>
+
+            <p class="form-group text-right">
+                <button type="submit" id="login" name="submit" id="login" class="btn btn-blue">ログイン</button>
+            </p>
+        </form>
+    </section>
+    <?php errorMessages($errors) ?>
 </div>
 
 <?php include("../public/assets/php/partial/footer.php"); ?>

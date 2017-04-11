@@ -45,7 +45,7 @@
     background: darken($bg-base-color, 30%);
     box-sizing: border-box;
     display: inline-block;
-    margin: 5px 2px;
+    margin: 5px 0px;
     outline: none;
     font-weight: bold;
     font-size: 0.85em;
@@ -166,6 +166,7 @@
 }
 
 .form-group{
+    box-sizing: border-box;
     label, .msg{
         display: block;
         font-size: 0.8em;

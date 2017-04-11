@@ -520,8 +520,9 @@ footer {
   bottom: 0;
   box-sizing: border-box;
   height: 40px;
+  z-index: 3;
 }
-/* line 10, ../scss/_footer.scss */
+/* line 11, ../scss/_footer.scss */
 footer h6 {
   position: absolute;
   top: 0;
@@ -620,7 +621,7 @@ footer h6 {
   background: darkgray;
   box-sizing: border-box;
   display: inline-block;
-  margin: 5px 2px;
+  margin: 5px 0px;
   outline: none;
   font-weight: bold;
   font-size: 0.85em;
@@ -928,29 +929,33 @@ footer h6 {
   opacity: 0.9;
 }
 
-/* line 169, ../scss/_class.scss */
+/* line 168, ../scss/_class.scss */
+.form-group {
+  box-sizing: border-box;
+}
+/* line 170, ../scss/_class.scss */
 .form-group label, .form-group .msg {
   display: block;
   font-size: 0.8em;
 }
-/* line 173, ../scss/_class.scss */
+/* line 174, ../scss/_class.scss */
 .form-group input, .form-group select, .form-group textarea {
   width: 100%;
 }
 
-/* line 180, ../scss/_class.scss */
+/* line 181, ../scss/_class.scss */
 .form-trans input, .form-trans select, .form-trans textarea {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* line 189, ../scss/_class.scss */
+/* line 190, ../scss/_class.scss */
 .radio label,
 .checkbox label {
   display: block;
   cursor: pointer;
   vertical-align: middle;
 }
-/* line 193, ../scss/_class.scss */
+/* line 194, ../scss/_class.scss */
 .radio label input[type="checkbox"],
 .radio label input[type="radio"],
 .checkbox label input[type="checkbox"],
@@ -961,11 +966,11 @@ footer h6 {
   margin: 0;
 }
 
-/* line 205, ../scss/_class.scss */
+/* line 206, ../scss/_class.scss */
 .form-group-inline label {
   display: inline-block;
 }
-/* line 208, ../scss/_class.scss */
+/* line 209, ../scss/_class.scss */
 .form-group-inline input, .form-group-inline select, .form-group-inline textarea {
   width: auto;
 }
@@ -1018,17 +1023,17 @@ footer h6 {
   color: #881827;
 }
 
-/* line 224, ../scss/_class.scss */
+/* line 225, ../scss/_class.scss */
 .border-left {
   border-left: 1px solid #ccc;
 }
 
-/* line 228, ../scss/_class.scss */
+/* line 229, ../scss/_class.scss */
 .border-right {
   border-right: 1px solid #ccc;
 }
 
-/* line 232, ../scss/_class.scss */
+/* line 233, ../scss/_class.scss */
 .label {
   color: #fff;
   display: inline-block;
@@ -1044,7 +1049,7 @@ footer h6 {
   min-width: 50px;
 }
 
-/* line 244, ../scss/_class.scss */
+/* line 245, ../scss/_class.scss */
 .border-radius {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -1054,7 +1059,7 @@ footer h6 {
   -o-border-radius: 5px;
 }
 
-/* line 249, ../scss/_class.scss */
+/* line 250, ../scss/_class.scss */
 .has-error {
   border: 1px solid #d92d44;
   border-radius: 5px;
@@ -1065,14 +1070,14 @@ footer h6 {
   background: #f1aeb7;
 }
 
-/* line 255, ../scss/_class.scss */
+/* line 256, ../scss/_class.scss */
 .scroll {
   height: calc(100vh - 100px);
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* line 261, ../scss/_class.scss */
+/* line 262, ../scss/_class.scss */
 .paging {
   position: relative;
   left: 5px;
@@ -1081,12 +1086,12 @@ footer h6 {
   letter-spacing: -1em;
   padding: 5px 0;
 }
-/* line 268, ../scss/_class.scss */
+/* line 269, ../scss/_class.scss */
 .paging .page-selected {
   transition: 0.6s;
   color: #fff;
 }
-/* line 273, ../scss/_class.scss */
+/* line 274, ../scss/_class.scss */
 .paging .page {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #eee), color-stop(0, white));
   background: -webkit-linear-gradient(top, white 0%, #eee 47%);
@@ -1103,11 +1108,11 @@ footer h6 {
   min-width: 15px;
   text-align: center;
 }
-/* line 275, ../scss/_class.scss */
+/* line 276, ../scss/_class.scss */
 .paging .page:link, .paging .page:visited {
   color: #e3b108;
 }
-/* line 289, ../scss/_class.scss */
+/* line 290, ../scss/_class.scss */
 .paging .page:hover, .paging .page-selected {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.47, #f2bc09), color-stop(0, #f9d868));
   background: -webkit-linear-gradient(top, #f9d868 0%, #f2bc09 47%);

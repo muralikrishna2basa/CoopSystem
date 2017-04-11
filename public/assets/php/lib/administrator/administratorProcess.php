@@ -566,6 +566,7 @@ function deleteFaultList(){
     }
 }
 //確定時商品ＩＤ（商品名）ごとに個数を集計する関数
+// @return [array] [月別商品ID（monthly_goods_id）,商品名（goods_name）,単価（unit_price）, カテゴリ名（category_name）,色（color）,発注数（ordering_quantity）, 個数の合計(total_ordering_quantity),金額の合計(total_amount)]
 function orderAggregate($monthlyId)
 {
   try{
@@ -591,7 +592,8 @@ function orderAggregate($monthlyId)
         throw $e;
     }
 }
-//月別の総数と送金額を表示する関数
+//月別の総数と総金額を表示する関数
+// @return [array] [月別ＩＤ(monthly_id),年月(date),総数(total_monthly_ordering_quantity),総金額(total_amount)]
 function monthlySum(){
     try{
 

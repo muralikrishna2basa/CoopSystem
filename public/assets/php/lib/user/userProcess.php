@@ -199,7 +199,7 @@ function returnStockList($userId,$monthlyId = 0){
                     stock_quantity,category_name,color
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
-                    INNER JOIN category ON monthly_goods.category_id = category.category_id;"
+                    INNER JOIN category ON monthly_goods.category_id = category.category_id ORDER BY category.category_id ASC ,coop_product_id ASC;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute(null);
@@ -211,7 +211,7 @@ function returnStockList($userId,$monthlyId = 0){
                     FROM stock_list
                     INNER JOIN monthly_goods ON stock_list.monthly_goods_id = monthly_goods.monthly_goods_id
                     INNER JOIN category ON monthly_goods.category_id = category.category_id
-                    WHERE stock_list.monthly_id =?;"
+                    WHERE stock_list.monthly_id =? ORDER BY category.category_id ASC ,coop_product_id ASC;"
             ;
             $stmt = $pdo->prepare($sql);
             $res  = $stmt->execute(array($monthlyId)); // TODO: monthly_idの削除 kawanishi 2017/04/03

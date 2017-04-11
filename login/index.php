@@ -74,6 +74,26 @@ if(isset($_POST) && count($_POST) > 0){
     <title>ログイン画面</title>
     <?php include("{$PATH}/public/assets/php/partial/head.php"); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $URL ?>/public/assets/stylesheets/login.css">
+
+
+<script type="text/javascript">
+var date   = new Date();
+var month  = date.getMonth() + 1;
+var sec    = date.getSeconds();
+var bgPath = '<?php echo $URL ?>/public/assets/imgs/bg/';
+
+month = ('0' + month).slice(-2);
+bgPath += month+"_";
+if(sec % 2 === 0){
+    bgPath += '1.jpg';
+}else{
+    bgPath += '2.jpg';
+}
+//console.log(bgPath);
+$(function(){
+    $('#body-bg').css({backgroundImage: 'url('+bgPath+')'});
+})
+</script>
 </head>
 <body id="body-bg">
 <?php include("../public/assets/php/partial/header.php"); ?>

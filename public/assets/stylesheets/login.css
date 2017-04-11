@@ -3,7 +3,6 @@
 @import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
 /* line 13, ../scss/login.scss */
 #body-bg {
-  background-image: url(../imgs/bg/spring_2.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

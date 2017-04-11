@@ -54,11 +54,11 @@ if(count($_POST) > 0 && isset($_POST['btn']))
                 unFixOrder($_POST['month_id']);
                 break;
             case 'export':
-                header("location: ../export/?id={$_POST['month_id']}");
+                header("location: ../export/?id={$_POST['month_id']}&page=1");
                 exit();
                 break;
             case 'edit':
-                header("location: ../productlist/?id={$_POST['month_id']}");
+                header("location: ../productlist/?id={$_POST['month_id']}&page=1");
                 exit();
                 break;
         }

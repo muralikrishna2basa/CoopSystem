@@ -9,7 +9,7 @@ $timer: 0.6s;
 
 @import "_colors.scss";
 
-$blur: 10px;
+$blur: 8px;
 #body-bg{
 //    background-image: url(../imgs/bg/spring_2.jpg);
     background-repeat: no-repeat;
@@ -45,6 +45,7 @@ $blur: 10px;
         z-index: 10;
         position: relative;
         width: 60%;
+        max-width: 700px;
         background: rgba($white, 0.3);
         @include setPrefix(border-radius, 2px);
         margin: auto;

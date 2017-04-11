@@ -4,6 +4,7 @@
         <ul>
             <li><a href="<?php echo $URL ?>/admin/import" onclick="return checkEdit();">商品リストを登録する</a></li>   <!-- 月を選択して取込 -->
             <li><a href="<?php echo $URL ?>/admin/month" onclick="return checkEdit();">月を選択して処理を行う</a></li>      <!-- 月を選択して公開 -->
+            <li><a href="<?php echo $URL ?>/admin/list" onclick="return checkEdit();">月ごとの明細を確認する</a></li>      <!-- 月を選択して公開 -->
             <li><a href="<?php echo $URL ?>/admin/fixed/?page=1" onclick="return checkEdit();">発注を確定する</a></li>       <!-- 公開フラグが立っているものを確定 -->
             <li><a href="<?php echo $URL ?>/admin/stock/add" onclick="return checkEdit();">在庫を登録する</a></li>       <!-- 確定済みかつ一番若い月を抽出 -->
             <li><a href="<?php echo $URL ?>/admin/stock/edit/?page=1" onclick="return checkEdit();">在庫を編集する</a></li>       <!-- 確定済みかつ一番若い月を抽出 -->

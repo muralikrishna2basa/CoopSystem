@@ -20,7 +20,7 @@ try{
     $monthlyId = $row['monthly_id'];
     $date      = $row['date'];
 
-    $lists = getOrderListBeforeFixed($monthlyId);
+    $lists = orderAggregate($monthlyId);
 
     if(count($_POST) > 0)
     {
@@ -39,6 +39,7 @@ try {
 } catch (Exception $e) {
     $errors[] = $e->getMessage();
 }
+//var_dump($lists);
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,10 +65,9 @@ try {
                 <th class="text-center">No</th>
                 <th class="text-center">カテゴリ名</th>
                 <th class="text-left">商品名</th>
-                <th class="text-left">購入者</th>
                 <th class="text-center">必要数</th>
-                <th class="text-right">単価</th>
                 <th class="text-right">購入数</th>
+                <th class="text-right">単価</th>
                 <th class="text-right">合計金額</th>
             </thead>
             <tbody>
@@ -77,11 +77,10 @@ try {
                     <td class="text-center"><?php echo $i ?></td>
                     <td class="text-center"><p class="label" style="background: <?php echo $lists[$i]['color'] ?>; color: <?php echo getFontColor($lists[$i]['color']) ?>"><?php echo $lists[$i]['category_name'] ?></p></td>
                     <td class="text-left"  ><?php echo $lists[$i]['goods_name'] ?></td>
-                    <td class="text-left"  ><?php echo $lists[$i]['user_name'] ?></td>
                     <td class="text-center"><?php echo $lists[$i]['required_quantity'] ?>個</td>
+                    <td class="text-right" ><?php echo $lists[$i]['total_ordering_quantity'] ?>個</td>
                     <td class="text-right" ><?php echo number_format(intval($lists[$i]['unit_price'])) ?>円</td>
-                    <td class="text-right" ><?php echo $lists[$i]['ordering_quantity'] ?>個</td>
-                    <td class="text-right" ><?php echo number_format(intval($lists[$i]['total'])) ?>円</td>
+                    <td class="text-right" ><?php echo number_format(intval($lists[$i]['total_amount'])) ?>円</td>
                 </tr>
                 <?php } ?>
             </tbody>

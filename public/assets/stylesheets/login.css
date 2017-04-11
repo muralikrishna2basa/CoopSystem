@@ -13,19 +13,19 @@
 #body-bg:after {
   content: "";
   background: inherit;
-  filter: blur(10px);
-  -webkit-filter: blur(10px);
-  -moz-filter: blur(10px);
-  -ms-filter: blur(10px);
-  -o-filter: blur(10px);
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  -moz-filter: blur(8px);
+  -ms-filter: blur(8px);
+  -o-filter: blur(8px);
   position: absolute;
   width: 102%;
   height: 102%;
   z-index: -1;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
 }
 /* line 34, ../scss/login.scss */
 #body-bg:before {
@@ -42,6 +42,7 @@
   z-index: 10;
   position: relative;
   width: 60%;
+  max-width: 700px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -53,12 +54,12 @@
   padding: 0;
   box-shadow: 0 0 5px rgba(34, 34, 34, 0.4);
 }
-/* line 56, ../scss/login.scss */
+/* line 57, ../scss/login.scss */
 #body-bg #login-content section {
   width: 100%;
   padding-top: 20px;
 }
-/* line 59, ../scss/login.scss */
+/* line 60, ../scss/login.scss */
 #body-bg #login-content section .icon {
   width: 78px;
   height: 50px;
@@ -69,22 +70,22 @@
   background-size: 100%;
   vertical-align: middle;
 }
-/* line 69, ../scss/login.scss */
+/* line 70, ../scss/login.scss */
 #body-bg #login-content section h2 {
   margin: 0;
   margin-bottom: 20px;
   vertical-align: middle;
 }
-/* line 76, ../scss/login.scss */
+/* line 77, ../scss/login.scss */
 #body-bg #login-content .form-group {
   margin: 0;
 }
-/* line 80, ../scss/login.scss */
+/* line 81, ../scss/login.scss */
 #body-bg #login-content #name,
 #body-bg #login-content #pass {
   position: relative;
 }
-/* line 84, ../scss/login.scss */
+/* line 85, ../scss/login.scss */
 #body-bg #login-content #name input,
 #body-bg #login-content #pass input {
   background: rgba(255, 255, 255, 0.4);
@@ -100,18 +101,18 @@
   border-top: 1px solid #999999;
   border-bottom: 1px solid #999999;
 }
-/* line 95, ../scss/login.scss */
+/* line 96, ../scss/login.scss */
 #body-bg #login-content #name input:-webkit-autofill,
 #body-bg #login-content #pass input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   color: #fff;
 }
-/* line 100, ../scss/login.scss */
+/* line 101, ../scss/login.scss */
 #body-bg #login-content #name .msg,
 #body-bg #login-content #pass .msg {
   color: #b32034;
 }
-/* line 104, ../scss/login.scss */
+/* line 105, ../scss/login.scss */
 #body-bg #login-content #name:before,
 #body-bg #login-content #pass:before {
   content: "";
@@ -124,24 +125,24 @@
   height: 20px;
   width: 20px;
 }
-/* line 117, ../scss/login.scss */
+/* line 118, ../scss/login.scss */
 #body-bg #login-content #name:before {
   background-image: url(../imgs/user_1.png);
 }
-/* line 120, ../scss/login.scss */
+/* line 121, ../scss/login.scss */
 #body-bg #login-content #name input {
   border-top: 1px solid #999999;
   border-bottom: 1px solid #999999;
 }
-/* line 126, ../scss/login.scss */
+/* line 127, ../scss/login.scss */
 #body-bg #login-content #pass:before {
   background-image: url(../imgs/key_1.png);
 }
-/* line 129, ../scss/login.scss */
+/* line 130, ../scss/login.scss */
 #body-bg #login-content #pass input {
   border-bottom: 1px solid #999999;
 }
-/* line 133, ../scss/login.scss */
+/* line 134, ../scss/login.scss */
 #body-bg #login-content #login {
   width: 100%;
   border-radius: 0;

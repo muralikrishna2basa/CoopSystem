@@ -5,13 +5,15 @@ function getPagenation($lists, $pageNumber = 1, $num = 50)
         $tmp     = ($pageNumber-1);
         if($tmp < 0) $tmp = 0;
         $page    = $tmp * $num + 1;
+        if($page <= 0) $page = 1;
         $maxPage = $page + $num;
+
         if($maxPage > count($lists))
         {
-            $page    = (floor(count($lists) / $num) * $num);
-            if($page <= 0) $page = 1;
+            $page    = (floor(count($lists) / $num) * $num) + 1;
             $maxPage = count($lists);
         }
+
     } catch (Exception $e) {
         $errors[] = $e->getMessage();
     }

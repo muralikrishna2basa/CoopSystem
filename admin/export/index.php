@@ -90,7 +90,7 @@ try {
             </tbody>
         </table>
         <?php //var_dump(floor(count($lists) / $num)) ?>
-        <?php setPages('./?id=1', floor(count($lists) / $num), $nowPage) ?>
+        <?php setPages("./?id={$_GET['id']}&", floor(count($lists) / $num), $nowPage) ?>
         <form method="post">
             <input type="hidden" name="monthly_id" value="<?php echo $monthlyId ?>">
             <p class="text-right">

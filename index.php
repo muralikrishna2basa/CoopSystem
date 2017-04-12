@@ -85,9 +85,9 @@ var bgPath = '<?php echo $URL ?>/public/assets/imgs/bg/';
 month = ('0' + month).slice(-2);
 bgPath += month+"_";
 if(sec % 2 === 0){
-    bgPath += '1.jpg';
+    bgPath += '1_censored.jpg';
 }else{
-    bgPath += '2.jpg';
+    bgPath += '2_censored.jpg';
 }
 //console.log(bgPath);
 $(function(){

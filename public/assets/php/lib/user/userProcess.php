@@ -132,6 +132,8 @@ function returnCurrentMonthProductList($userId){
     for ($i=0; $i <count($order) ; $i++) {
         $order[$i]['ordering_quantity'] = 0;
         $order[$i][7]                   = 0;
+        $order[$i]['currentOrderCount'] = 0;
+        $order[$i][8]                   = 0;
     }
 
     try{
@@ -161,6 +163,31 @@ function returnCurrentMonthProductList($userId){
                 }
            }
         }
+        $sql = "SELECT  ordering_list.monthly_goods_id,
+                SUM(ordering_quantity) AS total_ordering_quantity
+                FROM  ordering_list
+                INNER JOIN monthly_goods ON ordering_list.monthly_goods_id = monthly_goods.monthly_goods_id
+                INNER JOIN ordering ON ordering_list.ordering_id = ordering.ordering_id
+                INNER JOIN category ON monthly_goods.category_id = category.category_id
+                INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
+                WHERE ordering.monthly_id = (SELECT monthly_id FROM monthly WHERE public_flag=1)
+                GROUP BY ordering_list.monthly_goods_id
+                ORDER BY ordering_list.monthly_goods_id ASC ,category.category_id";
+        $stmt= $pdo->prepare($sql);
+        $res = $stmt->execute();
+        if(!$res) throw new Exception("[{$functionName}]:SELECT文実行時にエラーが発生しました。");
+        while ($row = $stmt->fetch()) {
+            $currentOrderCount[] =$row;
+        }
+        
+        for ($i=0; $i <count($order) ; $i++) {
+            for ($j=0; $j < count($currentMonthList); $j++) {
+                if($order[$i][0] == $currentOrderCount[$j][0]){
+                    $order[$i]['currentOrderCount'] = $currentOrderCount[$j][1]; 
+                    $order[$i][8] = $currentOrderCount[$j][1]; 
+           }
+        }
+    }
         return $order;
     }catch(Exception $e){
         throw $e;

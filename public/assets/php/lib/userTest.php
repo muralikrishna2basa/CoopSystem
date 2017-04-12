@@ -12,8 +12,8 @@ class userTest extends PHPUnit_Framework_TestCase
     function testReturnCurrentMonthProductList()
     {
 
-     //  $a = returnCurrentMonthProductList(12);
-    // var_dump($a);
+      $a = returnCurrentMonthProductList(244);
+    var_dump($a);
 
    }
  /**
@@ -49,7 +49,7 @@ function testDisplayHistory()
     */
 function testNoOrder()
 {
-    noOrder(244);
+    //noOrder(244);
 }
 }
 ?>

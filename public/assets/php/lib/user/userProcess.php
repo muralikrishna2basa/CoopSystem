@@ -102,6 +102,7 @@ function returnCurrentMonthProductList($userId){
     $order_flag   = [];
     $order = [];
     $currentMonthList=[];
+    $currentOrderCount=[];
     try{
         $pdo = connectDb('cooopshinren');
         $sql = "SELECT order_flag FROM ordering WHERE orderer= ?";
@@ -179,6 +180,7 @@ function returnCurrentMonthProductList($userId){
         while ($row = $stmt->fetch()) {
             $currentOrderCount[] =$row;
         }
+        
         for ($i=0; $i <count($order) ; $i++) {
             for ($j=0; $j < count($currentOrderCount); $j++) {
                 if($order[$i][0] == $currentOrderCount[$j][0]){

@@ -132,10 +132,19 @@ try {
                         <p><?php echo $lists[$i]['goods_name'] ?></p>
                     </td>
                     <td class="text-center">
-                        <p><?php echo $lists[$i]['required_quantity'] ?>個</p>
+                        <p><span id="required_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo $lists[$i]['required_quantity'] ?></span>個</p>
                     </td>
                     <td class="text-center">
-                        <p>あと<span class="label bg-green" id="current_order_count_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo $lists[$i]['current_order_count'] ?></span>個</p>
+                        <?php
+                            $max     = $lists[$i]['required_quantity'];
+                            $current = ($max - ($lists[$i]['current_order_count'] % $max));
+                            $cls     = 'bg-green';
+                            if(($current / $max) * 100 < 45) $cls = 'bg-yellow';
+                            if(($current / $max) * 100 < 15 || $current == 1) $cls = 'bg-red';
+                        ?>
+                        <p>あと<span class="label <?php echo $cls ?>">
+                            <span id="current_order_count_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo $current ?></span>個</span>
+                        </p>
                     </td>
                     <td class="text-right">
                         <p>
@@ -146,10 +155,12 @@ try {
                     <td class="text-center">
 
                         <p
-                            data-price  ="unit_price_<?php echo $lists[$i]['monthly_goods_id'] ?>"
-                            data-total  ="total_<?php echo $lists[$i]['monthly_goods_id'] ?>"
-                            data-number ="ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"
-                            data-display="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-price   ="unit_price_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-total   ="total_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-number  ="ordering_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-display ="display_number_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-quantity="required_quantity_<?php echo $lists[$i]['monthly_goods_id'] ?>"
+                            data-current ="current_order_count_<?php echo $lists[$i]['monthly_goods_id'] ?>"
                         >
                             <?php if($fixed !== 1){ ?>
                             <button class="ordering-minus">&minus;</button>

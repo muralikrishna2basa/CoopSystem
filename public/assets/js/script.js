@@ -37,13 +37,19 @@ function setPrice(selector, sign)
     var trgNum   = selector.parent().attr('data-number');
     var trgDisp  = selector.parent().attr('data-display');
     var trgStock = selector.parent().attr('data-stock');
+
+    var trgCrnt  = selector.parent().attr('data-current');
+    var trgQuant = selector.parent().attr('data-quantity');
+
     var num      = document.getElementById(trgNum).defaultValue * 1;
     if(num + sign < 0) return;
     var log =
         'trgPrice:'+trgPrice+"\n"+
         'trgTotal:'+trgTotal+"\n"+
         'trgNum  :'+trgNum+"\n"+
-        'trgDisp :'+trgDisp
+        'trgDisp :'+trgDisp+"\n"+
+        'trgCrnt :'+trgCrnt+"\n"+
+        'trgQuant:'+trgQuant+"\n"
     ;
 //    console.log(log);
         // 在庫数の計算
@@ -64,6 +70,33 @@ function setPrice(selector, sign)
 
     // 表示される個数を再計算
     $('#'+trgDisp).html(num);
+
+    // 注文までの残り数を再計算
+    if(trgCrnt !== void 0)
+    {
+        var current = $('#'+trgCrnt).html() * 1;
+        var max     = $('#'+trgQuant).html() * 1;
+        var dsp     = (max + current - sign) % max;
+
+        if(dsp <  0) dsp = max - dsp;
+        if(dsp == 0) dsp = max;
+
+        var cls = 'label bg-green';
+        if((dsp / max) * 100 < 45) cls = 'label bg-yellow';
+        if((dsp / max) * 100 < 15 || dsp == 1) cls = 'label bg-red';
+
+
+
+        $('#'+trgCrnt).html(dsp);
+        $('#'+trgCrnt).parent().removeClass().addClass(cls);
+        var log =
+                'max    :'+max+"\n"+
+                'current:'+current+"\n"+
+                'sign   :'+sign+"\n"+
+                'disp   :'+dsp+"\n"
+        ;
+//        console.log(log);
+    }
 
     // 合計金額を再計算
     if(trgPrice !== void 0)

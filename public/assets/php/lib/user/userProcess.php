@@ -132,7 +132,7 @@ function returnCurrentMonthProductList($userId){
     for ($i=0; $i <count($order) ; $i++) {
         $order[$i]['ordering_quantity'] = 0;
         $order[$i][7]                   = 0;
-        $order[$i]['currentOrderCount'] = 0;
+        $order[$i]['current_order_count'] = 0;
         $order[$i][8]                   = 0;
     }
 

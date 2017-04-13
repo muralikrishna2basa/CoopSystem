@@ -107,14 +107,14 @@ try {
         <table class="table-hover border-bottom">
             <thead>
                 <tr>
-                    <th width="10%" class="text-center">No</th>
+                    <th width="5%" class="text-center">No</th>
                     <th width="10%" class="text-center">カテゴリ</th>
                     <th width="30%"                    >商品名</th>
-                    <th width="10%" class="text-center">必要数</th>
-                    <th width="10%" class="text-center">現在数</th>
+                    <th width="5%" class="text-center">必要数</th>
+                    <th width="15%" class="text-center">現在数</th>
                     <th width="10%" class="text-right" >単価</th>
                     <th width="15%" class="text-center">購入数</th>
-                    <th width="15%" class="text-right" >合計金額</th>
+                    <th width="20%" class="text-right" >合計金額</th>
                 </tr>
             </thead>
             <tbody>

@@ -135,7 +135,7 @@ try {
                         <p><?php echo $lists[$i]['required_quantity'] ?>個</p>
                     </td>
                     <td class="text-center">
-                        <p class="label bg-green"><span><?php echo $lists[$i]['currentOrderCount'] ?></span>個</p>
+                        <p>あと<span class="label bg-green" id="current_order_count_<?php echo $lists[$i]['monthly_goods_id'] ?>"><?php echo $lists[$i]['current_order_count'] ?></span>個</p>
                     </td>
                     <td class="text-right">
                         <p>

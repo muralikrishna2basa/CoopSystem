@@ -609,7 +609,7 @@ function monthlySum(){
                 INNER JOIN category ON monthly_goods.category_id = category.category_id
                 INNER JOIN monthly ON ordering.monthly_id =monthly.monthly_id
                 GROUP BY ordering.monthly_id
-                ORDER BY ordering_list.monthly_goods_id ASC ,category.category_id;";
+                ORDER BY monthly.monthly_id  DESC;";
         $stmt=$pdo->prepare($sql);
         $res  = $stmt->execute();
         if(!$res) throw new Exception("関数monthlySumでSELECT実行時にエラーが発生しました。"); 

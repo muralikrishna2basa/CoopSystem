@@ -179,12 +179,11 @@ function returnCurrentMonthProductList($userId){
         while ($row = $stmt->fetch()) {
             $currentOrderCount[] =$row;
         }
-        
         for ($i=0; $i <count($order) ; $i++) {
-            for ($j=0; $j < count($currentMonthList); $j++) {
+            for ($j=0; $j < count($currentOrderCount); $j++) {
                 if($order[$i][0] == $currentOrderCount[$j][0]){
-                    $order[$i]['currentOrderCount'] = $currentOrderCount[$j][1]; 
-                    $order[$i][8] = $currentOrderCount[$j][1]; 
+                    $order[$i]['current_order_ount'] = $currentOrderCount[$j]["total_ordering_quantity"]; 
+                    $order[$i][8] = $currentOrderCount[$j]["total_ordering_quantity"]; 
            }
         }
     }

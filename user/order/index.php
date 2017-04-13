@@ -111,6 +111,7 @@ try {
                     <th width="10%" class="text-center">カテゴリ</th>
                     <th width="30%"                    >商品名</th>
                     <th width="10%" class="text-center">必要数</th>
+                    <th width="10%" class="text-center">現在数</th>
                     <th width="10%" class="text-right" >単価</th>
                     <th width="15%" class="text-center">購入数</th>
                     <th width="15%" class="text-right" >合計金額</th>
@@ -132,6 +133,9 @@ try {
                     </td>
                     <td class="text-center">
                         <p><?php echo $lists[$i]['required_quantity'] ?>個</p>
+                    </td>
+                    <td class="text-center">
+                        <p class="label bg-green"><span><?php echo $lists[$i]['currentOrderCount'] ?></span>個</p>
                     </td>
                     <td class="text-right">
                         <p>
